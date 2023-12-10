@@ -473,8 +473,12 @@ body {
   #INSTRUCTION
 \*-----------------------------------*/
 
-.instruction :is(.section-title, .section-text) {
+.instruction .section-title {
   text-align: center;
+}
+
+.instruction .section-text {
+  text-align: justify;
 }
 
 .instruction .section-title {
