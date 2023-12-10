@@ -584,6 +584,7 @@ body {
 .app-banner {
   position: relative;
   margin-block-start: 60px;
+  margin: auto;
 }
 
 .app-banner .span {
