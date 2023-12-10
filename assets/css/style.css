@@ -1051,6 +1051,7 @@ body {
 .swiper {
   width: 474px;
   height: 526px;
+  max-width: 100%;
 }
 
 iframe {
