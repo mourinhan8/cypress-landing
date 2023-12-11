@@ -7,7 +7,7 @@
  */
 
 const addEventOnElem = function (elem, type, callback) {
-  if (elem.length > 1) {
+  if (elem.length > 1 && elem !== window) {
     for (let i = 0; i < elem.length; i++) {
       elem[i].addEventListener(type, callback);
     }
@@ -40,6 +40,22 @@ const closeNavbar = function () {
 
 addEventOnElem(navbarLinks, "click", closeNavbar);
 
+/**
+ * header active
+ */
+
+const header = document.querySelector("[data-header]");
+console.log({ header });
+
+const activeHeader = function () {
+  if (window.scrollY > 300) {
+    header.classList.add("active");
+  } else {
+    header.classList.remove("active");
+  }
+}
+
+addEventOnElem(window, "scroll", activeHeader);
 
 const swiper = new Swiper('.swiper', {
   // Optional parameters
