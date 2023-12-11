@@ -310,8 +310,6 @@ body.active {
 
 .header.active {
   position: fixed;
-  top: -66px;
-  background-color: var(--white);
   border-block-start: 1px solid var(--cultured);
   box-shadow: var(--shadow-1);
   animation: slideIn 0.25s var(--cubic-out) forwards;
@@ -320,12 +318,12 @@ body.active {
 @keyframes slideIn {
 
   0% {
-    transform: translateY(0);
+    transform: translateY(-100%);
     background-color: var(--white);
   }
 
   100% {
-    transform: translateY(100%);
+    transform: translateY(0);
     background-color: var(--eerie-black-2);
   }
 
@@ -843,10 +841,6 @@ body.active {
     padding-block: 5px;
   }
 
-  .header.active {
-    top: -60px;
-  }
-
   .header>.container {
     gap: 50px;
   }
@@ -990,11 +984,7 @@ body.active {
    * HEADER
    */
 
-  .header.active {
-    top: -64px;
-  }
-
-  .x-navbar-link {
+  .navbar-link {
     font-size: unset;
   }
 
