@@ -782,26 +782,6 @@ body.active {
     display: none;
   }
 
-  .instruction table {
-    width: 100%;
-  }
-
-  .instruction table th,
-  td {
-    border: 1px solid;
-    padding: 8px;
-    text-align: left;
-    border: 1px solid var(--cadet-blue-crayola);
-  }
-
-  .instruction table th {
-    color: #fff;
-  }
-
-  .instruction table tr:nth-child(even) {
-    background-color: var(--eerie-black-1);
-  }
-
   /**
    * APP
    */
