@@ -152,6 +152,10 @@ body {
   line-height: 1.4;
 }
 
+body.active {
+  overflow: hidden;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
