@@ -1067,3 +1067,7 @@ iframe {
 img {
   border-radius: 5%;
 }
+
+.text {
+  text-align: justify;
+}
