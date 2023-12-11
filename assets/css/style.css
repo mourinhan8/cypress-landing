@@ -1060,9 +1060,18 @@ img {
   text-align: justify;
 }
 
-/* token-cp.html */
+/* bao-mat.html */
 .articles .container {
   display: flex;
   flex-direction: column;
   gap: var(--fs-1);
+}
+
+/* polkadot-va-token-cp.html */
+.card-text a {
+  text-decoration: underline;
+}
+
+.card-text a:hover {
+  color: var(--blue-crayola);
 }
