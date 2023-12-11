@@ -94,20 +94,23 @@ const infoTexts = [
   
   Tất cả đều có thực hiện được trên Blockchain, các thành viên không cần biết nhau ở ngoài đời thực.`
 ];
-for (let i = 0; i < infoTabs.length; i++) {
-  infoTabs[i].addEventListener("click", function () {
-    for (let j = 0; j < infoTabs.length; j++) {
-      if (i === j) {
-        infoTabs[j].classList.add("active");
-        infoText.innerText = infoTexts[i];
-      } else {
-        infoTabs[j].classList.remove("active");
-      }
-    }
-  });
-}
 
-infoTabs[0].click();
+if (infoTabs.length > 0) {
+  for (let i = 0; i < infoTabs.length; i++) {
+    infoTabs[i].addEventListener("click", function () {
+      for (let j = 0; j < infoTabs.length; j++) {
+        if (i === j) {
+          infoTabs[j].classList.add("active");
+          infoText.innerText = infoTexts[i];
+        } else {
+          infoTabs[j].classList.remove("active");
+        }
+      }
+    });
+  }
+
+  infoTabs[0].click();
+}
 
 const swiper = new Swiper('.swiper', {
   // Optional parameters
