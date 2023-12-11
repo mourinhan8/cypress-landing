@@ -1133,3 +1133,24 @@ img {
   width: 100%;
   height: 100%;
 }
+
+.modal-body {
+  text-align: justify;
+}
+
+.modal-content {
+  background-color: var(--eerie-black-1);
+  ;
+}
+
+.submit-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+}

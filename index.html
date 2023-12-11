@@ -19,6 +19,9 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
 
+  <!-- sweetalert -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <!-- 
     - custom css link
   -->
@@ -433,6 +436,57 @@
     </div>
 
   </footer>
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary feedback" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <ion-icon name="chatbox-ellipses-outline" size="large"></ion-icon>
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" data-bs-theme="dark">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title h3" id="exampleModalLabel">Feedback</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="h4">It is an investment fund index managed by Cypress Capital with the aim of increasing profits
+            through coins like Bitcoin
+            and Polkadot</div>
+          <hr>
+          <h4>Xin chào, Vui lòng cho chúng tôi biết bạn cần hỗ trợ gì và chúng tôi sẽ phản hồi ngay.</h4>
+          <hr>
+          <form id="feedback-form" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên</label>
+              <input type="text" class="form-control" id="name" placeholder="" required>
+              <div class="invalid-feedback">
+                Vui lòng nhập tên bạn.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+              <div class="invalid-feedback">
+                Vui lòng nhập địa chỉ email của bạn.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="feedback" class="form-label">Chúng tôi có thể giúp gì cho bạn?</label>
+              <textarea class="form-control" id="feedback" rows="5" required></textarea>
+              <div class="invalid-feedback">
+                Trường này không được bỏ trống.
+              </div>
+            </div>
+            <div class="submit-btn-wrapper">
+              <button type="submit" class="btn btn-primary mx-auto">Gửi</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- 
     - custom js link
