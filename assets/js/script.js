@@ -95,13 +95,30 @@ const infoTexts = [
   Tất cả đều có thực hiện được trên Blockchain, các thành viên không cần biết nhau ở ngoài đời thực.`
 ];
 
+var i = 0;
+var txt = `
+
+`; /* The text */
+
+var speed = 50; /* The speed/duration of the effect in milliseconds */
+
 if (infoTabs.length > 0) {
   for (let i = 0; i < infoTabs.length; i++) {
     infoTabs[i].addEventListener("click", function () {
       for (let j = 0; j < infoTabs.length; j++) {
         if (i === j) {
           infoTabs[j].classList.add("active");
+          let count = 0;
+          const txt = infoTexts[i]
           infoText.innerText = infoTexts[i];
+          // function typeWriter() {
+          //   if (count < txt.length) {
+          //     infoText.innerText += txt.charAt(count);
+          //     count++;
+          //     setTimeout(typeWriter, speed);
+          //   }
+          // }
+          // typeWriter()
         } else {
           infoTabs[j].classList.remove("active");
         }
