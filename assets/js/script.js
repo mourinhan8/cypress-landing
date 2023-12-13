@@ -81,18 +81,19 @@ addEventOnElem(window, "scroll", scrollReveal);
 const infoTabs = document.querySelectorAll("[data-info]");
 const infoText = document.querySelector("[data-info-text]");
 const infoTexts = [
-  `Người sáng lập: tin rằng giá trị cốt lõi phải từ "phi tập trung và minh bạch", đã tìm tòi nghiên cứu và đầu tư Bitcoin từ năm 2012. Ý nghĩa của dự án: Dự án dành cho những nhà đầu tư trong bình an bằng sản phẩm có mức giá sàn tăng dần 12% một năm ít nhất đến năm 2026, và giá trần tăng theo thị trường. Giúp các thành viên hội đồng quản trị, Cypress Capital Council, có thể phát huy năng lực của mình, đầu tư hiệu quả toàn bộ nguồn vốn. Tầm nhìn của dự án là phi tập trung và minh bạch, chuyển dần quyền quản trị sang cộng đồng.`,
-  `Dự án dùng giải pháp Multisig của Moonbeam để giám đốc (Leader), hội đồng quản trị (Council) và đại diện cộng đồng (Core holders) có thể điều hành dự án. Theo nguyên tắc những thứ cần sự an toàn cao nhất sẽ để trong địa chỉ do cộng đồng quản lý ví dụ các thanh khoản cần giữ lâu dài, các tài sản cần dùng ví dụ ngân sách dành cho giao dịch và ngân sách quảng cáo sẽ để trong địa chỉ của giám đốc, các tài sản ở giữa hai mức đó sẽ do hội đồng quản trị nắm giữ ví dụ số lượng token CP chưa đưa vào lưu thông, các thanh khoản còn cần thay đổi tùy theo thị trường.
+  `The Founder believes in the core values of "decentralization and transparency," has been exploring research and investing in Bitcoin since 2012. 
+  Project Significance: Tailored for investors prioritizing security, the project features a product with a floor that increases by 12% annually, while the ceiling price adjusts based on market conditions. The project operates under the guidance of a leader, a council, and a team of core holders. With a vision of decentralization and transparency, the project aims to progressively shift management authority to the community.`,
+  `The project utilizes Moonbeam's Multisig solution for the governance of the Leader, Council, and Core Holders in the community. According to the principle, items requiring the highest security are stored in addresses managed by the community, such as long-term liquidity holdings. Assets needed for transactions and advertising budgets, for example, are stored in the director's address. Assets between these two levels are held by the Council, such as the quantity of CP tokens not yet in circulation and liquidity that needs to be adjusted based on market conditions.
+
+  The community representative group consists of members holding at least 1 million CP, and the total tokens of the group account for 50% or more of the circulating supply mbeam:0x012f3c193E6D78BaBEC52F8AbE6b7B0c443D3bCf. Decisions are made through a vote with over 75% approval. Each member needs to hold 500k CP in their operating budget, which will be returned when they cease to be a representative.
   
-  Nhóm đại diện cộng đồng là nhóm gồm các thành viên có ít nhất từ 1 triệu CP trở lên và tổng số token của nhóm chiếm từ 50% cung lưu thông trở lên mbeam:0x012f3c193E6D78BaBEC52F8AbE6b7B0c443D3bCf thực hiện bằng biểu quyết trên 75%, mỗi thành viên cần giữ 500k CP trong ngân sách họ đang điều hành và sẽ được trả lại khi ngừng tham gia đại diện.
+  The Council, identified by the address mbeam:0xF33D7751De5927F0B80Ef3C3e4fA75581754C980, operates through consensus with over 90% agreement.
   
-  Hội đồng quản trị mbeam:0xF33D7751De5927F0B80Ef3C3e4fA75581754C980 thực hiện bằng đồng thuận trên 90%.
+  The responsibility when joining the leadership team is to ensure the sustainable development of the project. This involves fulfilling the project's commitments to small investors, and the benefit is that you always have insider information and are proactive in trading, which is valuable during an uptrend.
   
-  Trách nhiệm khi bạn vào nhóm lãnh đạo là đảm bảo sự phát triển bền vững của dự án, tức là cùng nhau thực hiện các cam kết của dự án với những nhà đầu tư nhỏ lẻ, lợi ích là bạn luôn nắm được tin nội bộ và chủ động trong việc trade, điều này có giá trị rất lớn khi up trend.
+  Attendance is mandatory: Community representatives and management members need to check in monthly, while the director needs to check in weekly.
   
-  Chế độ điểm danh: Đại diện cộng đồng và thành viên quản trị cần điểm danh hàng tháng. Giám đốc cần điểm danh hàng tuần.
-  
-  Tất cả đều có thực hiện được trên Blockchain, các thành viên không cần biết nhau ở ngoài đời thực.`
+  All of these processes are executed on the blockchain, and members don't need to know each other in real life.`
 ];
 
 var i = 0;
