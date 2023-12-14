@@ -1211,7 +1211,7 @@ img {
   border-color: var(--blue-crayola);
 }
 
-/* blockquote {
+blockquote {
   font-family: Georgia, serif;
   font-size: 18px;
   font-style: italic;
@@ -1248,4 +1248,4 @@ blockquote cite:before {
 .container-blockquote {
   display: flex;
   justify-content: center;
-} */
+}
