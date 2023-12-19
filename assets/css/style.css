@@ -1249,3 +1249,9 @@ blockquote cite:before {
   display: flex;
   justify-content: center;
 }
+
+.price-chart-containter {
+  display: grid;
+  padding: 48px;
+  text-align: center;
+}
