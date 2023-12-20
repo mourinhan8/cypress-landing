@@ -1255,3 +1255,11 @@ blockquote cite:before {
   padding: 48px;
   text-align: center;
 }
+
+.header-img {
+  border-radius: 50%;
+}
+
+.price-chart .section-title {
+  margin-block-end: 15px;
+}
