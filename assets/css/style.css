@@ -704,6 +704,9 @@ body.active {
     --fs-5: 2rem;
   }
 
+  .price-chart-containter {
+    padding: 12px;
+  }
 }
 
 
@@ -808,6 +811,10 @@ body.active {
 
   .copyright {
     margin-block-end: 0;
+  }
+
+  .price-chart-containter {
+    padding: 16px;
   }
 
 }
@@ -941,6 +948,10 @@ body.active {
     margin-block: 50px;
   }
 
+  .price-chart-containter {
+    padding: 48px;
+  }
+
 }
 
 
@@ -1031,7 +1042,11 @@ body.active {
   .app-content {
     margin-block: 100px;
   }
+}
 
+.price-chart-containter {
+  display: grid;
+  text-align: center;
 }
 
 .open {
@@ -1247,12 +1262,6 @@ blockquote cite:before {
 .container-blockquote {
   display: flex;
   justify-content: center;
-}
-
-.price-chart-containter {
-  display: grid;
-  padding: 48px;
-  text-align: center;
 }
 
 .header-img {
