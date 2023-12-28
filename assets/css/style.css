@@ -326,6 +326,7 @@ body.active {
 .header.active {
   position: fixed;
   border-block-start: 1px solid var(--cultured);
+  border-top: none;
   box-shadow: var(--shadow-1);
   animation: slideIn 0.25s var(--cubic-out) forwards;
 }
@@ -865,20 +866,11 @@ body.active {
     display: flex;
     align-items: center;
     margin-bottom: 0;
+    /* gap: .5em; */
   }
 
   .navbar-item:not(:last-child) {
     border-block-end: none;
-  }
-
-  .navbar-link {
-    font-size: var(--fs-7);
-    padding: 15px 12px;
-  }
-
-  .navbar-link:is(:hover, :focus, .active) {
-    background-color: var(--blue-crayola);
-    color: var(--white);
   }
 
   /**
@@ -1270,4 +1262,71 @@ blockquote cite:before {
 
 .price-chart .section-title {
   margin-block-end: 15px;
+}
+
+.dropbtn {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  color: var(--white);
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: var(--cadet-blue-crayola)}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: var(--blue-crayola);
+}
+
+.navbar-link {
+  font-size: var(--fs-7);
+  padding: 15px 12px;
+}
+
+.nav-normal:is(:hover, :focus, .active) {
+  background-color: var(--blue-crayola);
+  color: var(--white);
+}
+
+.dropbtn:is(:hover, :focus, .active) {
+  /* background-color: var(--blue-crayola); */
+  color: var(--white);
+}
+
+.bold-cp-text {
+  color: var(--blue-crayola);
+}
+
+.hidden {
+  display: none;
 }
