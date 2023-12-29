@@ -385,6 +385,7 @@ body.active {
 }
 
 .dropdown:not(:last-child) {
+  border-right: 1px solid var(--white_30);
   border-block-end: 0px solid var(--white_30) !important;
 }
 
