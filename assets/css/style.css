@@ -384,6 +384,10 @@ body.active {
   border-block-end: 1px solid var(--white_30);
 }
 
+.dropdown:not(:last-child) {
+  border-block-end: 0px solid var(--white_30) !important;
+}
+
 .navbar-link {
   color: var(--white);
   font-weight: var(--fw-700);
