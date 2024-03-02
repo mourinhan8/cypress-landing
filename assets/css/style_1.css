@@ -448,7 +448,8 @@ body.active {
 
 .price-chart {
   background-color: var(--eerie-black-2);
-  padding-block: 40px !important;
+  padding-block: 70px !important;
+  padding: 0 12px
 }
 
 .price-chart-container {
