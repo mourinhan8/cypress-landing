@@ -84,7 +84,6 @@
 
 }
 
-
 /*-----------------------------------*\
   #RESET
 \*-----------------------------------*/
@@ -434,25 +433,125 @@ body.active {
 \*-----------------------------------*/
 
 .price-chart {
-  background-color: var(--eerie-black-1);
+  background-color: var(--eerie-black-2);
 }
 
-/*-----------------------------------*\
-  #HERO
-\*-----------------------------------*/
-
-.hero {
-  padding-block: 150px 140px;
+.price-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.hero-content {
-  margin-block-end: 80px;
+.price-chart-wrapper {
+  width: 100%;
 }
 
 .hero-text {
   font-size: var(--fs-5);
   margin-block: 25px 40px;
-  max-width: 70%
+  margin: auto;
+}
+
+/*-----------------------------------*\
+  #ABOUT
+\*-----------------------------------*/
+
+.about {
+  background-color: var(--eerie-black-1);
+}
+
+.about-banner {
+  margin-block-end: 40px;
+}
+
+/*-----------------------------------*\
+  #INSTRUCTION
+\*-----------------------------------*/
+
+.instruction .section-title {
+  text-align: center;
+}
+
+.instruction .section-text {
+  text-align: justify;
+}
+
+.instruction .section-title {
+  margin-block-end: 15px;
+}
+
+.instruction-list {
+  display: grid;
+  gap: 30px;
+  margin-block-start: 50px;
+}
+
+.instruction-card {
+  text-align: center;
+}
+
+.instruction-card .card-banner {
+  transition: var(--transition-2);
+}
+
+.instruction-card:hover .card-banner {
+  transform: rotateY(1turn);
+}
+
+.instruction-card .img {
+  margin-inline: auto;
+  margin-block-end: 12px;
+}
+
+.instruction-card .card-subtitle {
+  font-size: var(--fs-8);
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+}
+
+.instruction-card .card-title {
+  font-size: var(--fs-4);
+  margin-block: 5px 15px;
+}
+
+.instruction-card .card-text {
+  padding-inline: 20px;
+}
+
+/*-----------------------------------*\
+  #APP
+\*-----------------------------------*/
+
+.app {
+  padding-block-end: 0;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+}
+
+.app-banner {
+  position: relative;
+  margin-block-start: 60px;
+  margin: auto;
+}
+
+.app-banner .span {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  color: var(--white);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-700);
+  padding: 8px 15px;
+  border: 2px solid var(--white);
+  border-radius: 50px;
 }
 
 /*-----------------------------------*\
@@ -460,7 +559,7 @@ body.active {
 \*-----------------------------------*/
 
 .market {
-  background-color: var(--eerie-black-1);
+  background-color: var(--eerie-black-2);
   color: var(--white);
 }
 
@@ -532,113 +631,13 @@ body.active {
   background-color: var(--blue-crayola);
 }
 
-/*-----------------------------------*\
-  #INSTRUCTION
-\*-----------------------------------*/
-
-.instruction .section-title {
-  text-align: center;
-}
-
-.instruction .section-text {
-  text-align: justify;
-}
-
-.instruction .section-title {
-  margin-block-end: 15px;
-}
-
-.instruction-list {
-  display: grid;
-  gap: 30px;
-  margin-block-start: 50px;
-}
-
-.instruction-card {
-  text-align: center;
-}
-
-.instruction-card .card-banner {
-  transition: var(--transition-2);
-}
-
-.instruction-card:hover .card-banner {
-  transform: rotateY(1turn);
-}
-
-.instruction-card .img {
-  margin-inline: auto;
-  margin-block-end: 12px;
-}
-
-.instruction-card .card-subtitle {
-  font-size: var(--fs-8);
-  font-weight: var(--fw-700);
-  text-transform: uppercase;
-}
-
-.instruction-card .card-title {
-  font-size: var(--fs-4);
-  margin-block: 5px 15px;
-}
-
-.instruction-card .card-text {
-  padding-inline: 20px;
-}
-
-/*-----------------------------------*\
-  #ABOUT
-\*-----------------------------------*/
-
-.about {
-  background-color: var(--eerie-black-1);
-}
-
-.about-banner {
-  margin-block-end: 40px;
-}
-
-/*-----------------------------------*\
-  #APP
-\*-----------------------------------*/
-
-.app {
-  padding-block-end: 0;
-}
-
-.app-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 15px;
-}
-
-.app-banner {
-  position: relative;
-  margin-block-start: 60px;
-  margin: auto;
-}
-
-.app-banner .span {
-  position: absolute;
-  top: 10%;
-  left: 0;
-  color: var(--white);
-  font-size: var(--fs-7);
-  font-weight: var(--fw-700);
-  padding: 8px 15px;
-  border: 2px solid var(--white);
-  border-radius: 50px;
-}
-
 
 /*-----------------------------------*\
   #FOOTER
 \*-----------------------------------*/
 
-
 .footer-bottom {
-  background-color: var(--eerie-black-2);
+  background-color: var(--eerie-black-1);
   padding-block: 20px;
 }
 
@@ -670,7 +669,6 @@ body.active {
   color: var(--blue-crayola);
 }
 
-
 /*-----------------------------------*\
   #MEDIA QUERIES
 \*-----------------------------------*/
@@ -696,8 +694,6 @@ body.active {
 
   }
 
-
-
   /**
    * REUSED STYLE
    */
@@ -708,23 +704,18 @@ body.active {
     margin-inline: auto;
   }
 
+  /*-----------------------------------*\
+  #PRICE-CHART
+\*-----------------------------------*/
 
-
-  /**
-   * HERO
-   */
+  .price-chart-container {
+    padding: 12px;
+  }
 
   .hero-text {
     --fs-5: 2rem;
   }
-
-  .price-chart-containter {
-    padding: 12px;
-  }
 }
-
-
-
 
 
 /**
@@ -758,15 +749,12 @@ body.active {
     max-width: 750px;
   }
 
+  /*-----------------------------------*\
+  #PRICE-CHART
+\*-----------------------------------*/
 
-
-  /**
-   * HERO
-   */
-
-  .hero-banner {
-    max-width: max-content;
-    margin-inline: auto;
+  .price-chart-container {
+    padding: 16px;
   }
 
   /**
@@ -827,14 +815,7 @@ body.active {
     margin-block-end: 0;
   }
 
-  .price-chart-containter {
-    padding: 16px;
-  }
-
 }
-
-
-
 
 
 /**
@@ -886,36 +867,17 @@ body.active {
     border-block-end: none;
   }
 
-  /**
-   * HERO
-   */
+  /*-----------------------------------*\
+  #PRICE-CHART
+  \*-----------------------------------*/
 
-  .hero .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 30px;
+  .price-chart-container {
+    padding: 48px;
   }
 
-  .hero-content {
-    margin-block-end: 0;
-  }
-
-
-
   /**
-   * MARKET
-   */
-
-  .market-tab {
-    padding-block-end: 0;
-  }
-
-
-
-  /**
-   * ABOUT
-   */
+  * ABOUT
+  */
 
   .about .container {
     display: grid;
@@ -928,14 +890,13 @@ body.active {
     margin-block-end: 0;
   }
 
-
-
   /**
-   * APP
-   */
+  * APP
+  */
 
   .app {
     padding-block: 0;
+    background-color: var(--eerie-black-1);
   }
 
   .app .container {
@@ -953,15 +914,15 @@ body.active {
     margin-block: 50px;
   }
 
-  .price-chart-containter {
-    padding: 48px;
+  /**
+  * MARKET
+  */
+
+  .market-tab {
+    padding-block-end: 0;
   }
 
 }
-
-
-
-
 
 /**
  * responsive for larger than 1200px screen
@@ -984,8 +945,6 @@ body.active {
 
   }
 
-
-
   /**
    * REUSED STYLE
    */
@@ -993,8 +952,6 @@ body.active {
   .container {
     max-width: 1280px;
   }
-
-
 
   /**
    * HEADER
@@ -1028,8 +985,6 @@ body.active {
     display: none;
   }
 
-
-
   /**
    * ABOUT, APP
    */
@@ -1038,8 +993,6 @@ body.active {
     gap: 60px;
   }
 
-
-
   /**
    * APP
    */
@@ -1047,11 +1000,6 @@ body.active {
   .app-content {
     margin-block: 100px;
   }
-}
-
-.price-chart-containter {
-  display: grid;
-  text-align: center;
 }
 
 .open {
