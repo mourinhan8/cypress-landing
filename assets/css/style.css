@@ -430,6 +430,14 @@ body.active {
 }
 
 /*-----------------------------------*\
+  #PRICE-CHART
+\*-----------------------------------*/
+
+.price-chart {
+  background-color: var(--eerie-black-1);
+}
+
+/*-----------------------------------*\
   #HERO
 \*-----------------------------------*/
 
@@ -1150,10 +1158,14 @@ img {
   bottom: 30px;
 }
 
-.market-table { width: 100%; }
+.market-table {
+  width: 100%;
+}
 
 .table-heading,
-.table-data { padding: 8px; }
+.table-data {
+  padding: 8px;
+}
 
 .table-heading {
   font-size: var(--fs-5);
@@ -1161,9 +1173,13 @@ img {
   white-space: nowrap;
 }
 
-.market-table .table-head { border-block-end: 2px solid var(--white); }
+.market-table .table-head {
+  border-block-end: 2px solid var(--white);
+}
 
-.table-row:not(.table-title) { height: 90px; }
+.table-row:not(.table-title) {
+  height: 90px;
+}
 
 .market-table .table-row {
   font-size: var(--fs-5);
@@ -1181,12 +1197,18 @@ img {
 }
 
 .market-table .add-to-fav.active .icon-outline,
-.market-table .add-to-fav .icon-fill { display: none; }
+.market-table .add-to-fav .icon-fill {
+  display: none;
+}
 
 .market-table .add-to-fav .icon-outline,
-.market-table .add-to-fav.active .icon-fill { display: block; }
+.market-table .add-to-fav.active .icon-fill {
+  display: block;
+}
 
-.market-table .add-to-fav.active ion-icon { color: var(--maximum-yellow-red); }
+.market-table .add-to-fav.active ion-icon {
+  color: var(--maximum-yellow-red);
+}
 
 .market-table .wrapper {
   display: flex;
@@ -1208,9 +1230,13 @@ img {
   font-size: var(--fs-7);
 }
 
-.market-table .coin-name:is(:hover, :focus) { color: var(--blue-crayola); }
+.market-table .coin-name:is(:hover, :focus) {
+  color: var(--blue-crayola);
+}
 
-.market-table :is(.rank, .last-price, .market-cap) { font-weight: var(--fw-700); }
+.market-table :is(.rank, .last-price, .market-cap) {
+  font-weight: var(--fw-700);
+}
 
 .market-table .btn-outline {
   border-width: 2px;
@@ -1242,7 +1268,7 @@ blockquote:before {
   position: absolute;
   left: -20px;
   top: -20px;
-  color: #white;
+  color: white;
 }
 
 blockquote cite {
@@ -1288,7 +1314,7 @@ blockquote cite:before {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -1301,7 +1327,9 @@ blockquote cite:before {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: var(--cadet-blue-crayola)}
+.dropdown-content a:hover {
+  background-color: var(--cadet-blue-crayola)
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {

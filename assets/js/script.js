@@ -132,19 +132,19 @@ if (infoTabs.length > 0) {
 
 const form = document.querySelector('#feedback-form');
 
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  event.stopPropagation();
-  form.classList.add('was-validated');
-  if (form.checkValidity()) {
-    const name = document.querySelector("#name").value;
-    const email = document.querySelector("#email").value;
-    const feedback = document.querySelector("#feedback").value;
-    console.log("will submit", { name, email, feedback });
-    setTimeout(() => {
-      swal("Tin nhắn đã được gửi đi!", "Cảm ơn bạn về tin nhắn này. Chúng tôi sẽ liên hệ lại với bạn ngay khi có thể.", "success");
-    }, 1000);
-  }
-}, false);
-
-
+if (form) {
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add('was-validated');
+    if (form.checkValidity()) {
+      const name = document.querySelector("#name").value;
+      const email = document.querySelector("#email").value;
+      const feedback = document.querySelector("#feedback").value;
+      console.log("will submit", { name, email, feedback });
+      setTimeout(() => {
+        swal("Tin nhắn đã được gửi đi!", "Cảm ơn bạn về tin nhắn này. Chúng tôi sẽ liên hệ lại với bạn ngay khi có thể.", "success");
+      }, 1000);
+    }
+  }, false);
+}
