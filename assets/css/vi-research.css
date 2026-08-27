@@ -1,0 +1,368 @@
+.vi-research-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 15% 15%, hsla(326, 100%, 45%, 0.06), transparent 28rem),
+    radial-gradient(circle at 85% 10%, hsla(222, 100%, 61%, 0.07), transparent 32rem),
+    var(--eerie-black-2);
+}
+
+.vi-research-main {
+  flex: 1;
+}
+
+.vi-research-index {
+  padding: 150px 0 100px;
+}
+
+.vi-research-index > .container {
+  width: min(100%, 930px);
+  margin-inline: auto;
+}
+
+.vi-research-heading {
+  max-width: 780px;
+}
+
+.vi-research-heading p {
+  margin-top: 18px;
+  color: var(--gainsboro);
+  font-size: clamp(1.75rem, 2.5vw, 2.1rem);
+  line-height: 1.7;
+}
+
+.vi-research-empty {
+  margin-top: 42px;
+  padding: 30px;
+  background: var(--eerie-black-1);
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-12);
+  box-shadow: var(--shadow-3);
+}
+
+.vi-research-empty h2 {
+  margin-bottom: 14px;
+}
+
+.vi-research-empty p {
+  max-width: 700px;
+  color: var(--cadet-blue-crayola);
+  font-size: var(--fs-5);
+  line-height: 1.7;
+}
+
+.vi-research-back,
+.vi-article-back,
+.vi-research-card-link {
+  color: var(--white);
+  font-weight: var(--fw-700);
+  transition: color var(--transition-1), transform var(--transition-1);
+}
+
+.vi-research-back {
+  display: inline-block;
+  margin-top: 30px;
+}
+
+.vi-research-back:is(:hover, :focus-visible),
+.vi-article-back:is(:hover, :focus-visible),
+.vi-research-card-link:is(:hover, :focus-visible) {
+  color: var(--blue-crayola);
+}
+
+.vi-research-back:is(:hover, :focus-visible),
+.vi-article-back:is(:hover, :focus-visible) {
+  transform: translateX(-4px);
+}
+
+/* Reusable research card for future Vietnamese articles. */
+.vi-research-grid {
+  display: grid;
+  gap: 28px;
+  margin-top: 42px;
+}
+
+.vi-research-card {
+  display: grid;
+  overflow: hidden;
+  background: var(--eerie-black-1);
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-24);
+}
+
+.vi-research-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.vi-research-card-content {
+  padding: 24px;
+}
+
+.vi-research-card-label {
+  width: max-content;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  color: var(--white);
+  background: var(--blue-crayola);
+  border-radius: 50px;
+  font-size: var(--fs-8);
+  font-weight: var(--fw-700);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vi-research-card-title {
+  margin-bottom: 12px;
+  color: var(--white);
+  font-size: var(--fs-3);
+  line-height: 1.25;
+}
+
+.vi-research-card-description {
+  line-height: 1.7;
+}
+
+.vi-research-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 16px;
+  color: var(--roman-silver);
+  font-size: var(--fs-7);
+}
+
+.vi-research-card-link {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+/* Reusable long-form article styles for future Vietnamese research. */
+.vi-article-main {
+  min-height: 70vh;
+  padding: 140px 15px 100px;
+}
+
+.vi-article-shell {
+  width: min(100%, 900px);
+  margin-inline: auto;
+}
+
+.vi-article-header {
+  margin-bottom: 42px;
+}
+
+.vi-article-title {
+  max-width: 850px;
+  color: var(--white);
+  font-size: clamp(3.4rem, 7vw, 6.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.vi-article-subtitle {
+  max-width: 800px;
+  margin-top: 22px;
+  color: var(--gainsboro);
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  line-height: 1.55;
+}
+
+.vi-article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 24px;
+  color: var(--roman-silver);
+  font-size: var(--fs-7);
+}
+
+.vi-article-hero {
+  margin: 0 0 54px;
+}
+
+.vi-article-hero img {
+  width: 100%;
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-12);
+}
+
+.vi-article-caption {
+  margin-top: 12px;
+  color: var(--roman-silver);
+  font-size: var(--fs-7);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.vi-article-body,
+.vi-article-footer {
+  width: min(100%, 780px);
+  margin-inline: auto;
+}
+
+.vi-article-body {
+  color: var(--gainsboro);
+  font-size: clamp(1.75rem, 2vw, 1.9rem);
+  line-height: 1.82;
+}
+
+.vi-article-body p {
+  margin-bottom: 1.45em;
+}
+
+.vi-article-body h2,
+.vi-article-body h3 {
+  color: var(--white);
+  line-height: 1.25;
+}
+
+.vi-article-body h2 {
+  margin: 2.2em 0 0.8em;
+  font-size: clamp(2.6rem, 4vw, 3.5rem);
+}
+
+.vi-article-body h3 {
+  margin: 1.8em 0 0.7em;
+  font-size: clamp(2.1rem, 3vw, 2.7rem);
+}
+
+.vi-article-body ul,
+.vi-article-body ol {
+  margin: -0.35em 0 1.6em;
+  padding-left: 1.5em;
+}
+
+.vi-article-body li {
+  margin-bottom: 0.45em;
+  list-style: inherit;
+}
+
+.vi-article-body blockquote {
+  max-width: 100%;
+  min-width: 0;
+  margin: 2em 0;
+  padding: 24px 26px;
+  box-sizing: border-box;
+  color: var(--white);
+  background: var(--blue-crayola_10);
+  border-left: 4px solid var(--blue-crayola);
+  border-radius: 0 var(--radius-12) var(--radius-12) 0;
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  line-height: 1.55;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.vi-article-table-wrap {
+  overflow-x: auto;
+  margin: 2em 0;
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-12);
+}
+
+.vi-article-table {
+  width: 100%;
+  min-width: 560px;
+}
+
+.vi-article-table th,
+.vi-article-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--white_10);
+  text-align: left;
+  vertical-align: top;
+}
+
+.vi-article-table th {
+  color: var(--white);
+  background: var(--eerie-black-1);
+}
+
+.vi-article-note,
+.vi-article-author,
+.vi-article-disclaimer {
+  padding: 24px;
+  background: var(--eerie-black-1);
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-12);
+}
+
+.vi-article-note {
+  margin: 2em 0;
+}
+
+.vi-article-footer {
+  margin-top: 70px;
+  padding-top: 38px;
+  border-top: 1px solid var(--white_10);
+}
+
+.vi-article-author + .vi-article-disclaimer {
+  margin-top: 18px;
+}
+
+.vi-article-disclaimer {
+  color: var(--roman-silver);
+  font-size: var(--fs-7);
+}
+
+.vi-article-back {
+  display: inline-block;
+  margin-top: 30px;
+}
+
+@media (min-width: 768px) {
+  .vi-research-card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  }
+
+  .vi-research-card-content {
+    padding: 34px;
+  }
+}
+
+@media (max-width: 574px) {
+  .vi-research-index {
+    padding: 115px 0 70px;
+  }
+
+  .vi-research-empty,
+  .vi-research-card-content,
+  .vi-article-note,
+  .vi-article-author,
+  .vi-article-disclaimer {
+    padding: 20px;
+  }
+
+  .vi-article-main {
+    padding-top: 115px;
+    padding-bottom: 70px;
+  }
+
+  .vi-article-body blockquote {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .vi-article-body blockquote::before {
+    left: 4px;
+    padding-left: 0;
+    font-size: 60px;
+  }
+}
+
+
+/* First published article additions. */
+.vi-article-meta strong,
+.vi-article-body strong { color: var(--white); }
+.vi-article-lead { color: var(--cultured); font-size: clamp(1.9rem, 2.5vw, 2.2rem); font-style: italic; }
+.vi-article-figure { margin: 2.2em 0; }
+.vi-article-figure a { border-radius: var(--radius-12); }
+.vi-article-figure img { width: 100%; border: 1px solid var(--white_10); border-radius: var(--radius-12); }
+.vi-article-body em { color: var(--cultured); }
+.vi-article-body a { color: var(--blue-crayola); text-decoration: underline; text-underline-offset: 3px; }
+.vi-article-body a:is(:hover, :focus-visible) { color: var(--white); }
+.vi-article-table tbody tr:last-child td { border-bottom: 0; }

@@ -1,0 +1,2 @@
+# Timestamped production backup copies retained on disk
+*.backup-*

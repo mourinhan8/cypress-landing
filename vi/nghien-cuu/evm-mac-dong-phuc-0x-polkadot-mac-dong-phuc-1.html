@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVM mặc đồng phục 0x, Polkadot mặc đồng phục 1 | Cypress</title>
+<meta name="description" content="Các chain còn gắn bó kinh tế với DOT đang cùng sử dụng địa chỉ Polkadot bắt đầu bằng số 1, trong khi EVM vẫn được hỗ trợ như một lớp tương thích.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://cypress.work/vi/nghien-cuu/evm-mac-dong-phuc-0x-polkadot-mac-dong-phuc-1.html">
+<meta property="og:title" content="EVM mặc đồng phục 0x, Polkadot mặc đồng phục 1 | Cypress">
+<meta property="og:description" content="Các chain còn gắn bó kinh tế với DOT đang cùng sử dụng địa chỉ Polkadot bắt đầu bằng số 1, trong khi EVM vẫn được hỗ trợ như một lớp tương thích.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://cypress.work/vi/nghien-cuu/evm-mac-dong-phuc-0x-polkadot-mac-dong-phuc-1.html">
+<meta property="og:image" content="https://cypress.work/assets/images/research/evm-0x-polkadot-1-banner.png">
+<meta property="og:image:width" content="1672">
+<meta property="og:image:height" content="941">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="EVM wears 0x and Polkadot wears 1 — a shared address identity for the Polkadot ecosystem">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:site_name" content="Cypress">
+<meta property="article:published_time" content="2026-07-27">
+<meta property="article:modified_time" content="2026-07-27">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EVM mặc đồng phục 0x, Polkadot mặc đồng phục 1 | Cypress">
+<meta name="twitter:description" content="Các chain còn gắn bó kinh tế với DOT đang cùng sử dụng địa chỉ Polkadot bắt đầu bằng số 1, trong khi EVM vẫn được hỗ trợ như một lớp tương thích.">
+<meta name="twitter:image" content="https://cypress.work/assets/images/research/evm-0x-polkadot-1-banner.png">
+<meta name="twitter:image:alt" content="EVM wears 0x and Polkadot wears 1 — a shared address identity for the Polkadot ecosystem">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"EVM mặc đồng phục 0x, Polkadot mặc đồng phục 1","description":"Các chain còn gắn bó kinh tế với DOT đang cùng sử dụng địa chỉ Polkadot bắt đầu bằng số 1, trong khi EVM vẫn được hỗ trợ như một lớp tương thích.","image":{"@type":"ImageObject","url":"https://cypress.work/assets/images/research/evm-0x-polkadot-1-banner.png","width":1672,"height":941},"author":{"@type":"Person","name":"TienCypress"},"publisher":{"@type":"Organization","name":"Cypress","logo":{"@type":"ImageObject","url":"https://cypress.work/assets/cypress-logo-pink.png"}},"datePublished":"2026-07-27","dateModified":"2026-07-27","mainEntityOfPage":{"@type":"WebPage","@id":"https://cypress.work/vi/nghien-cuu/evm-mac-dong-phuc-0x-polkadot-mac-dong-phuc-1.html"},"inLanguage":"vi","articleSection":["Nghiên cứu","Polkadot","Hạ tầng blockchain"]}</script>
+<link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+<link rel="stylesheet" href="/assets/css/style_1.css?v=1.5">
+<link rel="stylesheet" href="/assets/css/vi-research.css?v=1.2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+.vi-evm-dot-article .vi-article-breadcrumb{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:24px;color:var(--roman-silver);font-size:var(--fs-7)}
+.vi-evm-dot-article .vi-article-breadcrumb a{color:var(--gainsboro)}
+.vi-evm-dot-article .vi-article-breadcrumb a:is(:hover,:focus-visible){color:var(--blue-crayola)}
+.vi-evm-dot-article .vi-article-hero img{height:auto;object-fit:contain}
+.vi-evm-dot-article .vi-article-body{min-width:0;overflow-wrap:anywhere}
+.vi-evm-dot-article .vi-article-body code{padding:.12em .36em;color:var(--white);background:var(--white_10);border-radius:5px;font-size:.92em;overflow-wrap:anywhere}
+</style>
+</head>
+<body class="vi-research-page vi-evm-dot-article">
+<header class="header" data-header><div class="container">
+<a href="/vi/" class="logo"><img class="header-img" src="/assets/cypress-logo-pink-32.png" srcset="/assets/cypress-logo-pink-32.png 1x, /assets/cypress-logo-pink-64.png 2x" width="32" height="32" alt="Logo Cypress">Cypress</a>
+<nav class="x-navbar" aria-label="Điều hướng chính" data-navbar><ul class="navbar-list"><li class="navbar-item"><a href="/vi/" class="navbar-link" data-nav-link>Trang chủ</a></li><li class="navbar-item"><a href="/vi/nghien-cuu/" class="navbar-link active" aria-current="page" data-nav-link>Nghiên cứu</a></li><li class="navbar-item"><a href="/vi/#information" class="navbar-link" data-nav-link>Thông tin</a></li><li class="navbar-item"><a href="/vi/#moonbeam-legacy" class="navbar-link" data-nav-link>Di sản Moonbeam</a></li><li class="navbar-separator" aria-hidden="true"></li><li class="navbar-item mobile-language"><a href="/research/" class="navbar-link language-link" lang="en" data-nav-link>🌐 English</a></li><li class="navbar-item mobile-language"><a href="/vi/nghien-cuu/evm-mac-dong-phuc-0x-polkadot-mac-dong-phuc-1.html" class="navbar-link language-link active" lang="vi" aria-current="page" data-nav-link>🌐 Tiếng Việt</a></li></ul></nav>
+<div class="desktop-language" aria-label="Ngôn ngữ"><a href="/research/" lang="en">EN</a><span aria-hidden="true">|</span><a href="/vi/nghien-cuu/evm-mac-dong-phuc-0x-polkadot-mac-dong-phuc-1.html" class="active" lang="vi" aria-current="page">VI</a></div>
+<button class="nav-toggle-btn" aria-label="Mở hoặc đóng menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
+<a href="https://swap.cypress.work/" class="x-btn btn-outline" target="_blank" rel="noopener noreferrer">Học Swap</a>
+</div></header>
+<main class="vi-article-main"><article class="vi-article-shell">
+<nav class="vi-article-breadcrumb" aria-label="Breadcrumb"><a href="/vi/">Trang chủ</a><span aria-hidden="true">›</span><a href="/vi/nghien-cuu/">Nghiên cứu</a><span aria-hidden="true">›</span><span aria-current="page">EVM mặc đồng phục 0x</span></nav>
+<header class="vi-article-header"><h1 class="vi-article-title">EVM mặc đồng phục <code>0x</code> — Polkadot từ nay mặc đồng phục <code>1</code></h1><p class="vi-article-meta"><span>Bởi <strong>TienCypress</strong></span><span>Nghiên cứu · Polkadot · Hạ tầng blockchain</span><time datetime="2026-07-27">27 tháng 7, 2026</time></p></header>
+<figure class="vi-article-hero"><img src="/assets/images/research/evm-0x-polkadot-1-banner.png" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" alt="EVM wears 0x and Polkadot wears 1 — a shared address identity for the Polkadot ecosystem"></figure>
+<div class="vi-article-body">
+<p>Trong thế giới blockchain, địa chỉ ví không chỉ là một chuỗi ký tự kỹ thuật.</p>
+<p>Nó còn là dấu hiệu nhận diện.</p>
+<p>Chỉ cần nhìn thấy một địa chỉ bắt đầu bằng <code>0x...</code>, phần lớn người dùng sẽ nghĩ ngay đến Ethereum và toàn bộ thế giới EVM.</p>
+<p>Ethereum, Base, Arbitrum, Optimism hay BNB Chain có thể khác nhau về hạ tầng, bảo mật, thanh khoản và ứng dụng. Nhưng khi nhìn vào địa chỉ <code>0x...</code>, người dùng vẫn cảm nhận được rằng mình đang ở trong cùng một không gian quen thuộc.</p>
+<p>EVM từ lâu đã có một bộ đồng phục rất rõ ràng.</p>
+<p>Polkadot thì trước đây chưa có được cảm giác thống nhất như vậy.</p>
+<p>Nhưng điều đó đang thay đổi.</p>
+<h2>Dùng Polkadot SDK không có nghĩa là thuộc hệ sinh thái DOT</h2>
+<p>Trước hết, cần phân biệt hai khái niệm:</p>
+<ul>
+<li>một blockchain sử dụng Polkadot SDK;</li>
+<li>một blockchain thuộc không gian kinh tế của DOT.</li>
+</ul>
+<p>Hai điều này không giống nhau.</p>
+<p>Một chain có thể sử dụng công nghệ từ Polkadot SDK để xây dựng hạ tầng nhưng lại phát triển một nền kinh tế, cộng đồng và bản sắc hoàn toàn độc lập.</p>
+<p>Bittensor với token TAO là một ví dụ dễ thấy.</p>
+<p>Bittensor sử dụng công nghệ phát triển từ hệ Polkadot, nhưng không phụ thuộc đáng kể vào DOT về thanh khoản, người dùng hay vận hành kinh tế.</p>
+<p>Vì vậy, việc Bittensor sử dụng tiền tố địa chỉ riêng là hoàn toàn bình thường.</p>
+<p>Dùng chung một bộ công cụ không có nghĩa phải mặc chung một bộ đồng phục.</p>
+<p>“Bộ đồng phục số 1” chỉ nên được hiểu trong phạm vi những chain vừa sử dụng công nghệ Polkadot, vừa còn gắn bó trực tiếp với không gian kinh tế của DOT.</p>
+<h2>Điều quan trọng là không gian kinh tế chung</h2>
+<p>Hydration, Acala, Astar và các chain cốt lõi khác không chỉ dùng Polkadot SDK.</p>
+<p>Chúng còn gắn bó với Polkadot thông qua:</p>
+<ul>
+<li>người dùng;</li>
+<li>tài sản;</li>
+<li>thanh khoản;</li>
+<li>hạ tầng liên chuỗi;</li>
+<li>các ứng dụng chung;</li>
+<li>và lịch sử phát triển của toàn hệ sinh thái.</li>
+</ul>
+<p>Mỗi chain có một chức năng khác nhau.</p>
+<p>Hydration tập trung vào thanh khoản và DeFi.</p>
+<p>Acala xây dựng hạ tầng tài chính.</p>
+<p>Astar phát triển môi trường hợp đồng thông minh.</p>
+<p>Các chain khác có thể tập trung vào staking, bridge, tài sản thực hoặc những ứng dụng chuyên biệt.</p>
+<p>Nhưng người dùng và tài sản vẫn di chuyển trong cùng một không gian kinh tế.</p>
+<p>Vì vậy, việc những chain này cùng hiển thị địa chỉ theo định dạng Polkadot, thường bắt đầu bằng số <code>1</code>, không chỉ là thay đổi giao diện.</p>
+<p>Nó tạo ra một căn tính chung.</p>
+<h2>Moonbeam từng là ngoại lệ lớn nhất</h2>
+<p>Moonbeam là một trường hợp đặc biệt trong lịch sử Polkadot.</p>
+<p>Về kinh tế, Moonbeam từng gắn bó sâu sắc với DOT.</p>
+<p>Moonbeam có cộng đồng lớn trong hệ Polkadot, kết nối với nhiều tài sản, ứng dụng và dòng thanh khoản của hệ sinh thái.</p>
+<p>Nhưng về tài khoản, Moonbeam lại chọn căn tính EVM.</p>
+<p>Địa chỉ chính của Moonbeam bắt đầu bằng:</p>
+<blockquote><code>0x...</code></blockquote>
+<p>Lựa chọn này rất hợp lý đối với một chain hướng mạnh tới Ethereum.</p>
+<p>Người dùng có thể sử dụng MetaMask.</p>
+<p>Nhà phát triển có thể triển khai ứng dụng EVM mà không phải thay đổi quá nhiều công cụ.</p>
+<p>Nhưng về mặt nhận diện, Moonbeam sống trong không gian kinh tế DOT mà vẫn mặc bộ đồng phục của EVM.</p>
+<p>Đó từng là ngoại lệ lớn nhất trong bức tranh địa chỉ của Polkadot.</p>
+<h2>Sau khi Moonbeam rời đi, ranh giới trở nên rõ hơn</h2>
+<p>Moonbeam rời khỏi Polkadot rõ ràng là một mất mát.</p>
+<p>Polkadot mất đi một chain EVM quan trọng, một thương hiệu lớn và một hệ sinh thái ứng dụng từng có nhiều kỳ vọng.</p>
+<p>Nhưng ở một chiều khác, sự ra đi này cũng khiến căn tính của phần hệ sinh thái còn lại trở nên rõ hơn.</p>
+<p>Những chain quan trọng còn:</p>
+<ul>
+<li>dùng công nghệ Polkadot;</li>
+<li>gắn bó kinh tế với DOT;</li>
+<li>chia sẻ người dùng và tài sản với hệ;</li>
+<li>và xem mình là một phần của Polkadot;</li>
+</ul>
+<p>đang dần cùng sử dụng định dạng địa chỉ bắt đầu bằng:</p>
+<blockquote><code>1...</code></blockquote>
+<p>Từ đây, có thể hình dung rất đơn giản:</p>
+<blockquote>**EVM mặc đồng phục <code>0x</code>.<br>Hệ sinh thái DOT đang mặc đồng phục <code>1</code>.**</blockquote>
+<h2>Hỗ trợ EVM không có nghĩa phải trở thành EVM</h2>
+<p>Việc các chain Polkadot sử dụng địa chỉ chính thức bắt đầu bằng <code>1</code> không có nghĩa họ quay lưng với EVM.</p>
+<p>Ngược lại, Hydration, Acala hay Astar vẫn có thể tiếp tục hỗ trợ MetaMask, Solidity và các công cụ quen thuộc của Ethereum.</p>
+<p>Một chain hoàn toàn có thể cung cấp giao diện EVM để người dùng tương tác thuận tiện hơn.</p>
+<p>Nhưng cần phân biệt rõ hai điều:</p>
+<blockquote>Hỗ trợ EVM là một năng lực.<br>Địa chỉ chính thức là căn tính.</blockquote>
+<p><code>0x...</code> có thể là giao diện Polkadot mở ra cho thế giới Ethereum.</p>
+<p>Còn <code>1...</code> là dấu hiệu nhận diện của những chain đang sống trong không gian kinh tế DOT.</p>
+<p>Một hệ sinh thái không cần từ chối EVM để giữ được bản sắc riêng.</p>
+<p>Nó chỉ cần biết đâu là công cụ được hỗ trợ và đâu là căn tính trung tâm của mình.</p>
+<h2>Một địa chỉ, nhiều chain</h2>
+<p>Khi các chain sử dụng cùng một định dạng địa chỉ, trải nghiệm của người dùng trở nên đơn giản hơn.</p>
+<p>Người dùng có thể đi từ Polkadot sang Hydration, Acala, Astar hoặc các chain khác mà vẫn nhìn thấy cùng một địa chỉ.</p>
+<p>Họ không phải ghi nhớ nhiều chuỗi ký tự khác nhau cho cùng một tài khoản.</p>
+<p>Không cần tự hỏi tại sao cùng một khóa lại hiện ra nhiều địa chỉ khác nhau.</p>
+<p>Cùng một địa chỉ tạo cảm giác về cùng một danh tính.</p>
+<p>Giống như một chiếc hộ chiếu được sử dụng trong nhiều khu vực của cùng một không gian kinh tế.</p>
+<p>Mỗi chain vẫn có chức năng và đặc điểm riêng, nhưng người dùng biết rằng họ chưa rời khỏi ngôi nhà DOT.</p>
+<h2>Nhược điểm là có thật</h2>
+<p>Sự thống nhất này không hoàn toàn không có rủi ro.</p>
+<p>Khi nhiều chain sử dụng cùng một định dạng địa chỉ, người dùng có thể nhập đúng địa chỉ nhưng lại chọn sai mạng.</p>
+<p>Địa chỉ giống nhau có thể tạo ra cảm giác an toàn giả nếu người dùng không kiểm tra chain đang sử dụng.</p>
+<p>Đây là vấn đề cần được xử lý bằng:</p>
+<ul>
+<li>giao diện ví rõ ràng;</li>
+<li>cảnh báo mạng nhận;</li>
+<li>xác nhận chain trước khi gửi;</li>
+<li>và cơ chế hỗ trợ khi người dùng gửi nhầm trong những trường hợp có thể khôi phục.</li>
+</ul>
+<p>Tuy nhiên, đây không phải vấn đề riêng của Polkadot.</p>
+<p>Trong EVM, cùng một địa chỉ <code>0x...</code> có thể xuất hiện trên Ethereum, Base, Arbitrum, Optimism và nhiều mạng khác.</p>
+<p>Người dùng vẫn phải chọn đúng chain.</p>
+<p>Dù vậy, không ai phủ nhận rằng địa chỉ thống nhất đã giúp EVM trở nên dễ nhận diện và dễ sử dụng hơn.</p>
+<p>Polkadot cũng có thể nhận được lợi ích đó, miễn là trải nghiệm cảnh báo được thiết kế tốt.</p>
+<blockquote><strong>Ghi chú:</strong> Địa chỉ cùng bắt đầu bằng <code>1</code> không có nghĩa các chain là cùng một mạng. Người dùng vẫn phải kiểm tra đúng chain khi gửi tài sản.</blockquote>
+<h2>Người dùng biết mình đang ở đâu</h2>
+<p>Lợi ích lớn nhất của địa chỉ thống nhất không chỉ là tiện lợi.</p>
+<p>Nó là cảm giác định vị.</p>
+<p>Khi nhìn thấy <code>1...</code>, người dùng biết rằng họ vẫn đang ở trong không gian Polkadot.</p>
+<p>Họ có thể chuyển từ chain này sang chain khác, nhưng vẫn đang hoạt động trong cùng một hệ sinh thái kinh tế.</p>
+<p>Khi họ bước sang địa chỉ <code>0x...</code>, họ hiểu rằng mình đang đi vào thế giới EVM.</p>
+<p>Khi họ bước sang một chain sử dụng định dạng khác, họ biết rằng mình có thể đã rời khỏi hệ DOT hoặc đang tương tác với một nền kinh tế độc lập.</p>
+<p>Blockchain vốn rất phức tạp.</p>
+<p>Phần lớn người dùng không cần hiểu sâu về runtime, account mapping, H160 hay SS58.</p>
+<p>Nhưng họ có thể hiểu một tín hiệu rất đơn giản:</p>
+<blockquote><code>1...</code> nghĩa là tôi vẫn đang ở trong hệ Polkadot.</blockquote>
+<h2>Từ tập hợp nhiều chain thành một hệ sinh thái</h2>
+<p>Một trong những vấn đề lớn của Polkadot trong nhiều năm là người dùng thường cảm nhận các parachain như những hòn đảo riêng biệt.</p>
+<p>Mỗi chain có token riêng.</p>
+<p>Ứng dụng riêng.</p>
+<p>Đội ngũ riêng.</p>
+<p>Cách trình bày riêng.</p>
+<p>Và trước đây, nhiều chain còn hiển thị địa chỉ theo cách riêng.</p>
+<p>Dù kiến trúc bên dưới được thiết kế để liên kết, trải nghiệm bên ngoài vẫn tạo cảm giác phân mảnh.</p>
+<p>Việc thống nhất địa chỉ không giải quyết được mọi vấn đề.</p>
+<p>Nó không tự động tạo thanh khoản.</p>
+<p>Không tự động mang người dùng mới.</p>
+<p>Không tự động làm ứng dụng tốt hơn.</p>
+<p>Nhưng nó giúp người dùng cảm nhận rằng các chain thực sự thuộc về cùng một hệ sinh thái.</p>
+<p>Địa chỉ giống nhau không chỉ là một lựa chọn kỹ thuật.</p>
+<p>Nó còn là ngôn ngữ thị giác của sự thống nhất.</p>
+<h2>Mỗi chain một chức năng, cùng một bộ trang phục</h2>
+<p>Có thể hình dung hệ sinh thái DOT như một tổ chức lớn.</p>
+<p>Mỗi đơn vị đảm nhiệm một nhiệm vụ khác nhau.</p>
+<p>Hydration không cần trở thành Acala.</p>
+<p>Acala không cần trở thành Astar.</p>
+<p>Astar không cần trở thành Polkadot.</p>
+<p>Mỗi chain vẫn giữ:</p>
+<ul>
+<li>sản phẩm riêng;</li>
+<li>mô hình kinh tế riêng;</li>
+<li>cộng đồng riêng;</li>
+<li>và cá tính riêng.</li>
+</ul>
+<p>Nhưng khi tất cả cùng thuộc một không gian kinh tế, việc mặc chung một bộ trang phục giúp người dùng nhận ra mối liên hệ giữa chúng.</p>
+<p>Không phải mọi chain dùng Polkadot SDK đều phải mặc bộ trang phục này.</p>
+<p>Nhưng những chain còn gắn bó sâu sắc với DOT sử dụng cùng một định dạng địa chỉ sẽ tạo ra một hình ảnh rất mạnh:</p>
+<blockquote>Nhiều chain, một hệ sinh thái.<br>Nhiều chức năng, một danh tính.<br>Nhiều con đường, một ngôi nhà.</blockquote>
+<h2>Kết luận</h2>
+<p>Moonbeam rời khỏi Polkadot là một tổn thất đáng kể.</p>
+<p>Nhưng sau sự ra đi đó, căn tính của phần hệ sinh thái còn lại lại trở nên rõ ràng hơn.</p>
+<p>Những chain dùng công nghệ Polkadot nhưng đã xây dựng nền kinh tế độc lập có thể tự do chọn định dạng địa chỉ riêng.</p>
+<p>Điều đó hoàn toàn bình thường.</p>
+<p>Còn những chain vừa dùng công nghệ Polkadot, vừa sống trong không gian kinh tế DOT, đang dần cùng mang địa chỉ bắt đầu bằng số <code>1</code>.</p>
+<p>Họ vẫn có thể hỗ trợ EVM.</p>
+<p>Vẫn có thể phục vụ người dùng MetaMask.</p>
+<p>Vẫn có thể triển khai Solidity.</p>
+<p>Nhưng EVM chỉ là một khả năng được hỗ trợ.</p>
+<p>Nó không nhất thiết phải quyết định căn tính chính của hệ sinh thái.</p>
+<p>Từ nay, có thể diễn đạt rất đơn giản:</p>
+<blockquote>**EVM mặc đồng phục <code>0x</code>.<br>Hệ sinh thái DOT đang mặc đồng phục <code>1</code>.**</blockquote>
+<p>Và điều quan trọng hơn cả:</p>
+<blockquote><strong>Khi nhìn vào địa chỉ, người dùng biết mình đang ở đâu — và biết mình đã rời khỏi DOT hay chưa.</strong></blockquote>
+</div>
+<footer class="vi-article-footer"><section class="vi-article-author" aria-labelledby="about-author"><h2 id="about-author">Về tác giả</h2><p><strong>TienCypress</strong> nghiên cứu thị trường tiền mã hóa, với trọng tâm là hệ sinh thái Polkadot và Base, hạ tầng blockchain, DeFi và trải nghiệm người dùng on-chain.</p></section><a class="vi-article-back" href="/vi/nghien-cuu/">← Quay lại Nghiên cứu</a></footer>
+</article></main>
+<footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. Bảo lưu mọi quyền.</p><ul class="social-list"><li><a href="https://facebook.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer"><img src="/public-images/facebook.svg" width="30" height="30" alt="Facebook"></a></li><li><a href="https://twitter.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X">X</a></li><li><a href="https://t.me/CypressCapital" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Telegram">Telegram</a></li></ul></div></div></footer>
+<script src="/assets/js/script_1.js?v=1.5" defer></script>
+</body>
+</html>
