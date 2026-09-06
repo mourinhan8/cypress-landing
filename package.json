@@ -1,0 +1,9 @@
+{
+  "name": "cypress-landing",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "lint": "node --check assets/js/cp-market-data.js && node --check assets/js/cp-market-ui.js && node --check assets/js/script_1.js",
+    "build": "npm run lint"
+  }
+}
