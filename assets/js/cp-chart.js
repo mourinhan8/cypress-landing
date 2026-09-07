@@ -124,14 +124,25 @@
 
   function formatUsd(value) {
     const decimal = exactDecimal(String(value), "price");
-    const parts = decimal.split(".");
-    const integer = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return "$" + integer + (parts[1] ? "." + parts[1] : "");
+    return formatDisplayUsd(Number(decimal));
+  }
+
+  function displayFractionDigits(value) {
+    if (value >= 0.0001) return 6;
+    if (value <= 0) return 6;
+    return Math.min(12, Math.max(6, Math.floor(-Math.log10(value)) + 4));
+  }
+
+  function formatDisplayUsd(value) {
+    if (!Number.isFinite(value) || value < 0) throw new Error("Invalid chart display price");
+    return "$" + new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: displayFractionDigits(value),
+      minimumFractionDigits: 0
+    }).format(value);
   }
 
   function formatAxisUsd(value) {
-    const digits = value >= 1 ? 4 : value >= 0.01 ? 6 : 10;
-    return "$" + new Intl.NumberFormat("en-US", { maximumFractionDigits: digits }).format(value);
+    return formatDisplayUsd(value);
   }
 
   function provenanceText(candle, locale) {
@@ -145,6 +156,21 @@
     }).format(new Date(candle.time));
     return date + " UTC\nO " + formatUsd(candle.open) + "  H " + formatUsd(candle.high)
       + "  L " + formatUsd(candle.low) + "  C " + formatUsd(candle.close) + "\n" + provenanceText(candle, locale);
+  }
+
+  function renderTooltip(tooltip, candle, locale) {
+    const lines = tooltipText(candle, locale).split("\n");
+    const date = document.createElement("span");
+    const values = document.createElement("span");
+    const provenance = document.createElement("span");
+    date.className = "chart-tooltip-date";
+    values.className = "chart-tooltip-values";
+    provenance.className = "chart-tooltip-source";
+    date.textContent = lines[0];
+    values.textContent = lines[1];
+    provenance.textContent = lines[2];
+    tooltip.replaceChildren(date, values, provenance);
+    tooltip.hidden = false;
   }
 
   function chartPoints(snapshot) {
@@ -233,7 +259,9 @@
 
     function palette() {
       const light = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-      return light ? { text: "#3d4250", grid: "rgba(35, 40, 52, .10)" } : { text: "#b7bdcc", grid: "rgba(255, 255, 255, .08)" };
+      return light
+        ? { text: "#4d5361", grid: "rgba(35, 40, 52, .08)", up: "#237b68", down: "#b4425c" }
+        : { text: "#aeb5c4", grid: "rgba(255, 255, 255, .06)", up: "#4fae95", down: "#d8627a" };
     }
 
     function ensureChart() {
@@ -246,21 +274,21 @@
         layout: { background: { type: "solid", color: "transparent" }, textColor: colors.text, attributionLogo: false },
         grid: { vertLines: { color: colors.grid }, horzLines: { color: colors.grid } },
         rightPriceScale: { borderVisible: false, scaleMargins: { top: 0.14, bottom: 0.12 } },
-        timeScale: { borderVisible: false, timeVisible: true, secondsVisible: false, rightOffset: 2 },
+        timeScale: {
+          borderVisible: false, timeVisible: true, secondsVisible: false, rightOffset: 2,
+          barSpacing: 10, minBarSpacing: 4, maxBarSpacing: 18
+        },
         crosshair: { mode: window.LightweightCharts.CrosshairMode.Normal },
         localization: { priceFormatter: formatAxisUsd }
       });
       series = chart.addSeries(window.LightweightCharts.CandlestickSeries, {
-        upColor: "#26a69a", downColor: "#ef5350", borderVisible: false,
-        wickUpColor: "#26a69a", wickDownColor: "#ef5350",
+        upColor: colors.up, downColor: colors.down, borderVisible: false,
+        wickUpColor: colors.up, wickDownColor: colors.down,
         priceFormat: { type: "price", precision: 8, minMove: 0.00000001 }
       });
       chart.subscribeCrosshairMove(function (parameter) {
         const candle = parameter.time === undefined ? null : byTime.get(String(parameter.time));
-        if (candle) {
-          tooltip.textContent = tooltipText(candle, locale);
-          tooltip.hidden = false;
-        }
+        if (candle) renderTooltip(tooltip, candle, locale);
       });
     }
 
@@ -272,8 +300,7 @@
       series.setData(chartPoints(snapshot));
       chart.timeScale().fitContent();
       const last = snapshot.candles[snapshot.candles.length - 1];
-      tooltip.textContent = tooltipText(last, locale);
-      tooltip.hidden = false;
+      renderTooltip(tooltip, last, locale);
       rootElement.classList.toggle("is-stale", options.stale);
       const countWord = snapshot.candle_count === 1 ? copy.candle : copy.candles;
       summary.textContent = snapshot.timeframe + ": " + snapshot.candle_count + " " + countWord
@@ -320,7 +347,7 @@
         buttons[target].click();
       });
     });
-    coordinator.select("7D");
+    coordinator.select("1Y");
   }
 
   if (typeof document !== "undefined") {
