@@ -46,7 +46,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.5">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.6">
 
   <!-- 
     - google font link
@@ -125,9 +125,36 @@
           </div>
           <!-- <a href="#swapOn" class="x-btn x-btn-primary-swap">Swap now</a> -->
           <div class="price-chart-wrapper">
-            <iframe style="border-style: none;width: 100%;" id="geckoterminal-embed" title="GeckoTerminal Embed"
-              src="https://www.geckoterminal.com/base/pools/0x8057a6de149f110358b9ee0b8c124f3e4796f328?embed=1&amp;info=0&amp;swaps=0"
-              frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
+            <div class="cp-chart" data-cp-chart data-language="vi">
+              <div class="chart-toolbar">
+                <p class="chart-title">CP / USD</p>
+                <div class="chart-timeframes" role="tablist" aria-label="Khung thời gian biểu đồ">
+                  <button type="button" role="tab" data-chart-timeframe="7D" aria-selected="true">7D</button>
+                  <button type="button" role="tab" data-chart-timeframe="1M" aria-selected="false" tabindex="-1">1M</button>
+                  <button type="button" role="tab" data-chart-timeframe="3M" aria-selected="false" tabindex="-1">3M</button>
+                  <button type="button" role="tab" data-chart-timeframe="1Y" aria-selected="false" tabindex="-1">1Y</button>
+                  <button type="button" role="tab" data-chart-timeframe="MAX" aria-selected="false" tabindex="-1">MAX</button>
+                </div>
+              </div>
+              <div class="chart-stage">
+                <div class="chart-canvas" data-chart-canvas role="img" aria-label="Biểu đồ nến CP theo USD"></div>
+                <output class="chart-tooltip" data-chart-tooltip aria-live="polite" hidden></output>
+                <p class="chart-status" data-chart-status aria-live="polite">Đang tải biểu đồ…</p>
+              </div>
+              <p class="chart-summary" data-chart-summary>Đang tải dữ liệu biểu đồ CP có giới hạn.</p>
+              <details class="chart-provenance">
+                <summary>Cách đọc biểu đồ này</summary>
+                <p>Nến lịch sử được tổng hợp từ giá đóng cửa hằng ngày; mức cao và thấp không phải cực trị thị trường trong ngày. Nến hiện tại là OHLCV thực từ pool GeckoTerminal đã cấu hình. Nến một phần vẫn được tách riêng tại ranh giới nguồn.</p>
+              </details>
+              <p class="chart-attribution">
+                Source: <a href="https://www.coingecko.com/en/coins/cypress" target="_blank" rel="noopener noreferrer">CoinGecko</a>
+                <span aria-hidden="true">·</span>
+                <a href="https://www.geckoterminal.com/base/pools/0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9" target="_blank" rel="noopener noreferrer">GeckoTerminal</a>
+              </p>
+              <p class="chart-attribution">
+                Biểu đồ bởi <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>
+              </p>
+            </div>
             <p class="chart-note">Cypress hiện hoạt động trên Base.<br>
               Tổng cung đã giảm còn 25% so với mức trước đây.</p>
             <div class="market-data" aria-label="Dữ liệu thị trường CP trực tiếp" aria-live="polite">
@@ -371,6 +398,8 @@
   <!-- 
     - custom js link
   -->
+  <script src="/assets/vendor/lightweight-charts/lightweight-charts.standalone.production.js?v=5.2.0" defer></script>
+  <script src="/assets/js/cp-chart.js?v=1.0" defer></script>
   <script src="/assets/js/cp-market-data.js?v=1.0" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.0" defer></script>

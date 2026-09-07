@@ -46,7 +46,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.5">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.6">
 
   <!-- 
     - google font link
@@ -125,9 +125,36 @@
           </div>
           <!-- <a href="#swapOn" class="x-btn x-btn-primary-swap">Swap now</a> -->
           <div class="price-chart-wrapper">
-            <iframe style="border-style: none;width: 100%;" id="geckoterminal-embed" title="GeckoTerminal Embed"
-              src="https://www.geckoterminal.com/base/pools/0x8057a6de149f110358b9ee0b8c124f3e4796f328?embed=1&amp;info=0&amp;swaps=0"
-              frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
+            <div class="cp-chart" data-cp-chart data-language="en">
+              <div class="chart-toolbar">
+                <p class="chart-title">CP / USD</p>
+                <div class="chart-timeframes" role="tablist" aria-label="Chart timeframe">
+                  <button type="button" role="tab" data-chart-timeframe="7D" aria-selected="true">7D</button>
+                  <button type="button" role="tab" data-chart-timeframe="1M" aria-selected="false" tabindex="-1">1M</button>
+                  <button type="button" role="tab" data-chart-timeframe="3M" aria-selected="false" tabindex="-1">3M</button>
+                  <button type="button" role="tab" data-chart-timeframe="1Y" aria-selected="false" tabindex="-1">1Y</button>
+                  <button type="button" role="tab" data-chart-timeframe="MAX" aria-selected="false" tabindex="-1">MAX</button>
+                </div>
+              </div>
+              <div class="chart-stage">
+                <div class="chart-canvas" data-chart-canvas role="img" aria-label="CP to USD candlestick chart"></div>
+                <output class="chart-tooltip" data-chart-tooltip aria-live="polite" hidden></output>
+                <p class="chart-status" data-chart-status aria-live="polite">Loading chart…</p>
+              </div>
+              <p class="chart-summary" data-chart-summary>Loading bounded CP chart data.</p>
+              <details class="chart-provenance">
+                <summary>How to read this chart</summary>
+                <p>Historical candles are aggregated from daily closing prices; their highs and lows are not intraday market extremes. Current candles are real OHLCV from the configured GeckoTerminal pool. Partial candles remain separate at source boundaries.</p>
+              </details>
+              <p class="chart-attribution">
+                Source: <a href="https://www.coingecko.com/en/coins/cypress" target="_blank" rel="noopener noreferrer">CoinGecko</a>
+                <span aria-hidden="true">·</span>
+                <a href="https://www.geckoterminal.com/base/pools/0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9" target="_blank" rel="noopener noreferrer">GeckoTerminal</a>
+              </p>
+              <p class="chart-attribution">
+                Charts by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>
+              </p>
+            </div>
             <p class="chart-note">Cypress is now on Base.<br>
               Total supply reduced to 25% of its previous level.</p>
             <div class="market-data" aria-label="Live CP market data" aria-live="polite">
@@ -376,6 +403,8 @@
   <!-- 
     - custom js link
   -->
+  <script src="/assets/vendor/lightweight-charts/lightweight-charts.standalone.production.js?v=5.2.0" defer></script>
+  <script src="/assets/js/cp-chart.js?v=1.0" defer></script>
   <script src="/assets/js/cp-market-data.js?v=1.0" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.0" defer></script>
