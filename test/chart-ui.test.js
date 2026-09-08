@@ -147,6 +147,7 @@ test("coordinator exposes empty, error, stale, and last-known-good states", asyn
 
 test("English and Vietnamese homepages include native chart copy and required attribution", () => {
   const root = path.join(__dirname, "..");
+  const tradingUrl = "https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440";
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
   const css = fs.readFileSync(path.join(root, "assets/css/style_1.css"), "utf8");
@@ -160,7 +161,8 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /coingecko\.com\/en\/coins\/cypress/);
     assert.match(html, /geckoterminal\.com\/base\/pools\/0x962265/);
     assert.match(html, /tradingview\.com/);
-    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>\s*<\/p>/);
+    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>Trading<\/a>\s*<\/p>/);
+    assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
   }
