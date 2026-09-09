@@ -616,16 +616,16 @@ body.active {
 
 .chart-attribution a,
 .chart-footer-action {
-  color: var(--gainsboro);
+  color: hsl(214, 100%, 74%);
   text-decoration: underline;
-  text-decoration-color: var(--cadet-blue-crayola);
+  text-decoration-color: currentColor;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
 .chart-attribution a:hover,
 .chart-footer-action:hover {
-  color: var(--cultured);
+  color: hsl(214, 100%, 82%);
   text-decoration-color: currentColor;
 }
 
@@ -639,8 +639,8 @@ body.active {
 
 .chart-attribution a:focus-visible,
 .chart-footer-action:focus-visible {
-  color: var(--cultured);
-  outline: 2px solid var(--cadet-blue-crayola);
+  color: hsl(214, 100%, 82%);
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
@@ -995,6 +995,18 @@ body.active {
     background: var(--cultured);
     border-color: var(--black_10);
     color: hsl(225, 15%, 16%);
+  }
+
+  .chart-attribution a,
+  .chart-footer-action {
+    color: hsl(216, 100%, 40%);
+  }
+
+  .chart-attribution a:hover,
+  .chart-footer-action:hover,
+  .chart-attribution a:focus-visible,
+  .chart-footer-action:focus-visible {
+    color: hsl(216, 100%, 32%);
   }
 
   .chart-timeframes button[aria-selected="true"],

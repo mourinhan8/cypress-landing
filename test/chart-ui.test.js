@@ -171,9 +171,10 @@ test("English and Vietnamese homepages include native chart copy and required at
   }
   assert.match(css, /@media \(max-width: 480px\)[\s\S]*chart-canvas/);
   assert.match(css, /prefers-reduced-motion/);
-  assert.match(css, /\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: var\(--gainsboro\)[\s\S]*?text-decoration: underline/);
-  assert.match(css, /\.chart-attribution a:hover,[\s\S]*?\.chart-footer-action:hover[\s\S]*?color: var\(--cultured\)/);
-  assert.match(css, /\.chart-attribution a:focus-visible,[\s\S]*?\.chart-footer-action:focus-visible[\s\S]*?outline: 2px solid var\(--cadet-blue-crayola\)/);
+  assert.match(css, /\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: hsl\(214, 100%, 74%\)[\s\S]*?text-decoration: underline[\s\S]*?text-decoration-color: currentColor/);
+  assert.match(css, /\.chart-attribution a:hover,[\s\S]*?\.chart-footer-action:hover[\s\S]*?color: hsl\(214, 100%, 82%\)/);
+  assert.match(css, /\.chart-attribution a:focus-visible,[\s\S]*?\.chart-footer-action:focus-visible[\s\S]*?color: hsl\(214, 100%, 82%\)[\s\S]*?outline: 2px solid currentColor/);
+  assert.match(css, /@media \(prefers-color-scheme: light\)[\s\S]*?\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: hsl\(216, 100%, 40%\)[\s\S]*?\.chart-attribution a:hover,[\s\S]*?\.chart-footer-action:focus-visible[\s\S]*?color: hsl\(216, 100%, 32%\)/);
   const source = fs.readFileSync(path.join(root, "assets/js/cp-chart.js"), "utf8");
   assert.match(source, /barSpacing:\s*10, minBarSpacing:\s*4, maxBarSpacing:\s*18/);
   assert.match(source, /coordinator\.select\("1Y"\)/);
