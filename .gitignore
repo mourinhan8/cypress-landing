@@ -1,2 +1,5 @@
 # Timestamped production backup copies retained on disk
 *.backup-*
+
+# Private LP historical-state cache
+.local/cypress-lp/

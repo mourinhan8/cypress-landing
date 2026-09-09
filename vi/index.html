@@ -147,8 +147,52 @@
                 Charts by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>
                 <span aria-hidden="true">·</span>
                 <a href="https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440" target="_blank" rel="noopener noreferrer">Trading</a>
+                <span aria-hidden="true">·</span>
+                <a href="https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;currencyB=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;fee=%7B%22feeAmount%22%3A10000%2C%22tickSpacing%22%3A200%2C%22isDynamic%22%3Afalse%7D" target="_blank" rel="noopener noreferrer">Cung cấp thanh khoản</a>
+                <span aria-hidden="true">·</span>
+                <button class="chart-footer-action" type="button" data-lp-open>Máy tính LP</button>
               </p>
             </div>
+            <dialog class="lp-dialog" data-lp-dialog aria-labelledby="lp-calculator-title-vi">
+              <section class="lp-calculator" data-lp-calculator data-language="vi">
+                <header class="lp-calculator-header">
+                  <div>
+                    <p class="lp-eyebrow">CP / USDC · Uniswap V3 · Toàn dải</p>
+                    <h2 id="lp-calculator-title-vi">Máy tính LP</h2>
+                  </div>
+                  <button type="button" class="lp-close" data-lp-close aria-label="Đóng Máy tính LP">×</button>
+                </header>
+                <p class="lp-intro">Mô phỏng vị thế cố định 1.000 USDC: 500 USDC và lượng CP trị giá 500 USDC tại thời điểm bắt đầu.</p>
+                <div class="lp-controls">
+                  <label>Ngày bắt đầu<select data-lp-boundary="start" aria-describedby="lp-date-policy-vi"></select></label>
+                  <label>Ngày kết thúc<select data-lp-boundary="end" aria-describedby="lp-date-policy-vi"></select></label>
+                  <button type="button" class="x-btn lp-calculate" data-lp-calculate>Tính toán</button>
+                </div>
+                <p class="lp-date-policy" id="lp-date-policy-vi">Mỗi ngày dùng trạng thái pool finalized chính xác tại thời điểm hiển thị. Ngày 6 tháng 9 dùng thời điểm khởi tạo; các ngày sau dùng 00:00 UTC.</p>
+                <p class="lp-status" data-lp-status aria-live="polite">Đang tải trạng thái pool chính xác…</p>
+                <div class="lp-results" data-lp-results hidden>
+                  <div class="lp-resolutions">
+                    <p><span>Thời điểm bắt đầu</span><strong data-lp-result="start-resolution"></strong></p>
+                    <p><span>Thời điểm kết thúc</span><strong data-lp-result="end-resolution"></strong></p>
+                  </div>
+                  <dl class="lp-result-grid">
+                    <div><dt>Vốn ban đầu</dt><dd data-lp-result="capital"></dd></div>
+                    <div><dt>Lượng CP ban đầu</dt><dd data-lp-result="initial-cp"></dd></div>
+                    <div><dt>Giá CP bắt đầu</dt><dd data-lp-result="start-price"></dd></div>
+                    <div><dt>Giá CP kết thúc</dt><dd data-lp-result="end-price"></dd></div>
+                    <div><dt>CP cuối kỳ, gồm phần dư</dt><dd data-lp-result="ending-cp"></dd></div>
+                    <div><dt>USDC cuối kỳ, gồm phần dư</dt><dd data-lp-result="ending-usdc"></dd></div>
+                    <div class="lp-result-emphasis"><dt>Giá trị tài sản LP cuối kỳ</dt><dd data-lp-result="asset-value"></dd></div>
+                    <div><dt>Lãi/lỗ tài sản trước phí</dt><dd data-lp-result="asset-pnl"></dd></div>
+                    <div><dt>Lợi nhuận trước phí</dt><dd data-lp-result="return"></dd></div>
+                    <div><dt>Giá trị HODL cuối kỳ</dt><dd data-lp-result="hodl"></dd></div>
+                    <div><dt>LP so với HODL</dt><dd data-lp-result="lp-vs-hodl"></dd></div>
+                  </dl>
+                  <p class="lp-fee-status"><strong>Chưa có ước tính phí.</strong> Lãi/lỗ tài sản và lợi nhuận không bao gồm phí.</p>
+                  <p class="lp-risk-note">Toàn dải chỉ là một chiến lược LP. Dải hẹp hơn có thể kiếm nhiều phí hơn khi giá nằm trong dải, nhưng có thêm rủi ro. Phí cao hơn không bảo đảm lợi nhuận ròng cao hơn.</p>
+                </div>
+              </section>
+            </dialog>
             <p class="chart-note">Cypress hiện hoạt động trên Base.<br>
               Tổng cung đã giảm còn 25% so với mức trước đây.</p>
             <div class="market-data" aria-label="Dữ liệu thị trường CP trực tiếp" aria-live="polite">
@@ -397,6 +441,7 @@
   <script src="/assets/js/cp-market-data.js?v=1.0" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.0" defer></script>
+  <script type="module" src="/assets/js/lp-calculator.mjs?v=1.0"></script>
 
   <!-- 
     - ionicon link

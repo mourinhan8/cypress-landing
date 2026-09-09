@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "kind": "cypress-lp-principal-history",
+  "identity": {
+    "chainId": 8453,
+    "pool": "0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9",
+    "factory": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+    "token0": { "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", "symbol": "USDC", "decimals": 6 },
+    "token1": { "address": "0x934ef4bfffdce191ac4bcc351b2fe7892865b440", "symbol": "CP", "decimals": 18 },
+    "fee": "10000",
+    "tickSpacing": "200",
+    "fullRange": { "tickLower": -887200, "tickUpper": 887200 }
+  },
+  "initialization": { "blockNumber": "50941815", "timestamp": "2026-09-06T05:36:17.000Z" },
+  "generatedAt": "2026-09-09T04:30:00.000Z",
+  "latestIncludedFinalizedBlock": {
+    "blockNumber": "51064756",
+    "blockHash": "0xb2986e84b63d28890a77d9eb007daf51a528c707f3af6000dc98fa98efc381aa",
+    "timestamp": "2026-09-09T01:54:19.000Z"
+  },
+  "availableRange": { "from": "2026-09-06T05:36:17.000Z", "through": "2026-09-09T01:54:19.000Z" },
+  "resolutionPolicy": {
+    "exactRequestedTimestampsOnly": true,
+    "ordinaryUtcMidnightStarts": "2026-09-07",
+    "initializationDateTimestamp": "2026-09-06T05:36:17.000Z",
+    "defaultEnd": "latest_included_finalized_block",
+    "interpolation": false
+  },
+  "snapshots": [
+    {
+      "schemaVersion": 1,
+      "chainId": 8453,
+      "pool": "0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9",
+      "factory": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+      "blockNumber": "50941815",
+      "blockHash": "0x748bf3c1a7db6485324676b7480bee436a226c2cf12e20f7c62c3f8a7d7f6918",
+      "timestamp": "2026-09-06T05:36:17.000Z",
+      "token0": { "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", "decimals": 6 },
+      "token1": { "address": "0x934ef4bfffdce191ac4bcc351b2fe7892865b440", "decimals": 18 },
+      "fee": "10000",
+      "tickSpacing": "200",
+      "sqrtPriceX96": "638407101806347576136442032642785978",
+      "tick": "318059",
+      "activeLiquidity": "151230679965619705",
+      "finalized": true
+    },
+    {
+      "schemaVersion": 1,
+      "chainId": 8453,
+      "pool": "0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9",
+      "factory": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+      "blockNumber": "51064756",
+      "blockHash": "0xb2986e84b63d28890a77d9eb007daf51a528c707f3af6000dc98fa98efc381aa",
+      "timestamp": "2026-09-09T01:54:19.000Z",
+      "token0": { "address": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913", "decimals": 6 },
+      "token1": { "address": "0x934ef4bfffdce191ac4bcc351b2fe7892865b440", "decimals": 18 },
+      "fee": "10000",
+      "tickSpacing": "200",
+      "sqrtPriceX96": "637434091718179387822692496724259019",
+      "tick": "318028",
+      "activeLiquidity": "151230679965619705",
+      "finalized": true
+    }
+  ],
+  "resolutions": [
+    {
+      "requestedTimestamp": "2026-09-06T05:36:17.000Z",
+      "blockNumber": "50941815",
+      "blockHash": "0x748bf3c1a7db6485324676b7480bee436a226c2cf12e20f7c62c3f8a7d7f6918"
+    },
+    {
+      "requestedTimestamp": "2026-09-09T01:54:19.000Z",
+      "blockNumber": "51064756",
+      "blockHash": "0xb2986e84b63d28890a77d9eb007daf51a528c707f3af6000dc98fa98efc381aa"
+    }
+  ],
+  "gaps": [],
+  "fees": { "included": false, "status": "unavailable" }
+}

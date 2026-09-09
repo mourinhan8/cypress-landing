@@ -13,7 +13,7 @@ function apiSnapshot(timeframe, candles, overrides) {
     schema_version: 1, status: "ok", timeframe, interval: timeframe === "7D" ? "hourly" : "daily",
     range_start: "2026-08-01T00:00:00.000Z", range_end: "2026-09-07T04:00:00.000Z",
     generated_at: "2026-09-07T04:00:00.000Z", updated_at: "2026-09-07T03:30:00.000Z",
-    stale: false, freshness: { status: "fresh", age_seconds: 600, stale_after_seconds: 900, last_known_good: true },
+    stale: false, freshness: { status: "fresh", age_seconds: 600, stale_after_seconds: 7200, last_known_good: true },
     partial_history: timeframe === "7D", sources: [], candle_count: candles.length, candles,
     ...(overrides || {})
   };
@@ -69,7 +69,7 @@ test("tooltip uses compact display prices without mutating exact OHLC values", (
   });
   const fresh = apiSnapshot("7D", [candle("2026-09-06T12:00:00.000Z", "current")]);
   assert.equal(chart.snapshotIsStale(fresh, Date.parse("2026-09-07T03:40:00.000Z")), false);
-  assert.equal(chart.snapshotIsStale(fresh, Date.parse("2026-09-07T03:46:00.001Z")), true);
+  assert.equal(chart.snapshotIsStale(fresh, Date.parse("2026-09-07T05:30:00.001Z")), true);
 });
 
 test("request loading enforces response bounds, schema, timeout signal, and same origin", async () => {
@@ -161,7 +161,7 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /coingecko\.com\/en\/coins\/cypress/);
     assert.match(html, /geckoterminal\.com\/base\/pools\/0x962265/);
     assert.match(html, /tradingview\.com/);
-    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>Trading<\/a>\s*<\/p>/);
+    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>Trading<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
     assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
