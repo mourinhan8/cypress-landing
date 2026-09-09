@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh the Cypress USD/VND cache daily
+
+[Timer]
+OnCalendar=*-*-* 00:20:00 UTC
+RandomizedDelaySec=30min
+Persistent=true
+Unit=cypress-fx.service
+
+[Install]
+WantedBy=timers.target

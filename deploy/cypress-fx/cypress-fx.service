@@ -1,0 +1,31 @@
+[Unit]
+Description=Refresh the cached Cypress USD/VND rate
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=cypress-fx
+Group=www-data
+WorkingDirectory=/opt/cypress-fx/current
+ExecStart=/opt/node-v24.18.0-linux-x64/bin/node /opt/cypress-fx/current/tools/fx/refresh-usd-vnd.mjs --cache /var/lib/cypress-fx/public/v1/usd-vnd.json
+TimeoutStartSec=1min
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/cypress-fx
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectKernelLogs=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictNamespaces=true
+SystemCallArchitectures=native
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6

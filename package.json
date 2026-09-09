@@ -4,7 +4,8 @@
   "scripts": {
     "test": "node --test",
     "lp:populate-history": "node tools/lp/populate-history.mjs",
-    "lint": "node --check assets/js/cp-market-data.js && node --check assets/js/cp-market-ui.js && node --check assets/js/lp-calculator.mjs && node --check assets/js/script_1.js && node --check tools/lp/full-range-simulator.mjs && node --check tools/lp/historical-state.mjs && node --check tools/lp/historical-state-cache.mjs && node --check tools/lp/historical-dataset.mjs && node --check tools/lp/populate-history.mjs",
+    "fx:refresh": "node tools/fx/refresh-usd-vnd.mjs",
+    "lint": "node --check assets/js/cp-market-data.js && node --check assets/js/cp-market-metrics.js && node --check assets/js/cp-market-ui.js && node --check assets/js/lp-calculator.mjs && node --check assets/js/script_1.js && node --check tools/lp/full-range-simulator.mjs && node --check tools/lp/historical-state.mjs && node --check tools/lp/historical-state-cache.mjs && node --check tools/lp/historical-dataset.mjs && node --check tools/lp/populate-history.mjs && node --check tools/fx/refresh-usd-vnd.mjs",
     "build": "npm run lint"
   }
 }
