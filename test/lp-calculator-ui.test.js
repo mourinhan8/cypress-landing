@@ -88,13 +88,88 @@ test("English and Vietnamese pages expose modest calculator actions within chart
     assert.match(html, /data-lp-boundary="start"/);
     assert.match(html, /data-lp-boundary="end"/);
     assert.match(html, /data-lp-result="lp-vs-hodl"/);
-    assert.match(html, /lp-calculator\.mjs\?v=1\.0/);
+    assert.match(html, /lp-calculator\.mjs\?v=1\.1/);
     assert.doesNotMatch(html, /wallet|connect wallet|APR|APY/i);
   }
   assert.match(english, /Fee estimate unavailable/);
+  assert.match(english, /data-lp-open>LP Calculator<\/button>/);
   assert.match(english, /Higher fees do not guarantee higher net returns/);
   assert.match(vietnamese, /Chưa có ước tính phí/);
+  assert.match(vietnamese, /data-lp-open>Tính lãi của thanh khoản<\/button>/);
   assert.match(vietnamese, /Phí cao hơn không bảo đảm lợi nhuận ròng cao hơn/);
+});
+
+test("deployment serves every browser-loaded LP module as JavaScript", () => {
+  const nginx = fs.readFileSync(path.join(root, "deploy/cypress-lp/nginx-location.conf"), "utf8");
+  for (const modulePath of [
+    "/assets/js/lp-calculator.mjs",
+    "/tools/lp/full-range-simulator.mjs",
+    "/tools/lp/historical-state.mjs"
+  ]) {
+    assert.ok(nginx.includes(`location = ${modulePath} {
+    try_files $uri =404;
+    default_type application/javascript;
+    limit_except GET {
+        deny all;
+    }
+}`));
+  }
+});
+
+test("calculator initialization populates boundaries and runs the B1 simulation", async () => {
+  const listeners = new Map();
+  const start = { options: [], value: "", append(option) { this.options.push(option); } };
+  const end = { options: [], value: "", append(option) { this.options.push(option); } };
+  const status = { textContent: "", dataset: {} };
+  const calculate = {
+    disabled: false,
+    addEventListener(type, listener) { listeners.set(type, listener); },
+    click() { listeners.get("click")?.(); }
+  };
+  const results = { hidden: true };
+  const values = new Map([
+    "capital", "initial-cp", "start-price", "end-price", "ending-cp", "ending-usdc",
+    "asset-value", "asset-pnl", "return", "hodl", "lp-vs-hodl", "start-resolution", "end-resolution"
+  ].map(key => [key, { textContent: "" }]));
+  const rootElement = {
+    dataset: { language: "en" },
+    querySelector(selector) {
+      if (selector === "[data-lp-status]") return status;
+      if (selector === "[data-lp-calculate]") return calculate;
+      if (selector === '[data-lp-boundary="start"]') return start;
+      if (selector === '[data-lp-boundary="end"]') return end;
+      if (selector === "[data-lp-results]") return results;
+      const match = selector.match(/^\[data-lp-result="(.+)"\]$/);
+      return match ? values.get(match[1]) : null;
+    },
+    querySelectorAll(selector) {
+      if (selector === "[data-lp-boundary]") return [start, end];
+      if (selector === "select, button[data-lp-calculate]") return [start, end, calculate];
+      return [];
+    }
+  };
+  const originalDocument = global.document;
+  global.document = { createElement() { return { value: "", textContent: "", disabled: false }; } };
+  try {
+    await calculator.initializeCalculator(rootElement, { fetchImpl: async () => ({
+      ok: true,
+      status: 200,
+      headers: { get() { return null; } },
+      async text() { return JSON.stringify(liveDataset); }
+    }) });
+  } finally {
+    global.document = originalDocument;
+  }
+  assert.equal(status.dataset.state, "ready");
+  assert.equal(calculate.disabled, false);
+  assert.equal(start.options.length, 5);
+  assert.equal(end.options.length, 5);
+  assert.equal(start.value, liveDataset.snapshots[0].blockNumber);
+  assert.equal(end.value, liveDataset.latestIncludedFinalizedBlock.blockNumber);
+  assert.equal(results.hidden, false);
+  assert.equal(values.get("capital").textContent, "1,000 USDC");
+  assert.match(values.get("asset-value").textContent, /^1,001\.526448 USDC$/);
+  assert.match(values.get("start-resolution").textContent, /Block 50941815$/);
 });
 
 test("calculator frontend imports B1 math and never contacts RPC or duplicates formulas", () => {
