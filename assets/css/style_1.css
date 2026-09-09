@@ -616,9 +616,17 @@ body.active {
 
 .chart-attribution a,
 .chart-footer-action {
-  color: var(--cadet-blue-crayola);
+  color: var(--gainsboro);
   text-decoration: underline;
+  text-decoration-color: var(--cadet-blue-crayola);
+  text-decoration-thickness: 1px;
   text-underline-offset: 2px;
+}
+
+.chart-attribution a:hover,
+.chart-footer-action:hover {
+  color: var(--cultured);
+  text-decoration-color: currentColor;
 }
 
 .chart-footer-action {
@@ -629,8 +637,10 @@ body.active {
   padding: 0;
 }
 
+.chart-attribution a:focus-visible,
 .chart-footer-action:focus-visible {
-  outline: 1px solid currentColor;
+  color: var(--cultured);
+  outline: 2px solid var(--cadet-blue-crayola);
   outline-offset: 2px;
 }
 

@@ -148,6 +148,7 @@ test("coordinator exposes empty, error, stale, and last-known-good states", asyn
 test("English and Vietnamese homepages include native chart copy and required attribution", () => {
   const root = path.join(__dirname, "..");
   const tradingUrl = "https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440";
+  const liquidityUrl = "https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A10000%2C%22tickSpacing%22%3A200%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D";
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
   const css = fs.readFileSync(path.join(root, "assets/css/style_1.css"), "utf8");
@@ -163,11 +164,16 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /tradingview\.com/);
     assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>Trading<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
     assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
+    assert.equal((html.match(new RegExp(liquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
+    assert.doesNotMatch(html, /(?:minTick|maxTick|depositState|hook=undefined)/);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
   }
   assert.match(css, /@media \(max-width: 480px\)[\s\S]*chart-canvas/);
   assert.match(css, /prefers-reduced-motion/);
+  assert.match(css, /\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: var\(--gainsboro\)[\s\S]*?text-decoration: underline/);
+  assert.match(css, /\.chart-attribution a:hover,[\s\S]*?\.chart-footer-action:hover[\s\S]*?color: var\(--cultured\)/);
+  assert.match(css, /\.chart-attribution a:focus-visible,[\s\S]*?\.chart-footer-action:focus-visible[\s\S]*?outline: 2px solid var\(--cadet-blue-crayola\)/);
   const source = fs.readFileSync(path.join(root, "assets/js/cp-chart.js"), "utf8");
   assert.match(source, /barSpacing:\s*10, minBarSpacing:\s*4, maxBarSpacing:\s*18/);
   assert.match(source, /coordinator\.select\("1Y"\)/);
