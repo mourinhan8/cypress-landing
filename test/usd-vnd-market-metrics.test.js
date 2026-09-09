@@ -36,6 +36,27 @@ test("all three VND values use one cached rate", () => {
   assert.equal(result.vnd.marketCap, result.usd.marketCap * result.rate);
 });
 
+test("Vietnamese display truncates lower units without rounding up", () => {
+  assert.equal(metrics.formatVndPrice(402.999), "402 VNĐ");
+  assert.equal(metrics.formatVndCompact(633_602_782), "633 triệu 602 nghìn VNĐ");
+  assert.equal(metrics.formatVndCompact(10_053_622_429), "10 tỉ 53 triệu VNĐ");
+  assert.equal(metrics.formatVndCompact(10_000_999_999), "10 tỉ VNĐ");
+  assert.equal(metrics.formatVndCompact(8_000_999), "8 triệu VNĐ");
+});
+
+test("locale presentation keeps English in USD and Vietnamese in VND", () => {
+  const values = metrics.deriveMetrics(market(), snapshot(25_000));
+  assert.deepEqual(metrics.formatLocaleMetrics(values, "en"), {
+    price: "$0.0155", liquidity: "$24.5K", marketCap: "$387.5K"
+  });
+  assert.deepEqual(metrics.formatLocaleMetrics(values, "vi"), {
+    price: "387 VNĐ", liquidity: "612 triệu 500 nghìn VNĐ", marketCap: "9 tỉ 687 triệu VNĐ"
+  });
+  assert.deepEqual(metrics.formatLocaleMetrics(metrics.deriveMetrics(market(), null), "vi"), {
+    price: "VND không khả dụng", liquidity: "VND không khả dụng", marketCap: "VND không khả dụng"
+  });
+});
+
 test("USD metrics remain available without FX", () => {
   const result = metrics.deriveMetrics(market(), null);
   assert.equal(result.usd.liquidity, 24_500);
@@ -110,23 +131,30 @@ test("first-run failure publishes an unavailable cache and remains rate-limited"
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
-test("EN and VI render three USD/VND metrics without changing chart, LP, or Swap", () => {
+test("EN renders USD-only and VI renders VND-only metrics without changing chart, LP, or Swap", () => {
   const root = path.join(__dirname, "..");
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
   for (const html of [english, vietnamese]) {
     assert.equal((html.match(/data-cp-(?:price|liquidity|market-cap)>/g) || []).length, 3);
-    assert.equal((html.match(/data-cp-(?:price|liquidity|market-cap)-vnd>/g) || []).length, 3);
-    assert.match(html, /ExchangeRate-API/);
     assert.match(html, /cp-market-data\.js[\s\S]*cp-market-metrics\.js[\s\S]*cp-market-ui\.js/);
     assert.match(html, /data-cp-chart/);
     assert.match(html, /data-lp-dialog/);
     assert.match(html, /swap\.cypress\.work/);
     assert.match(html, /testswap\.cypress\.work/);
   }
-  assert.match(english, /Market Cap[\s\S]*25M CP fixed supply/);
-  assert.match(vietnamese, /Vốn hóa[\s\S]*tổng cung cố định 25 triệu CP/);
+  assert.match(english, /CP Price[\s\S]*Total Liquidity[\s\S]*Market Cap/);
+  assert.doesNotMatch(english, /ExchangeRate-API|VND|25M CP fixed supply|Cypress is now on Base|Total supply reduced/);
+  assert.match(vietnamese, /Giá CP[\s\S]*Tổng thanh khoản[\s\S]*Vốn hóa/);
+  assert.match(vietnamese, /ExchangeRate-API[\s\S]*không phải tỷ giá mua\/bán của ngân hàng/);
+  assert.doesNotMatch(vietnamese, /data-cp-(?:price|liquidity|market-cap)-vnd|tổng cung cố định 25 triệu CP/);
   assert.doesNotMatch(vietnamese, /Cypress hiện hoạt động trên Base|Tổng cung đã giảm còn 25%/);
+});
+
+test("runtime preserves locale units and only Vietnamese requests cached FX", () => {
+  const source = fs.readFileSync(path.join(__dirname, "../assets/js/cp-market-ui.js"), "utf8");
+  assert.match(source, /formatLocaleMetrics\(values, language\)/);
+  assert.match(source, /if \(vietnamese\) \{[\s\S]*fetchFxSnapshot/);
 });
 
 test("metric layout uses three desktop columns and a safe mobile stack", () => {

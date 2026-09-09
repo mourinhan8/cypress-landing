@@ -68,17 +68,57 @@
     return "$" + new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(value / 1000000) + "M";
   }
 
-  function formatVnd(value, language) {
-    const locale = String(language || "").toLowerCase().startsWith("vi") ? "vi-VN" : "en-US";
-    return "≈ " + new Intl.NumberFormat(locale, { style: "currency", currency: "VND", maximumFractionDigits: 0 }).format(value);
+  function wholeVnd(value) {
+    if (!Number.isFinite(value) || value < 0) throw new Error("VND value is invalid");
+    return Math.floor(value);
+  }
+
+  function formatVndPrice(value) {
+    return new Intl.NumberFormat("vi-VN").format(wholeVnd(value)) + " VNĐ";
+  }
+
+  function formatVndCompact(value) {
+    const amount = wholeVnd(value);
+    if (amount >= 1_000_000_000) {
+      const billions = Math.floor(amount / 1_000_000_000);
+      const millions = Math.floor((amount % 1_000_000_000) / 1_000_000);
+      return billions + " tỉ" + (millions ? " " + millions + " triệu" : "") + " VNĐ";
+    }
+    if (amount >= 1_000_000) {
+      const millions = Math.floor(amount / 1_000_000);
+      const thousands = Math.floor((amount % 1_000_000) / 1_000);
+      return millions + " triệu" + (thousands ? " " + thousands + " nghìn" : "") + " VNĐ";
+    }
+    return new Intl.NumberFormat("vi-VN").format(amount) + " VNĐ";
   }
 
   function unavailableVnd(language) {
     return String(language || "").toLowerCase().startsWith("vi") ? "≈ VND không khả dụng" : "≈ VND unavailable";
   }
 
+  function formatLocaleMetrics(values, language) {
+    const vietnamese = String(language || "").toLowerCase().startsWith("vi");
+    if (!vietnamese) {
+      return {
+        price: formatPrice(values.usd.price),
+        liquidity: formatCompactUsd(values.usd.liquidity),
+        marketCap: formatCompactUsd(values.usd.marketCap)
+      };
+    }
+    if (!values.vnd) {
+      const unavailable = unavailableVnd(language).replace(/^≈\s*/, "");
+      return { price: unavailable, liquidity: unavailable, marketCap: unavailable };
+    }
+    return {
+      price: formatVndPrice(values.vnd.price),
+      liquidity: formatVndCompact(values.vnd.liquidity),
+      marketCap: formatVndCompact(values.vnd.marketCap)
+    };
+  }
+
   return {
     FX_DATA_URL, MAX_FX_BYTES, TOTAL_SUPPLY_CP, deriveMetrics, fetchFxSnapshot,
-    formatCompactUsd, formatPrice, formatVnd, unavailableVnd, validateFxSnapshot
+    formatCompactUsd, formatLocaleMetrics, formatPrice, formatVndCompact, formatVndPrice,
+    unavailableVnd, validateFxSnapshot
   };
 });
