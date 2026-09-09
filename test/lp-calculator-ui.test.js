@@ -92,7 +92,10 @@ test("English and Vietnamese pages expose modest calculator actions within chart
     assert.doesNotMatch(html, /wallet|connect wallet|APR|APY/i);
   }
   assert.match(english, /Fee estimate unavailable/);
-  assert.match(english, /data-lp-open>LP Calculator<\/button>/);
+  assert.match(english, /data-lp-open>Liquidity Returns<\/button>/);
+  assert.match(english, /id="lp-calculator-title">Liquidity Returns<\/h2>/);
+  assert.match(english, /aria-label="Close Liquidity Returns"/);
+  assert.doesNotMatch(english, />LP Calculator<\/button>|>LP Calculator<\/h2>|Close LP Calculator/);
   assert.match(english, /Higher fees do not guarantee higher net returns/);
   assert.match(vietnamese, /Chưa có ước tính phí/);
   assert.match(vietnamese, /data-lp-open>Tính lãi của thanh khoản<\/button>/);

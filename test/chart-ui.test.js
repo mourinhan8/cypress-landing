@@ -162,13 +162,19 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /coingecko\.com\/en\/coins\/cypress/);
     assert.match(html, /geckoterminal\.com\/base\/pools\/0x962265/);
     assert.match(html, /tradingview\.com/);
-    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>Trading<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
+    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>(?:Trading|Mua bán)<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
     assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.equal((html.match(new RegExp(liquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.doesNotMatch(html, /(?:minTick|maxTick|depositState|hook=undefined)/);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
   }
+  assert.match(english, />Trading<\/a>/);
+  assert.match(english, /data-lp-open>Liquidity Returns<\/button>/);
+  assert.doesNotMatch(english, />Mua bán<\/a>|data-lp-open>LP Calculator<\/button>/);
+  assert.match(vietnamese, />Mua bán<\/a>/);
+  assert.match(vietnamese, /data-lp-open>Tính lãi của thanh khoản<\/button>/);
+  assert.doesNotMatch(vietnamese, />Trading<\/a>/);
   assert.match(css, /@media \(max-width: 480px\)[\s\S]*chart-canvas/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: hsl\(214, 100%, 74%\)[\s\S]*?text-decoration: underline[\s\S]*?text-decoration-color: currentColor/);
