@@ -149,16 +149,84 @@
       + "  L " + formatUsd(candle.low) + "  C " + formatUsd(candle.close);
   }
 
-  function renderTooltip(tooltip, candle, locale) {
+  function renderSelection(selection, candle, locale) {
     const lines = tooltipText(candle, locale).split("\n");
     const date = document.createElement("span");
     const values = document.createElement("span");
-    date.className = "chart-tooltip-date";
-    values.className = "chart-tooltip-values";
+    date.className = "chart-selection-date";
+    values.className = "chart-selection-values";
     date.textContent = lines[0];
     values.textContent = lines[1];
-    tooltip.replaceChildren(date, values);
-    tooltip.hidden = false;
+    selection.replaceChildren(date, values);
+    selection.hidden = false;
+  }
+
+  function nearestCandleIndex(candles, targetTime) {
+    if (!Array.isArray(candles) || candles.length === 0) return -1;
+    const target = Number(targetTime);
+    if (!Number.isFinite(target)) return -1;
+    const first = Math.floor(Date.parse(candles[0].time) / 1000);
+    const lastIndex = candles.length - 1;
+    const last = Math.floor(Date.parse(candles[lastIndex].time) / 1000);
+    if (target <= first) return 0;
+    if (target >= last) return lastIndex;
+    let low = 0;
+    let high = lastIndex;
+    while (low + 1 < high) {
+      const middle = Math.floor((low + high) / 2);
+      const middleTime = Math.floor(Date.parse(candles[middle].time) / 1000);
+      if (middleTime <= target) low = middle;
+      else high = middle;
+    }
+    const lowTime = Math.floor(Date.parse(candles[low].time) / 1000);
+    const highTime = Math.floor(Date.parse(candles[high].time) / 1000);
+    return target - lowTime <= highTime - target ? low : high;
+  }
+
+  function nearestLogicalIndex(logical, candleCount) {
+    if (!Number.isFinite(logical) || !Number.isInteger(candleCount) || candleCount < 1) return -1;
+    return Math.min(candleCount - 1, Math.max(0, Math.round(logical)));
+  }
+
+  function gestureAxis(deltaX, deltaY, threshold) {
+    const minimum = threshold === undefined ? 6 : threshold;
+    const horizontal = Math.abs(deltaX);
+    const vertical = Math.abs(deltaY);
+    if (Math.max(horizontal, vertical) < minimum) return "pending";
+    return horizontal > vertical ? "horizontal" : "vertical";
+  }
+
+  function createSelectionModel(onChange) {
+    let candles = [];
+    let selectedIndex = -1;
+
+    function selectIndex(index) {
+      if (!candles.length) return null;
+      const next = Math.min(candles.length - 1, Math.max(0, Math.round(index)));
+      selectedIndex = next;
+      onChange(candles[next], next);
+      return candles[next];
+    }
+
+    function setCandles(nextCandles) {
+      candles = nextCandles.slice();
+      selectedIndex = -1;
+      return candles.length ? selectIndex(candles.length - 1) : null;
+    }
+
+    function selectTime(targetTime) {
+      const index = nearestCandleIndex(candles, targetTime);
+      return index < 0 ? null : selectIndex(index);
+    }
+
+    return {
+      setCandles,
+      selectIndex,
+      selectTime,
+      selected: function () { return selectedIndex < 0 ? null : candles[selectedIndex]; },
+      selectedIndex: function () { return selectedIndex; },
+      size: function () { return candles.length; }
+    };
   }
 
   function chartPoints(snapshot) {
@@ -236,13 +304,16 @@
     const locale = rootElement.dataset.language || document.documentElement.lang;
     const copy = COPY[language(locale)];
     const canvas = rootElement.querySelector("[data-chart-canvas]");
-    const tooltip = rootElement.querySelector("[data-chart-tooltip]");
+    const selectionOutput = rootElement.querySelector("[data-chart-selection]");
     const status = rootElement.querySelector("[data-chart-status]");
     const buttons = Array.from(rootElement.querySelectorAll("[data-chart-timeframe]"));
     let chart;
     let series;
-    let byTime = new Map();
     let freshnessTimer;
+    let pointerGesture;
+    const selection = createSelectionModel(function (candle) {
+      renderSelection(selectionOutput, candle, locale);
+    });
 
     function palette() {
       const light = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -265,6 +336,7 @@
           borderVisible: false, timeVisible: true, secondsVisible: false, rightOffset: 2,
           barSpacing: 10, minBarSpacing: 4, maxBarSpacing: 18
         },
+        handleScroll: { horzTouchDrag: false, vertTouchDrag: false },
         crosshair: { mode: window.LightweightCharts.CrosshairMode.Normal },
         localization: { priceFormatter: formatAxisUsd }
       });
@@ -274,20 +346,66 @@
         priceFormat: { type: "price", precision: 8, minMove: 0.00000001 }
       });
       chart.subscribeCrosshairMove(function (parameter) {
-        const candle = parameter.time === undefined ? null : byTime.get(String(parameter.time));
-        if (candle) renderTooltip(tooltip, candle, locale);
+        if (parameter.time !== undefined) selection.selectTime(Number(parameter.time));
       });
+
+      function positionCrosshair(candle) {
+        chart.setCrosshairPosition(Number(candle.close), Math.floor(Date.parse(candle.time) / 1000), series);
+      }
+
+      function selectAtPointer(event) {
+        const bounds = canvas.getBoundingClientRect();
+        const logical = chart.timeScale().coordinateToLogical(event.clientX - bounds.left);
+        const index = nearestLogicalIndex(logical, selection.size());
+        if (index < 0) return null;
+        const candle = selection.selectIndex(index);
+        positionCrosshair(candle);
+        return candle;
+      }
+
+      canvas.addEventListener("pointerdown", function (event) {
+        if (event.pointerType === "mouse") return;
+        pointerGesture = {
+          id: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          axis: "pending"
+        };
+        selectAtPointer(event);
+      });
+      canvas.addEventListener("pointermove", function (event) {
+        if (!pointerGesture || pointerGesture.id !== event.pointerId) return;
+        if (pointerGesture.axis === "pending") {
+          pointerGesture.axis = gestureAxis(
+            event.clientX - pointerGesture.startX,
+            event.clientY - pointerGesture.startY
+          );
+          if (pointerGesture.axis === "horizontal" && canvas.setPointerCapture) {
+            canvas.setPointerCapture(event.pointerId);
+          }
+        }
+        if (pointerGesture.axis !== "horizontal") return;
+        if (event.cancelable) event.preventDefault();
+        selectAtPointer(event);
+      });
+      function finishPointer(event) {
+        if (!pointerGesture || pointerGesture.id !== event.pointerId) return;
+        const shouldRetainCrosshair = event.type === "pointerup" && pointerGesture.axis !== "vertical";
+        if (canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) {
+          canvas.releasePointerCapture(event.pointerId);
+        }
+        pointerGesture = undefined;
+        if (shouldRetainCrosshair && selection.selected()) positionCrosshair(selection.selected());
+      }
+      canvas.addEventListener("pointerup", finishPointer);
+      canvas.addEventListener("pointercancel", finishPointer);
     }
 
     function render(snapshot, options) {
       ensureChart();
-      byTime = new Map(snapshot.candles.map(function (candle) {
-        return [String(Math.floor(Date.parse(candle.time) / 1000)), candle];
-      }));
       series.setData(chartPoints(snapshot));
       chart.timeScale().fitContent();
-      const last = snapshot.candles[snapshot.candles.length - 1];
-      renderTooltip(tooltip, last, locale);
+      selection.setCandles(snapshot.candles);
       rootElement.classList.toggle("is-stale", options.stale);
       window.clearTimeout(freshnessTimer);
       if (!options.stale) {
@@ -303,7 +421,7 @@
       rootElement.dataset.state = name;
       if (name === "loading") window.clearTimeout(freshnessTimer);
       if (name === "loading" && series) series.setData([]);
-      if (name === "loading") tooltip.hidden = true;
+      if (name === "loading") selectionOutput.hidden = true;
       buttons.forEach(function (button) {
         const active = button.dataset.chartTimeframe === selected;
         button.setAttribute("aria-selected", String(active));
@@ -342,6 +460,7 @@
   return {
     TIMEFRAMES, MAX_RESPONSE_BYTES, ENDPOINT_BASE, COPY,
     endpointFor, validateSnapshot, fetchSnapshot, formatUsd, formatAxisUsd, compareDecimals,
-    tooltipText, chartPoints, snapshotIsStale, createCoordinator
+    tooltipText, chartPoints, snapshotIsStale, createCoordinator, renderSelection,
+    nearestCandleIndex, nearestLogicalIndex, gestureAxis, createSelectionModel
   };
 });

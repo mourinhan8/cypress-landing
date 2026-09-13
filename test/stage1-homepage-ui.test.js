@@ -34,15 +34,16 @@ test("mobile header exposes languages and moves Learning Swap into the menu", ()
   assert.match(css, /@media \(min-width: 900px\)[\s\S]*?\.mobile-swap,[\s\S]*?display: none;[\s\S]*?\.desktop-swap\s*{[^}]*display: block;/);
 });
 
-test("chart tooltip is compact and fixed to the bottom-left", () => {
+test("chart selection is compact and rendered above the plotting area", () => {
   const css = fs.readFileSync(path.join(root, "assets/css/style_1.css"), "utf8");
   const chartSource = fs.readFileSync(path.join(root, "assets/js/cp-chart.js"), "utf8");
 
-  assert.match(css, /\.chart-tooltip\s*{[^}]*inset: auto auto 10px 10px;[^}]*padding: 5px 7px;/);
-  assert.match(css, /@media \(max-width: 480px\)[\s\S]*?\.chart-tooltip\s*{[^}]*inset: auto auto 6px 6px;/);
+  assert.match(css, /\.chart-heading\s*{[^}]*display: flex;[^}]*flex-wrap: wrap;/);
+  assert.match(css, /\.chart-selection\s*{[^}]*display: flex;[^}]*flex-wrap: wrap;/);
+  assert.doesNotMatch(css, /\.chart-tooltip/);
   assert.doesNotMatch(css, /\.chart-tooltip-source/);
   assert.doesNotMatch(chartSource, /Historical · close-derived|Current · GeckoTerminal|Lịch sử · OHLC|Hiện tại · OHLCV/);
-  assert.match(chartSource, /tooltip\.replaceChildren\(date, values\)/);
+  assert.match(chartSource, /selection\.replaceChildren\(date, values\)/);
 });
 
 test("chart footer prioritizes actions and omits the candle-count status", () => {
