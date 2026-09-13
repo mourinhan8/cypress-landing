@@ -143,9 +143,9 @@ test("EN renders USD-only and VI renders VND-only metrics without changing chart
     assert.match(html, /swap\.cypress\.work/);
     assert.match(html, /testswap\.cypress\.work/);
   }
-  assert.match(english, /CP Price[\s\S]*Total Liquidity[\s\S]*Market Cap/);
+  assert.match(english, /Cypress Token Price[\s\S]*Total Liquidity[\s\S]*Market Cap/);
   assert.doesNotMatch(english, /ExchangeRate-API|VND|25M CP fixed supply|Cypress is now on Base|Total supply reduced/);
-  assert.match(vietnamese, /Giá CP[\s\S]*Tổng thanh khoản[\s\S]*Vốn hóa/);
+  assert.match(vietnamese, /Giá token Cypress[\s\S]*Tổng thanh khoản[\s\S]*Vốn hóa/);
   assert.match(vietnamese, /ExchangeRate-API[\s\S]*không phải tỷ giá mua\/bán của ngân hàng/);
   assert.doesNotMatch(vietnamese, /data-cp-(?:price|liquidity|market-cap)-vnd|tổng cung cố định 25 triệu CP/);
   assert.doesNotMatch(vietnamese, /Cypress hiện hoạt động trên Base|Tổng cung đã giảm còn 25%/);
