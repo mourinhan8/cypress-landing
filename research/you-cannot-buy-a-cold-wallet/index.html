@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Cannot Buy a “Cold Wallet” | Cypress</title>
+  <meta name="description" content="A hardware wallet is not automatically a cold wallet. Whether a key stays “cold” depends on how it is generated, stored, and used — and real security depends on the process before signing.">
+  <meta name="author" content="Tien Cypress">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cypress.work/research/you-cannot-buy-a-cold-wallet/">
+  <link rel="alternate" hreflang="en" href="https://cypress.work/research/you-cannot-buy-a-cold-wallet/">
+  <link rel="alternate" hreflang="vi" href="https://cypress.work/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/">
+  <link rel="alternate" hreflang="x-default" href="https://cypress.work/research/you-cannot-buy-a-cold-wallet/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Cypress">
+  <meta property="og:title" content="You Cannot Buy a “Cold Wallet”">
+  <meta property="og:description" content="A hardware wallet is not automatically a cold wallet. Whether a key stays “cold” depends on how it is generated, stored, and used — and real security depends on the process before signing.">
+  <meta property="og:url" content="https://cypress.work/research/you-cannot-buy-a-cold-wallet/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="vi_VN">
+  <meta property="og:image" content="https://cypress.work/assets/images/research/cold-wallet-security-models.png">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:alt" content="Hardware and software wallet security models compared: hardware includes layers that require trust, while more of the software wallet security logic can be publicly inspected.">
+  <meta property="article:published_time" content="2026-09-13">
+  <meta property="article:modified_time" content="2026-09-13">
+  <meta property="article:author" content="Tien Cypress">
+  <meta property="article:section" content="Research">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="You Cannot Buy a “Cold Wallet”">
+  <meta name="twitter:description" content="A hardware wallet is not automatically a cold wallet. Whether a key stays “cold” depends on how it is generated, stored, and used — and real security depends on the process before signing.">
+  <meta name="twitter:image" content="https://cypress.work/assets/images/research/cold-wallet-security-models.png">
+  <meta name="twitter:image:alt" content="Hardware and software wallet security models compared: hardware includes layers that require trust, while more of the software wallet security logic can be publicly inspected.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"You Cannot Buy a “Cold Wallet”","description":"A hardware wallet is not automatically a cold wallet. Whether a key stays “cold” depends on how it is generated, stored, and used — and real security depends on the process before signing.","image":{"@type":"ImageObject","url":"https://cypress.work/assets/images/research/cold-wallet-security-models.png","width":1672,"height":941},"author":{"@type":"Person","name":"Tien Cypress"},"publisher":{"@type":"Organization","name":"Cypress","logo":{"@type":"ImageObject","url":"https://cypress.work/assets/cypress-logo-pink.png"}},"datePublished":"2026-09-13","dateModified":"2026-09-13","mainEntityOfPage":{"@type":"WebPage","@id":"https://cypress.work/research/you-cannot-buy-a-cold-wallet/"},"inLanguage":"en","articleSection":["Research","Security","Wallets"],"workTranslation":{"@type":"Article","inLanguage":"vi","url":"https://cypress.work/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/"}}</script>
+  <link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.5">
+  <link rel="stylesheet" href="/assets/css/article.css?v=1.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="article-page">
+  <header class="header" data-header><div class="container">
+    <a href="/" class="logo"><img class="header-img" src="/assets/cypress-logo-pink-32.png" srcset="/assets/cypress-logo-pink-32.png 1x, /assets/cypress-logo-pink-64.png 2x" width="32" height="32" alt="Cypress logo">Cypress</a>
+    <nav class="x-navbar" aria-label="Primary navigation" data-navbar><ul class="navbar-list">
+      <li class="navbar-item"><a href="/" class="navbar-link" data-nav-link>Home</a></li>
+      <li class="navbar-item"><a href="/research/" class="navbar-link active" aria-current="page" data-nav-link>Research</a></li>
+      <li class="navbar-item"><a href="/#information" class="navbar-link" data-nav-link>Information</a></li>
+      <li class="navbar-item"><a href="/#moonbeam-legacy" class="navbar-link" data-nav-link>Moonbeam Legacy</a></li>
+      <li class="navbar-separator" aria-hidden="true"></li>
+      <li class="navbar-item mobile-language"><a href="/research/you-cannot-buy-a-cold-wallet/" class="navbar-link language-link active" lang="en" aria-current="page" data-nav-link>English</a></li>
+      <li class="navbar-item mobile-language"><a href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/" class="navbar-link language-link" lang="vi" hreflang="vi" data-nav-link>Tiếng Việt</a></li>
+    </ul></nav>
+    <div class="desktop-language" aria-label="Language"><a href="/research/you-cannot-buy-a-cold-wallet/" class="active" lang="en" aria-current="page">EN</a><span aria-hidden="true">|</span><a href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/" lang="vi" hreflang="vi">VI</a></div>
+    <button class="nav-toggle-btn" aria-label="Toggle menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
+    <a href="https://swap.cypress.work/?lang=en" class="x-btn btn-outline" target="_blank" rel="noopener noreferrer">Learning Swap</a>
+  </div></header>
+  <main class="article-main"><article class="article-shell">
+    <header class="article-header">
+      <p class="article-kicker">Research</p>
+      <h1 class="article-title">You Cannot Buy a “Cold Wallet”</h1>
+      <p class="article-meta"><span>By <strong>Tien Cypress</strong></span><span>Research · Security · Wallets</span><time datetime="2026-09-13">September 13, 2026</time></p>
+      <a class="article-back" href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/" lang="vi" hreflang="vi">Đọc bản tiếng Việt →</a>
+    </header>
+    <figure class="article-hero"><img src="/assets/images/research/cold-wallet-security-models.png" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async" alt="Hardware and software wallet security models compared: hardware includes layers that require trust, while more of the software wallet security logic can be publicly inspected."></figure>
+    <div class="article-body">
+        <p>Let me state my position clearly:</p>
+        <p><strong>If someone advertises the device they are selling as a “cold wallet,” I consider that misleading advertising.</strong></p>
+        <p>They can sell you a <strong>hardware wallet</strong>.</p>
+        <p>But nobody can sell you the state of being <strong>“cold.”</strong></p>
+        <p>Hot or cold is not an inherent property of a device. It is determined by <strong>how you generate, store, and use your keys</strong>.</p>
+        <h2>A Regular Smartphone Can Become Cold Storage</h2>
+        <p>I can take an ordinary smartphone, install Nova Wallet, create a wallet, back up the seed securely, disconnect the phone from the internet, and put it away.</p>
+        <p>No SIM.</p>
+        <p>No Wi-Fi.</p>
+        <p>No web browsing.</p>
+        <p>No additional apps.</p>
+        <p>No dApp connections.</p>
+        <p>No routine transaction signing.</p>
+        <p>Nobody sold me that phone as a “cold wallet.”</p>
+        <p>Nova is simply a <strong>software wallet</strong>.</p>
+        <p>Yet the way I operate the device has turned it into a form of <strong>cold storage</strong>.</p>
+        <p>Now consider the opposite.</p>
+        <p>I can buy a hardware wallet and connect it to my computer every day, use DeFi, swap tokens, approve spending permissions, interact with smart contracts, and sign transactions constantly.</p>
+        <p>Which one is colder?</p>
+        <p>The answer is not written on the hardware wallet’s box.</p>
+        <p>It lies in <strong>how the key is used</strong>.</p>
+        <h2>A Hardware Wallet Solves One Problem — Not Every Problem</h2>
+        <p>The real advantage of a hardware wallet is clear:</p>
+        <p><strong>It attempts to isolate your private key from the internet-connected computer or phone you are using.</strong></p>
+        <p>If malware is trying to extract your private key from your computer, that isolation can be extremely valuable.</p>
+        <p>But losing crypto does not always require someone to steal your private key.</p>
+        <p>There is often a much easier attack:</p>
+        <p><strong>Convince you to sign.</strong></p>
+        <p>A malicious website presents a transaction.</p>
+        <p>With a software wallet:</p>
+        <p><strong>Review → Confirm → Sign.</strong></p>
+        <p>With a hardware wallet:</p>
+        <p><strong>Review → Confirm on the computer → Confirm on the device → Sign.</strong></p>
+        <p>If you approve the malicious transaction yourself, both processes ultimately produce the same thing:</p>
+        <p><strong>a valid cryptographic signature.</strong></p>
+        <p>The blockchain does not know whether you used a Ledger, a smartphone, or a browser extension.</p>
+        <p>It does not know that you were deceived.</p>
+        <p>It only knows:</p>
+        <p><strong>The correct key signed.</strong></p>
+        <p>That distinction matters.</p>
+        <p><strong>Protecting the private key is not the same thing as protecting the assets from every possible threat.</strong></p>
+        <h2>A Hardware Wallet Is Software Too</h2>
+        <p>A hardware wallet is not a magical piece of metal.</p>
+        <p>Inside it are chips, firmware, a bootloader, applications, update mechanisms, and code written by human beings.</p>
+        <p>There is also a manufacturer.</p>
+        <p>There is a production process.</p>
+        <p>There is a supply chain.</p>
+        <p>And there are trust assumptions.</p>
+        <p>This does <strong>not</strong> mean hardware wallets are unsafe. Their key-isolation architecture provides a genuine security advantage against certain attacks.</p>
+        <p>Nor is it accurate to say that hardware wallets are completely closed source. Ledger, for example, publishes significant parts of its software ecosystem, while some critical lower-level components associated with its Secure Element are not fully public.</p>
+        <p>The important point is more subtle:</p>
+        <p><strong>“Hardware” does not automatically mean “safe.”</strong></p>
+        <p>And:</p>
+        <p><strong>“Software” does not automatically mean “unsafe.”</strong></p>
+        <p>They have different security architectures and different trust assumptions.</p>
+        <h2>Now Look at Software Wallets</h2>
+        <p>Nova publishes the source code for its mobile applications.</p>
+        <p>SubWallet publishes the source code for its extension and mobile wallet.</p>
+        <p>Polkadot.js Extension is open source.</p>
+        <p>The core MetaMask Extension source is also publicly available and has years of public development history.</p>
+        <p>None of this proves that these wallets cannot contain vulnerabilities.</p>
+        <p><strong>Open source does not mean perfectly secure.</strong></p>
+        <p>But openness provides an important security property:</p>
+        <p><strong>verifiability.</strong></p>
+        <p>Code can be inspected.</p>
+        <p>Changes can be tracked.</p>
+        <p>Development history can be examined.</p>
+        <p>Issues can be discovered publicly.</p>
+        <p>Independent developers and security researchers can challenge assumptions.</p>
+        <p>A piece of software that has existed publicly for years, with its source code exposed to continuous scrutiny, has a very different trust model from the simplistic assumption:</p>
+        <blockquote>Software = hot = dangerous.<br>Hardware = cold = safe.</blockquote>
+        <p>Security does not work like that.</p>
+        <h2>Security Is Layered</h2>
+        <p>A software wallet running inside a browser is not simply a private key lying naked on the internet.</p>
+        <p>There are multiple layers:</p>
+        <p><strong>Physical device → Operating system → Browser security and sandboxing → Extension environment → Wallet storage/encryption → Signing logic → User confirmation.</strong></p>
+        <p>An attacker trying to extract a key directly may have to compromise or bypass several layers of protection.</p>
+        <p>Modern operating systems and browsers themselves are products of decades of security engineering.</p>
+        <p>Of course, attackers look for shortcuts.</p>
+        <p>They may compromise the operating system.</p>
+        <p>They may trick you into installing a fake extension.</p>
+        <p>They may steal your seed through phishing.</p>
+        <p>They may replace an address.</p>
+        <p>They may imitate a legitimate dApp.</p>
+        <p>Or, easiest of all:</p>
+        <p><strong>they may persuade you to sign the wrong transaction yourself.</strong></p>
+        <p>That is why security should be understood as <strong>defense in depth</strong>, rather than a competition between “hardware” and “software.”</p>
+        <p>A hardware wallet adds another valuable layer.</p>
+        <p>It does not make all the other layers irrelevant.</p>
+        <p>And it certainly does not replace the need to understand what you are signing.</p>
+        <h2>Friction Can Be a Security Feature</h2>
+        <p>There is something in security that UX designers often treat as a problem:</p>
+        <p><strong>friction.</strong></p>
+        <p>I think that, in some situations:</p>
+        <p><strong>friction itself creates security.</strong></p>
+        <p>Imagine driving a long distance and beginning to fall asleep.</p>
+        <p>Every so often, something gives you a sharp wake-up call:</p>
+        <p><em>Wake up.</em></p>
+        <p><em>Look at the road.</em></p>
+        <p><em>What are you doing?</em></p>
+        <p>A good signing process should sometimes work the same way.</p>
+        <p><strong>Which network are you using?</strong></p>
+        <p><strong>Which token?</strong></p>
+        <p><strong>How much are you sending?</strong></p>
+        <p><strong>What is the recipient address?</strong></p>
+        <p><strong>What is the fee?</strong></p>
+        <p><strong>What will this transaction actually do?</strong></p>
+        <p><strong>Are you sure you want to sign it?</strong></p>
+        <p>Every checkpoint is another wake-up call.</p>
+        <p>Annoying?</p>
+        <p>Yes.</p>
+        <p>But that annoyance can prevent us from sleepwalking through the <strong>Confirm</strong> button.</p>
+        <h2>Sometimes UX Can Become Too Smooth</h2>
+        <p>In TestSwap, which we are currently experimenting with, some operations require more steps than users might ideally want.</p>
+        <p>Traditional UX thinking says this is bad.</p>
+        <p><strong>Fewer clicks are better.</strong></p>
+        <p>For financial transactions, I am not convinced that principle should always win.</p>
+        <p>If six steps merely repeat the same information, remove them.</p>
+        <p>But if those six steps force the user to see:</p>
+        <p><strong>Network → Token → Recipient → Amount → Review → Sign</strong></p>
+        <p>then they are not merely six UX steps.</p>
+        <p>They may also be <strong>six security checkpoints</strong>.</p>
+        <p>An interface that becomes too frictionless can train users into a dangerous behavioral loop:</p>
+        <p><strong>Confirm → Confirm → Confirm.</strong></p>
+        <p>Then one day a malicious transaction appears.</p>
+        <p>The finger does exactly what thousands of previous interactions have trained it to do.</p>
+        <p><strong>Confirm.</strong></p>
+        <h2>“Cold” Is a Behavior</h2>
+        <p>MetaMask can be hot.</p>
+        <p>Nova can be hot.</p>
+        <p>SubWallet can be hot.</p>
+        <p>And a Ledger can also be operationally hot if you connect it to dApps every day and continuously sign smart-contract interactions.</p>
+        <p>Meanwhile, an ordinary smartphone can be dedicated to a single key, kept offline, and brought out only under carefully controlled circumstances.</p>
+        <p>So instead of asking:</p>
+        <p><strong>“Do you use a hot wallet or a cold wallet?”</strong></p>
+        <p>Ask:</p>
+        <p><strong>Where was the key generated?</strong></p>
+        <p><strong>Where has the seed ever been exposed?</strong></p>
+        <p><strong>What devices have access to it?</strong></p>
+        <p><strong>Does the signing device normally connect to the internet?</strong></p>
+        <p><strong>Which dApps do you interact with?</strong></p>
+        <p><strong>How frequently do you sign?</strong></p>
+        <p><strong>What information do you verify before signing?</strong></p>
+        <p><strong>If you make a mistake, does the process force you to stop and look again?</strong></p>
+        <p>Those questions tell me far more about the security of your assets than the words <strong>“cold wallet.”</strong></p>
+        <h2>Don’t Buy Security in a Box</h2>
+        <p>You can buy a hardware wallet.</p>
+        <p>It can be an excellent security tool.</p>
+        <p>But <strong>nobody can sell you the state of being cold.</strong></p>
+        <p>The moment you receive that device, how you operate it begins to determine its actual security model.</p>
+        <p>That is why I object to simply marketing hardware wallets as <strong>“cold wallets.”</strong></p>
+        <p>It encourages a dangerously simple conclusion:</p>
+        <blockquote><strong>I bought a cold wallet. Therefore my crypto is safe.</strong></blockquote>
+        <p>No.</p>
+        <p>You bought another <strong>security tool</strong>.</p>
+        <p>How safe you actually are still depends on how you generate your keys, protect your seed, secure your devices, choose your dApps, inspect transactions, and—most importantly—how you behave before signing.</p>
+        <p>A good security process may deliberately make you uncomfortable.</p>
+        <p>It keeps waking you up:</p>
+        <p><strong>Read again.</strong></p>
+        <p><strong>Check again.</strong></p>
+        <p><strong>Understand first. Then sign.</strong></p>
+        <p>That is security.</p>
+        <p><strong>No device is inherently a “cold wallet.”</strong></p>
+        <p><strong>Your operational practices determine whether your keys remain cold or become hot.</strong></p>
+        <p>And if someone sells you a box while implying that the box itself guarantees “coldness,” they are selling you more than the box can actually guarantee.</p>
+        <p><strong>Security is not a product. It is a practice.</strong></p>
+    </div>
+    <footer class="article-footer-blocks"><a class="article-back" href="/research/">← Back to Research</a></footer>
+  </article></main>
+  <footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. All rights reserved.</p><ul class="social-list"><li><a href="https://facebook.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer"><img src="/public-images/facebook.svg" width="30" height="30" alt="Facebook"></a></li><li><a href="https://twitter.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X">X</a></li><li><a href="https://t.me/CypressCapital" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Telegram">Telegram</a></li></ul></div></div></footer>
+  <script src="/assets/js/script_1.js?v=1.5" defer></script>
+</body>
+</html>
