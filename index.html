@@ -87,11 +87,8 @@
             <a href="#moonbeam-legacy" class="navbar-link" data-nav-link>Moonbeam Legacy</a>
           </li>
           <li class="navbar-separator" aria-hidden="true"></li>
-          <li class="navbar-item mobile-language">
-            <a href="/" class="navbar-link language-link active" lang="en" aria-current="page" data-nav-link>🌐 English</a>
-          </li>
-          <li class="navbar-item mobile-language">
-            <a href="/vi/" class="navbar-link language-link" lang="vi" data-nav-link>🌐 Tiếng Việt</a>
+          <li class="navbar-item mobile-swap">
+            <a href="https://swap.cypress.work/?lang=en" class="navbar-link" target="_blank" rel="noopener noreferrer" data-nav-link>Learning Swap</a>
           </li>
         </ul>
       </nav>
@@ -109,7 +106,7 @@
       </button>
 
       <a href="https://swap.cypress.work/?lang=en"
-        class="x-btn btn-outline" target="_blank" rel="noopener noreferrer">Learning Swap</a>
+        class="x-btn btn-outline desktop-swap" target="_blank" rel="noopener noreferrer">Learning Swap</a>
 
     </div>
   </header>
@@ -138,20 +135,22 @@
                 <output class="chart-tooltip" data-chart-tooltip aria-live="polite" hidden></output>
                 <p class="chart-status" data-chart-status aria-live="polite">Loading chart…</p>
               </div>
-              <p class="chart-summary" data-chart-summary>Loading bounded CP chart data.</p>
-              <p class="chart-attribution">
-                Source: <a href="https://www.coingecko.com/en/coins/cypress" target="_blank" rel="noopener noreferrer">CoinGecko</a>
-                <span aria-hidden="true">·</span>
-                <a href="https://www.geckoterminal.com/base/pools/0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9" target="_blank" rel="noopener noreferrer">GeckoTerminal</a>
-                <span aria-hidden="true">·</span>
-                Charts by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>
-                <span aria-hidden="true">·</span>
-                <a href="https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440" target="_blank" rel="noopener noreferrer">Trading</a>
-                <span aria-hidden="true">·</span>
-                <a href="https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A10000%2C%22tickSpacing%22%3A200%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D" target="_blank" rel="noopener noreferrer">Provide liquidity</a>
-                <span aria-hidden="true">·</span>
-                <button class="chart-footer-action" type="button" data-lp-open>Liquidity Returns</button>
-              </p>
+              <div class="chart-footer">
+                <p class="chart-actions" aria-label="Chart actions">
+                  <a href="https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440" target="_blank" rel="noopener noreferrer">Trading</a>
+                  <span aria-hidden="true">·</span>
+                  <a href="https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A10000%2C%22tickSpacing%22%3A200%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D" target="_blank" rel="noopener noreferrer">Provide liquidity</a>
+                  <span aria-hidden="true">·</span>
+                  <button class="chart-footer-action" type="button" data-lp-open>Liquidity Returns</button>
+                </p>
+                <p class="chart-attribution">
+                  Source: <a href="https://www.coingecko.com/en/coins/cypress" target="_blank" rel="noopener noreferrer">CoinGecko</a>
+                  <span aria-hidden="true">·</span>
+                  <a href="https://www.geckoterminal.com/base/pools/0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9" target="_blank" rel="noopener noreferrer">GeckoTerminal</a>
+                  <span aria-hidden="true">·</span>
+                  Charts by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>
+                </p>
+              </div>
             </div>
             <dialog class="lp-dialog" data-lp-dialog aria-labelledby="lp-calculator-title">
               <section class="lp-calculator" data-lp-calculator data-language="en">

@@ -18,16 +18,12 @@
     en: {
       loading: "Loading chart…", empty: "No candles are available for this timeframe.",
       error: "Chart data is temporarily unavailable.", stale: "Showing last-known-good chart data.",
-      partial: "Available market history is partial.", fresh: "Chart data is current.",
-      synthetic: "Historical · close-derived synthetic OHLC", real: "Current · GeckoTerminal real OHLCV",
-      candle: "candle", candles: "candles"
+      partial: "Available market history is partial.", fresh: "Chart data is current."
     },
     vi: {
       loading: "Đang tải biểu đồ…", empty: "Chưa có nến cho khung thời gian này.",
       error: "Dữ liệu biểu đồ tạm thời không khả dụng.", stale: "Đang hiển thị dữ liệu biểu đồ tốt gần nhất.",
-      partial: "Lịch sử thị trường hiện có chưa đầy đủ.", fresh: "Dữ liệu biểu đồ đang cập nhật.",
-      synthetic: "Lịch sử · OHLC tổng hợp từ giá đóng cửa", real: "Hiện tại · OHLCV thực từ GeckoTerminal",
-      candle: "nến", candles: "nến"
+      partial: "Lịch sử thị trường hiện có chưa đầy đủ.", fresh: "Dữ liệu biểu đồ đang cập nhật."
     }
   };
 
@@ -145,31 +141,23 @@
     return formatDisplayUsd(value);
   }
 
-  function provenanceText(candle, locale) {
-    const copy = COPY[language(locale)];
-    return candle.source === "coingecko_csv" ? copy.synthetic : copy.real;
-  }
-
   function tooltipText(candle, locale) {
     const date = new Intl.DateTimeFormat(language(locale) === "vi" ? "vi-VN" : "en-US", {
       dateStyle: "medium", timeStyle: "short", timeZone: "UTC"
     }).format(new Date(candle.time));
     return date + " UTC\nO " + formatUsd(candle.open) + "  H " + formatUsd(candle.high)
-      + "  L " + formatUsd(candle.low) + "  C " + formatUsd(candle.close) + "\n" + provenanceText(candle, locale);
+      + "  L " + formatUsd(candle.low) + "  C " + formatUsd(candle.close);
   }
 
   function renderTooltip(tooltip, candle, locale) {
     const lines = tooltipText(candle, locale).split("\n");
     const date = document.createElement("span");
     const values = document.createElement("span");
-    const provenance = document.createElement("span");
     date.className = "chart-tooltip-date";
     values.className = "chart-tooltip-values";
-    provenance.className = "chart-tooltip-source";
     date.textContent = lines[0];
     values.textContent = lines[1];
-    provenance.textContent = lines[2];
-    tooltip.replaceChildren(date, values, provenance);
+    tooltip.replaceChildren(date, values);
     tooltip.hidden = false;
   }
 
@@ -250,7 +238,6 @@
     const canvas = rootElement.querySelector("[data-chart-canvas]");
     const tooltip = rootElement.querySelector("[data-chart-tooltip]");
     const status = rootElement.querySelector("[data-chart-status]");
-    const summary = rootElement.querySelector("[data-chart-summary]");
     const buttons = Array.from(rootElement.querySelectorAll("[data-chart-timeframe]"));
     let chart;
     let series;
@@ -302,9 +289,6 @@
       const last = snapshot.candles[snapshot.candles.length - 1];
       renderTooltip(tooltip, last, locale);
       rootElement.classList.toggle("is-stale", options.stale);
-      const countWord = snapshot.candle_count === 1 ? copy.candle : copy.candles;
-      summary.textContent = snapshot.timeframe + ": " + snapshot.candle_count + " " + countWord
-        + ". " + (snapshot.partial_history ? copy.partial : copy.fresh);
       window.clearTimeout(freshnessTimer);
       if (!options.stale) {
         const staleAt = Date.parse(snapshot.updated_at) + snapshot.freshness.stale_after_seconds * 1000;
@@ -358,6 +342,6 @@
   return {
     TIMEFRAMES, MAX_RESPONSE_BYTES, ENDPOINT_BASE, COPY,
     endpointFor, validateSnapshot, fetchSnapshot, formatUsd, formatAxisUsd, compareDecimals,
-    provenanceText, tooltipText, chartPoints, snapshotIsStale, createCoordinator
+    tooltipText, chartPoints, snapshotIsStale, createCoordinator
   };
 });

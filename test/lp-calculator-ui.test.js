@@ -76,11 +76,11 @@ test("financial formatting uses decimal strings without floating-point loss", ()
   assert.equal(calculator.formatDecimal("1000.000000", 2), "1,000");
 });
 
-test("English and Vietnamese pages expose modest calculator actions within chart attribution", () => {
+test("English and Vietnamese pages expose modest calculator actions before chart attribution", () => {
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
   for (const html of [english, vietnamese]) {
-    assert.match(html, /chart-attribution[\s\S]*?Trading[\s\S]*?positions\/create\/v3[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
+    assert.match(html, /chart-actions[\s\S]*?(?:Trading|Mua bán)[\s\S]*?positions\/create\/v3[\s\S]*?data-lp-open[\s\S]*?<\/p>[\s\S]*?chart-attribution/);
     assert.doesNotMatch(html, /lp-actions|lp-action-primary|lp-action-secondary/);
     assert.match(html, /positions\/create\/v3\?chain=base/);
     assert.match(html, /data-lp-open/);

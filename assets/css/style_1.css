@@ -398,6 +398,29 @@ body.active {
 }
 
 .desktop-language {
+  align-items: center;
+  color: var(--white_50);
+  display: flex;
+  flex-shrink: 0;
+  font-size: var(--fs-8);
+  gap: 5px;
+  margin-inline-start: auto;
+}
+
+.desktop-language a {
+  color: var(--cadet-blue-crayola);
+  padding-block: 8px;
+}
+
+.desktop-language a:is(:hover, :focus, .active) {
+  color: var(--white);
+}
+
+.desktop-language a.active {
+  box-shadow: inset 0 -2px var(--blue-crayola);
+}
+
+.desktop-swap {
   display: none;
 }
 
@@ -440,7 +463,7 @@ body.active {
 
 .nav-toggle-btn {
   padding: 8px 5px;
-  margin-inline-start: auto;
+  margin-inline-start: 0;
 }
 
 .nav-toggle-btn.active .line-1 {
@@ -566,10 +589,10 @@ body.active {
   gap: 2px;
   font-size: var(--fs-8);
   font-variant-numeric: tabular-nums;
-  inset: 10px auto auto 10px;
+  inset: auto auto 10px 10px;
   line-height: 1.4;
   max-width: min(410px, calc(100% - 20px));
-  padding: 7px 9px;
+  padding: 5px 7px;
   pointer-events: none;
   position: absolute;
   z-index: 2;
@@ -579,8 +602,7 @@ body.active {
   display: none;
 }
 
-.chart-tooltip-date,
-.chart-tooltip-source {
+.chart-tooltip-date {
   color: var(--roman-silver);
   font-size: 1.05rem;
 }
@@ -599,21 +621,35 @@ body.active {
   width: calc(100% - 32px);
 }
 
-.chart-summary,
-.chart-attribution {
-  color: var(--roman-silver);
-  font-size: var(--fs-8);
-  line-height: 1.5;
+.chart-footer {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
   margin-block-start: 7px;
 }
 
+.chart-actions,
 .chart-attribution {
   align-items: baseline;
   display: flex;
   flex-wrap: wrap;
   gap: 0 2px;
+  margin: 0;
 }
 
+.chart-actions {
+  font-size: var(--fs-7);
+  font-weight: var(--fw-700);
+}
+
+.chart-attribution {
+  color: var(--roman-silver);
+  font-size: var(--fs-8);
+  line-height: 1.5;
+}
+
+.chart-actions a,
 .chart-attribution a,
 .chart-footer-action {
   color: hsl(214, 100%, 74%);
@@ -644,6 +680,7 @@ body.active {
   outline-offset: 2px;
 }
 
+.chart-actions span,
 .chart-attribution span {
   margin-inline: 5px;
 }
@@ -962,7 +999,13 @@ body.active {
   .chart-tooltip {
     font-size: 1.1rem;
     max-width: calc(100% - 12px);
-    inset: 6px auto auto 6px;
+    inset: auto auto 6px 6px;
+  }
+
+  .chart-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
   }
 
   .market-metrics {
@@ -1617,31 +1660,19 @@ body.active {
     padding: 12px 10px;
   }
 
-  .mobile-language,
+  .mobile-swap,
   .navbar-separator {
     display: none;
   }
 
   .desktop-language {
-    align-items: center;
-    color: var(--white_50);
-    display: flex;
-    flex-shrink: 0;
     font-size: var(--fs-7);
     gap: 7px;
+    margin-inline-start: 0;
   }
 
-  .desktop-language a {
-    color: var(--cadet-blue-crayola);
-    padding-block: 8px;
-  }
-
-  .desktop-language a:is(:hover, :focus, .active) {
-    color: var(--white);
-  }
-
-  .desktop-language a.active {
-    box-shadow: inset 0 -2px var(--blue-crayola);
+  .desktop-swap {
+    display: block;
   }
 
   /*-----------------------------------*\
@@ -1985,8 +2016,8 @@ blockquote cite:before {
 }
 
 .nav-normal:is(:hover, :focus, .active) {
-  background-color: var(--blue-crayola);
-  color: var(--white);
+  color: hsl(214, 100%, 74%);
+  box-shadow: inset 0 -2px currentColor;
 }
 
 .dropbtn:is(:hover, :focus, .active) {

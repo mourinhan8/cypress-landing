@@ -57,8 +57,10 @@ test("tooltip uses compact display prices without mutating exact OHLC values", (
   const vietnamese = chart.tooltipText(historical, "vi");
   assert.match(english, /O \$0\.01  H \$0\.012346  L \$0\.009877  C \$0\.011111/);
   assert.doesNotMatch(english, /\d+\.\d{7,}/);
-  assert.match(english, /close-derived synthetic OHLC/);
-  assert.match(vietnamese, /OHLC tổng hợp từ giá đóng cửa/);
+  assert.equal(english.split("\n").length, 2);
+  assert.equal(vietnamese.split("\n").length, 2);
+  assert.doesNotMatch(english, /Historical|Current|synthetic|GeckoTerminal/);
+  assert.doesNotMatch(vietnamese, /Lịch sử|Hiện tại|tổng hợp|GeckoTerminal/);
   assert.equal(chart.formatUsd("1.230000"), "$1.23");
   assert.equal(chart.formatUsd("0.0000001234567"), "$0.0000001235");
   assert.notEqual(chart.formatUsd("0.0000001234567"), "$0");
@@ -162,12 +164,13 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /coingecko\.com\/en\/coins\/cypress/);
     assert.match(html, /geckoterminal\.com\/base\/pools\/0x962265/);
     assert.match(html, /tradingview\.com/);
-    assert.match(html, /Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>(?:Trading|Mua bán)<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>/);
+    assert.match(html, /class="chart-actions"[\s\S]*?<a[^>]+>(?:Trading|Mua bán)<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>[\s\S]*?class="chart-attribution"[\s\S]*?Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>/);
     assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.equal((html.match(new RegExp(liquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.doesNotMatch(html, /(?:minTick|maxTick|depositState|hook=undefined)/);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
+    assert.doesNotMatch(html, /chart-summary|data-chart-summary/);
   }
   assert.match(english, />Trading<\/a>/);
   assert.match(english, /data-lp-open>Liquidity Returns<\/button>/);
