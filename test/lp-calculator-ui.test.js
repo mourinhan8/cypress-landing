@@ -7,7 +7,7 @@ const path = require("node:path");
 
 const root = path.join(__dirname, "..");
 const pricePath = JSON.parse(fs.readFileSync(path.join(root, "data/comparison/price-path-v2.json"), "utf8"));
-const feeWindow = JSON.parse(fs.readFileSync(path.join(root, "data/comparison/reference-fee-window-v1.json"), "utf8"));
+const feeWindow = JSON.parse(fs.readFileSync(path.join(root, "data/comparison/reference-fee-window-v2.json"), "utf8"));
 let ui;
 
 test.before(async () => {
@@ -17,12 +17,12 @@ test.before(async () => {
 test("all four periods use exact Step 3A results", () => {
   const comparison = ui.buildComparisonResults(pricePath, feeWindow);
   assert.deepEqual(Object.keys(comparison.periods), ["7D", "30D", "6M", "1Y"]);
-  assert.equal(comparison.referenceApr.lpNetAprPercent.decimal, "0.395965604483489442492957090429168111");
+  assert.equal(comparison.referenceApr.lpNetAprPercent.decimal, "0.468003116766281838246968803629169812");
   const expected = {
-    "7D": ["0.014712000486675314", "0.015448580969905454573194645155919808", "1050.066643479060708068020842295638346408", "1024.804783865627956063306006011651781847", "0.077189097603419252521561988854071904", "25.26185961343275200471483628398656456"],
-    "30D": ["0.014111046838413145", "0.015448580969905454573194645155919808", "1094.786315062839215349361485004681562974", "1046.65345817563831429132685496716924509", "0.333088946959284199221582093132529263", "48.132856887200901058034630037512317883"],
-    "6M": ["0.012904999794865344", "0.015448580969905454573194645155919808", "1197.100442888201636769743074259434706061", "1096.130054312935478337964863424898406464", "2.009200436088089066570668460507757701", "100.970388575266158431778210834536299597"],
-    "1Y": ["0.017437560450345304", "0.015448580969905454573194645155919808", "885.937056040401394794629680706950227539", "944.682453728624739258810154828024560629", "3.440159714803134046051491894263070468", "-58.745397688223344464180474121074333089"]
+    "7D": ["0.014712000486675314", "0.015448580969905454573194645155919808", "1050.066643479060708068020842295638346408", "1024.818826778708644696214522542018723018", "0.091232010684107885430078519221013075", "25.247816700352063371806319753619623389"],
+    "30D": ["0.014111046838413145", "0.015448580969905454573194645155919808", "1094.786315062839215349361485004681562974", "1046.714056618624647803535729525976763789", "0.393687389945617711430456651940047962", "48.072258444214567545825755478704799184"],
+    "6M": ["0.012904999794865344", "0.015448580969905454573194645155919808", "1197.100442888201636769743074259434706061", "1096.495585559726694716791213230217599675", "2.374731682879305445397018265826950912", "100.604857328474942052951861029217106385"],
+    "1Y": ["0.017437560450345304", "0.015448580969905454573194645155919808", "885.937056040401394794629680706950227539", "945.308317553421248104761039529178416077", "4.066023539599642892002376595416925916", "-59.371261513019853310131358822228188537"]
   };
   for (const period of ui.PERIODS) {
     const result = comparison.periods[period];
@@ -38,14 +38,17 @@ test("all four periods use exact Step 3A results", () => {
   }
 });
 
-test("display formatting includes USD, percent, conclusion and partial-window APR", () => {
+test("display formatting uses exact better wording and full-window V2 APR", () => {
   const comparison = ui.buildComparisonResults(pricePath, feeWindow);
   assert.equal(ui.formatUsd("1050.066643"), "$1,050.07");
   assert.equal(ui.formatSignedUsd("-114.062943"), "−$114.06");
   assert.equal(ui.formatSignedPercent("5.006664"), "+5.01%");
-  assert.equal(ui.conclusionText(comparison.periods["7D"], "en"), "Hold ahead by $25.26");
-  assert.equal(ui.referenceAprText(comparison.referenceApr, "en"), "Reference fee APR: 0.40% (estimate) · 3.31 days observed");
-  assert.equal(ui.referenceAprText(comparison.referenceApr, "vi"), "APR phí tham chiếu: 0,40% (ước tính) · 3,31 ngày quan sát");
+  assert.equal(ui.conclusionText(comparison.periods["7D"], "en"), "Holding Cypress is better by $25.25");
+  assert.equal(ui.conclusionText(comparison.periods["7D"], "vi"), "Giữ Cypress tốt hơn $25.25");
+  assert.equal(ui.conclusionText(comparison.periods["1Y"], "en"), "LP 50/50 is better by $59.37");
+  assert.equal(ui.conclusionText(comparison.periods["1Y"], "vi"), "LP 50/50 tốt hơn $59.37");
+  assert.equal(ui.referenceAprText(comparison.referenceApr, "en"), "Reference fee APR: 0.47% (estimate) · 7.00 days observed");
+  assert.equal(ui.referenceAprText(comparison.referenceApr, "vi"), "APR phí tham chiếu: 0,47% (ước tính) · 7,00 ngày quan sát");
 });
 
 function fixture() {
@@ -73,10 +76,10 @@ test("rendering each selector updates ending values, P/L, fees and conclusion", 
   const comparison = ui.buildComparisonResults(pricePath, feeWindow);
   const view = fixture();
   const expected = {
-    "7D": ["$1,050.07","+$50.07","+5.01%","$1,024.80","+$24.80","+2.48%","$0.08","Hold ahead by $25.26"],
-    "30D": ["$1,094.79","+$94.79","+9.48%","$1,046.65","+$46.65","+4.67%","$0.33","Hold ahead by $48.13"],
-    "6M": ["$1,197.10","+$197.10","+19.71%","$1,096.13","+$96.13","+9.61%","$2.01","Hold ahead by $100.97"],
-    "1Y": ["$885.94","−$114.06","−11.41%","$944.68","−$55.32","−5.53%","$3.44","LP 50/50 ahead by $58.75"]
+    "7D": ["$1,050.07","+$50.07","+5.01%","$1,024.82","+$24.82","+2.48%","$0.09","Holding Cypress is better by $25.25"],
+    "30D": ["$1,094.79","+$94.79","+9.48%","$1,046.71","+$46.71","+4.67%","$0.39","Holding Cypress is better by $48.07"],
+    "6M": ["$1,197.10","+$197.10","+19.71%","$1,096.50","+$96.50","+9.65%","$2.37","Holding Cypress is better by $100.60"],
+    "1Y": ["$885.94","−$114.06","−11.41%","$945.31","−$54.69","−5.47%","$4.07","LP 50/50 is better by $59.37"]
   };
   for (const period of ui.PERIODS) {
     ui.renderPeriod(view.root, comparison, period, "en");
@@ -109,7 +112,7 @@ test("EN and VI dialogs are localized, accessible and concise", () => {
     assert.match(dialog, /<details class="lp-explanation">/);
     assert.doesNotMatch(dialog, /<details[^>]+open/);
     assert.doesNotMatch(dialog, /data-lp-boundary|fee-growth|NFT position|full range/i);
-    assert.match(html, /lp-calculator\.mjs\?v=3\.0/);
+    assert.match(html, /lp-calculator\.mjs\?v=4\.0/);
   }
   assert.match(english, /Liquidity Returns/);
   assert.match(english, /<h3>LP 50\/50<\/h3>/);
@@ -125,6 +128,7 @@ test("EN and VI dialogs are localized, accessible and concise", () => {
   assert.match(vietnamese, /phí thu được cũng có thể cao hơn khi vị thế nằm trong vùng giao dịch/);
   assert.match(vietnamese, /Kết quả mô phỏng dựa trên dữ liệu giá lịch sử, sử dụng giá trung bình theo ngày và nội suy tuyến tính cho các ngày không có dữ liệu\./);
   assert.match(vietnamese, /Vì sao LP có thể khác Hold/);
+  assert.doesNotMatch(fs.readFileSync(path.join(root, "assets/js/lp-calculator.mjs"), "utf8"), /ahead|dẫn trước/);
 });
 
 test("responsive styles provide stacked cards and visible focus", () => {
@@ -169,7 +173,7 @@ test("browser module graph uses production-executable MIME routes", () => {
   }
   assert.deepEqual([...visited].sort(), ["/assets/js/lp-calculator.mjs", "/tools/comparison/hold-vs-rebalanced-lp.mjs",
     "/tools/comparison/reference-fee.mjs"]);
-  for (const asset of ["/data/comparison/price-path-v2.json", "/data/comparison/reference-fee-window-v1.json"]) {
-    assert.ok(nginx.includes("location = " + asset + " {"));
-  }
+  assert.ok(nginx.includes("location = /data/comparison/price-path-v2.json {"));
+  assert.equal(path.extname(ui.REFERENCE_FEE_URL), ".json");
+  assert.ok(fs.existsSync(path.join(root, ui.REFERENCE_FEE_URL)));
 });

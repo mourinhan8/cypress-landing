@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 2,
+  "kind": "cypress-v2-reference-fee-window",
+  "generatedAt": "2026-09-14T06:36:28.273Z",
+  "identity": {
+    "chainId": 8453,
+    "dex": "uniswap-v2-base",
+    "pool": "0xa290c53cc25f0b857d21421b2f757f9a3434f80e",
+    "token0": "0x4200000000000000000000000000000000000006",
+    "token1": "0x934ef4bfffdce191ac4bcc351b2fe7892865b440",
+    "lpFeeFraction": {
+      "numerator": "1",
+      "denominator": "400"
+    }
+  },
+  "window": {
+    "requestedDays": 7,
+    "poolCreatedAt": "2026-09-06T04:52:55.000Z",
+    "startTimestamp": "2026-09-07T00:00:00.000Z",
+    "endTimestamp": "2026-09-14T00:00:00.000Z",
+    "partial": false,
+    "latestBoundaryBlock": {
+      "blockNumber": "51277326",
+      "blockHash": "0x9e5b0c15c5de18eff8fd990568a7575809905b96cb5130cd44a838d01955b531",
+      "timestamp": "2026-09-13T23:59:59.000Z"
+    }
+  },
+  "volume": {
+    "source": "geckoterminal_daily_ohlcv",
+    "endpoint": "https://api.geckoterminal.com/api/v2/networks/base/pools/0xa290c53cc25f0b857d21421b2f757f9a3434f80e/ohlcv/day?aggregate=1&limit=10&currency=usd",
+    "coverageStart": "2026-09-07T00:00:00.000Z",
+    "coverageEnd": "2026-09-14T00:00:00.000Z",
+    "sparseIntervalsMeanZeroVolume": true,
+    "intervals": [
+      {
+        "startTimestamp": "2026-09-07T00:00:00.000Z",
+        "endTimestamp": "2026-09-08T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "343802290932809",
+          "denominator": "100000000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-07T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      },
+      {
+        "startTimestamp": "2026-09-08T00:00:00.000Z",
+        "endTimestamp": "2026-09-09T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "103204803137129",
+          "denominator": "10000000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-08T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      },
+      {
+        "startTimestamp": "2026-09-09T00:00:00.000Z",
+        "endTimestamp": "2026-09-10T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "713419809461223",
+          "denominator": "25000000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-09T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      },
+      {
+        "startTimestamp": "2026-09-10T00:00:00.000Z",
+        "endTimestamp": "2026-09-11T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "647643853173859",
+          "denominator": "100000000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-10T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      },
+      {
+        "startTimestamp": "2026-09-11T00:00:00.000Z",
+        "endTimestamp": "2026-09-12T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "9293411709817319",
+          "denominator": "100000000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-11T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      },
+      {
+        "startTimestamp": "2026-09-12T00:00:00.000Z",
+        "endTimestamp": "2026-09-13T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": null,
+        "missingCandleMeansZeroSwaps": true
+      },
+      {
+        "startTimestamp": "2026-09-13T00:00:00.000Z",
+        "endTimestamp": "2026-09-14T00:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "4000478478379",
+          "denominator": "200000000000"
+        },
+        "finalized": true,
+        "sourceCandleTimestamp": "2026-09-13T00:00:00.000Z",
+        "missingCandleMeansZeroSwaps": false
+      }
+    ]
+  },
+  "tvl": {
+    "method": "daily_block_pinned_v2_reserves_geckoterminal_price_trapezoidal",
+    "reserveMethod": "UniswapV2Pair_getReserves_at_pinned_block",
+    "priceMethod": "GeckoTerminal_CP_USD_daily_boundary_with_no_swap_carry_forward",
+    "valuationMethod": "two_times_CP_reserve_times_CP_USD_price",
+    "snapshots": [
+      {
+        "blockNumber": "50974926",
+        "blockHash": "0x1847c0663f1a6aad94d5f49dfeae89f96a2e7f1ff10c7bef88543ac50c776eb4",
+        "timestamp": "2026-09-07T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-06T23:59:59.000Z",
+        "token0WethReserveRaw": "903511383588773342",
+        "token1CpReserveRaw": "145582088647789307620525",
+        "cpPriceUsd": {
+          "numerator": "155958605587607",
+          "denominator": "10000000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-07T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "908191181761624444578979202023953347",
+          "denominator": "200000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51018126",
+        "blockHash": "0x012262250d606fbfecceaebf5cd2c29e21aa0c575e92af4dd18e50838108ad0f",
+        "timestamp": "2026-09-08T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-07T23:59:59.000Z",
+        "token0WethReserveRaw": "902145598343236313",
+        "token1CpReserveRaw": "145803152925608122254814",
+        "cpPriceUsd": {
+          "numerator": "38880353524891",
+          "denominator": "2500000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-08T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "2834439065395694637604848583896787637",
+          "denominator": "625000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51061326",
+        "blockHash": "0x7ca5287755945fe9941072ee3ea449ba5ced2bded0e83436fdc9d09659056128",
+        "timestamp": "2026-09-09T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-08T23:59:59.000Z",
+        "token0WethReserveRaw": "906346378620370471",
+        "token1CpReserveRaw": "145129398129941958599959",
+        "cpPriceUsd": {
+          "numerator": "153173282770933",
+          "denominator": "10000000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-09T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "22229946338132914556774389064780191747",
+          "denominator": "5000000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51104526",
+        "blockHash": "0xe04e2e41b9d277c9df486c9fd3eec925267cbc003e92df2f3d62b7eb74886cb3",
+        "timestamp": "2026-09-10T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-09T23:59:59.000Z",
+        "token0WethReserveRaw": "915104812071961358",
+        "token1CpReserveRaw": "143745857595745326003604",
+        "cpPriceUsd": {
+          "numerator": "78378201384553",
+          "denominator": "5000000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-10T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "2816635443708651170584413346766982253",
+          "denominator": "625000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51147726",
+        "blockHash": "0xb625273e190f8042c5e13c3719022a772fbb869837fcbbe083e4ce82249c9352",
+        "timestamp": "2026-09-11T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-10T23:59:59.000Z",
+        "token0WethReserveRaw": "915103119054594073",
+        "token1CpReserveRaw": "143747373766047429474641",
+        "cpPriceUsd": {
+          "numerator": "77085166405147",
+          "denominator": "5000000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-11T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "11080790227058628504118812184768377227",
+          "denominator": "2500000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51190926",
+        "blockHash": "0x7615b17c628375c13549409353085ac16406269c5c55559e36746edc90d6ad1c",
+        "timestamp": "2026-09-12T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-11T23:59:59.000Z",
+        "token0WethReserveRaw": "899908216138259055",
+        "token1CpReserveRaw": "146192328689161712219275",
+        "cpPriceUsd": {
+          "numerator": "38755936677327",
+          "denominator": "2500000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-11T00:00:00.000Z",
+        "priceField": "close_carried_forward_no_swaps",
+        "tvlUsd": {
+          "numerator": "226632825335525065058578996749795117",
+          "denominator": "50000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51234126",
+        "blockHash": "0xe64ae81d8babdfcd98fc5622a9f00f59599307e7fcde6b18f246db8e70a14041",
+        "timestamp": "2026-09-13T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-12T23:59:59.000Z",
+        "token0WethReserveRaw": "899908216138259055",
+        "token1CpReserveRaw": "146192328689161712219275",
+        "cpPriceUsd": {
+          "numerator": "38755936677327",
+          "denominator": "2500000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-13T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "226632825335525065058578996749795117",
+          "denominator": "50000000000000000000000000000000"
+        }
+      },
+      {
+        "blockNumber": "51277326",
+        "blockHash": "0x9e5b0c15c5de18eff8fd990568a7575809905b96cb5130cd44a838d01955b531",
+        "timestamp": "2026-09-14T00:00:00.000Z",
+        "stateBlockTimestamp": "2026-09-13T23:59:59.000Z",
+        "token0WethReserveRaw": "907849045137832284",
+        "token1CpReserveRaw": "144917407493492657490383",
+        "cpPriceUsd": {
+          "numerator": "3922280149519",
+          "denominator": "250000000000000"
+        },
+        "priceSourceTimestamp": "2026-09-14T00:00:00.000Z",
+        "priceField": "open",
+        "tvlUsd": {
+          "numerator": "568406670731482231640908088544575777",
+          "denominator": "125000000000000000000000000000000"
+        }
+      }
+    ]
+  }
+}

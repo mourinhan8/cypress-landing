@@ -1,8 +1,8 @@
-import { calculateReferenceApr, projectAllPeriodFees } from "../../tools/comparison/reference-fee.mjs";
+import { calculateV2ReferenceApr, projectAllPeriodFees } from "../../tools/comparison/reference-fee.mjs";
 
 export const PERIODS = Object.freeze(["7D", "30D", "6M", "1Y"]);
 export const PRICE_PATH_URL = "/data/comparison/price-path-v2.json";
-export const REFERENCE_FEE_URL = "/data/comparison/reference-fee-window-v1.json";
+export const REFERENCE_FEE_URL = "/data/comparison/reference-fee-window-v2.json";
 export const MAX_DATASET_BYTES = 1_000_000;
 
 const XYK_INTERNAL_DECIMALS = 72;
@@ -196,8 +196,8 @@ const TEXT = Object.freeze({
   en: {
     unavailable: "Comparison data is unavailable.",
     ready: "Comparison ready.",
-    holdAhead: "Hold ahead by",
-    liquidityAhead: "LP 50/50 ahead by",
+    holdAhead: "Holding Cypress is better by",
+    liquidityAhead: "LP 50/50 is better by",
     tie: "Hold and LP 50/50 finish equal",
     apr: "Reference fee APR",
     estimate: "estimate",
@@ -207,8 +207,8 @@ const TEXT = Object.freeze({
   vi: {
     unavailable: "Dữ liệu so sánh hiện không khả dụng.",
     ready: "Đã tải kết quả so sánh.",
-    holdAhead: "Hold dẫn trước",
-    liquidityAhead: "LP 50/50 dẫn trước",
+    holdAhead: "Giữ Cypress tốt hơn",
+    liquidityAhead: "LP 50/50 tốt hơn",
     tie: "Hold và LP 50/50 có kết quả bằng nhau",
     apr: "APR phí tham chiếu",
     estimate: "ước tính",
@@ -270,7 +270,7 @@ export async function fetchComparisonData(options = {}) {
 }
 
 export function buildComparisonResults(pricePath, referenceFeeWindow) {
-  const referenceApr = calculateReferenceApr(referenceFeeWindow);
+  const referenceApr = calculateV2ReferenceApr(referenceFeeWindow);
   if (!referenceApr.available || referenceApr.status !== "available") throw new Error("Reference fee APR is unavailable");
   const existingFeeProjection = projectAllPeriodFees(pricePath, referenceApr);
   const estimatedFees = Object.fromEntries(PERIODS.map(period => [period,
@@ -296,10 +296,8 @@ export function referenceAprText(referenceApr, language) {
   const text = TEXT[language === "vi" ? "vi" : "en"];
   const apr = numeric(referenceApr.lpNetAprPercent.decimal).toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   let rendered = text.apr + ": " + apr + "% (" + text.estimate + ")";
-  if (referenceApr.window.partial || numeric(referenceApr.window.durationDays.decimal) < 7) {
-    const days = numeric(referenceApr.window.durationDays.decimal).toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    rendered += " · " + days + " " + text.window;
-  }
+  const days = numeric(referenceApr.window.durationDays.decimal).toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  rendered += " · " + days + " " + text.window;
   return rendered;
 }
 

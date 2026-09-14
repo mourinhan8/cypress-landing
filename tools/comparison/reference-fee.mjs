@@ -12,9 +12,13 @@ const POSITIVE_INTEGER = /^[1-9]\d*$/;
 const NON_NEGATIVE_INTEGER = /^(?:0|[1-9]\d*)$/;
 const POOL = "0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9";
 const INITIALIZATION = "2026-09-06T05:36:17.000Z";
+const V2_POOL = "0xa290c53cc25f0b857d21421b2f757f9a3434f80e";
+const V2_POOL_CREATED_AT = "2026-09-06T04:52:55.000Z";
 
 export const REFERENCE_FEE_SCHEMA_VERSION = 1;
 export const FEE_TIER_FRACTION = Object.freeze({ numerator: 1n, denominator: 100n });
+export const V2_REFERENCE_FEE_SCHEMA_VERSION = 2;
+export const V2_LP_FEE_FRACTION = Object.freeze({ numerator: 1n, denominator: 400n });
 
 function gcd(left, right) {
   let a = left < 0n ? -left : left;
@@ -254,6 +258,115 @@ export function calculateReferenceApr(cache) {
     };
   } catch (error) {
     return unavailable(["invalid_or_incomplete_reference_data"], { detail: error.message });
+  }
+}
+
+function validateV2Window(cache) {
+  if (!cache || cache.schemaVersion !== V2_REFERENCE_FEE_SCHEMA_VERSION
+      || cache.kind !== "cypress-v2-reference-fee-window" || cache.identity?.chainId !== 8453
+      || cache.identity?.dex !== "uniswap-v2-base" || cache.identity?.pool?.toLowerCase() !== V2_POOL
+      || cache.identity?.token0?.toLowerCase() !== "0x4200000000000000000000000000000000000006"
+      || cache.identity?.token1?.toLowerCase() !== "0x934ef4bfffdce191ac4bcc351b2fe7892865b440") {
+    throw new Error("V2 reference-fee cache identity mismatch");
+  }
+  const configuredFee = parseRational(cache.identity.lpFeeFraction, "V2 LP fee fraction", false);
+  if (compare(configuredFee, V2_LP_FEE_FRACTION) !== 0) throw new Error("V2 LP fee fraction must equal 0.0025");
+  const startMs = timestamp(cache.window?.startTimestamp, "V2 window start");
+  const endMs = timestamp(cache.window?.endTimestamp, "V2 window end");
+  const durationSeconds = BigInt(endMs - startMs) / 1000n;
+  if (cache.window?.poolCreatedAt !== V2_POOL_CREATED_AT || cache.window?.requestedDays !== 7
+      || cache.window?.partial !== false || startMs < Date.parse(V2_POOL_CREATED_AT)
+      || durationSeconds !== 7n * DAY_SECONDS) throw new Error("V2 reference-fee window policy mismatch");
+  return { startMs, endMs, durationSeconds };
+}
+
+function calculateV2AverageTvl(cache, window) {
+  const snapshots = cache.tvl?.snapshots;
+  if (cache.tvl?.method !== "daily_block_pinned_v2_reserves_geckoterminal_price_trapezoidal"
+      || cache.tvl?.reserveMethod !== "UniswapV2Pair_getReserves_at_pinned_block"
+      || !Array.isArray(snapshots) || snapshots.length !== 8) throw new Error("V2 liquidity snapshots are incomplete");
+  let weighted = rational(0n);
+  let priorMs = null;
+  for (const [index, snapshot] of snapshots.entries()) {
+    const currentMs = timestamp(snapshot.timestamp, "V2 liquidity snapshot timestamp");
+    if ((index === 0 && currentMs !== window.startMs) || (index > 0 && currentMs - priorMs !== Number(DAY_SECONDS * 1000n))
+        || !POSITIVE_INTEGER.test(snapshot.blockNumber) || !/^0x[0-9a-f]{64}$/.test(snapshot.blockHash)
+        || !NON_NEGATIVE_INTEGER.test(snapshot.token0WethReserveRaw) || !NON_NEGATIVE_INTEGER.test(snapshot.token1CpReserveRaw)) {
+      throw new Error("V2 liquidity snapshot coverage is invalid");
+    }
+    const tvl = parseRational(snapshot.tvlUsd, "V2 liquidity", false);
+    if (index > 0) {
+      const prior = parseRational(snapshots[index - 1].tvlUsd, "prior V2 liquidity", false);
+      weighted = add(weighted, multiply(divide(add(prior, tvl), rational(2n)), rational(DAY_SECONDS)));
+    }
+    priorMs = currentMs;
+  }
+  if (priorMs !== window.endMs) throw new Error("V2 liquidity snapshots do not reach the window end");
+  return divide(weighted, rational(window.durationSeconds));
+}
+
+function totalV2Volume(cache, window) {
+  const intervals = cache.volume?.intervals;
+  if (cache.volume?.source !== "geckoterminal_daily_ohlcv" || cache.volume?.sparseIntervalsMeanZeroVolume !== true
+      || timestamp(cache.volume.coverageStart, "V2 volume start") !== window.startMs
+      || timestamp(cache.volume.coverageEnd, "V2 volume end") !== window.endMs
+      || !Array.isArray(intervals) || intervals.length !== 7) throw new Error("V2 volume coverage is incomplete");
+  let cursor = window.startMs;
+  let total = rational(0n);
+  for (const interval of intervals) {
+    const startMs = timestamp(interval.startTimestamp, "V2 volume interval start");
+    const endMs = timestamp(interval.endTimestamp, "V2 volume interval end");
+    if (startMs !== cursor || endMs - startMs !== Number(DAY_SECONDS * 1000n) || interval.finalized !== true) {
+      throw new Error("V2 volume intervals are invalid");
+    }
+    total = add(total, parseRational(interval.volumeUsd, "V2 volume", true));
+    cursor = endMs;
+  }
+  if (cursor !== window.endMs) throw new Error("V2 volume does not reach the window end");
+  return total;
+}
+
+export function calculateV2ReferenceApr(cache) {
+  try {
+    const window = validateV2Window(cache);
+    const averageTvl = calculateV2AverageTvl(cache, window);
+    const totalVolume = totalV2Volume(cache, window);
+    if (averageTvl.numerator <= 0n) return unavailable(["average_v2_liquidity_not_positive"]);
+    const annualization = divide(rational(YEAR_SECONDS), rational(window.durationSeconds));
+    const aprFraction = multiply(divide(multiply(totalVolume, V2_LP_FEE_FRACTION), averageTvl), annualization);
+    return {
+      schemaVersion: V2_REFERENCE_FEE_SCHEMA_VERSION,
+      kind: "cypress-v2-reference-fee-apr",
+      status: "available",
+      available: true,
+      cacheGeneratedAt: cache.generatedAt,
+      window: {
+        startTimestamp: cache.window.startTimestamp,
+        endTimestamp: cache.window.endTimestamp,
+        durationSeconds: window.durationSeconds.toString(),
+        durationDays: output(divide(rational(window.durationSeconds), rational(DAY_SECONDS))),
+        requestedDays: 7,
+        partial: false
+      },
+      totalVolumeUsd: output(totalVolume),
+      timeWeightedAverageTvlUsd: output(averageTvl),
+      lpFeeFraction: output(V2_LP_FEE_FRACTION),
+      lpNetAprFraction: output(aprFraction),
+      lpNetAprPercent: output(multiply(aprFraction, rational(100n))),
+      sourceCoverage: {
+        volumeIntervals: cache.volume.intervals.length,
+        tvlSnapshots: cache.tvl.snapshots.length,
+        latestBoundaryBlock: cache.window.latestBoundaryBlock
+      },
+      limitations: [
+        "pool_level_volume_over_daily_time_weighted_liquidity_proxy",
+        "not_position_specific_fee_apr",
+        "daily_liquidity_sampling",
+        "sparse_geckoterminal_intervals_treated_as_zero_volume"
+      ]
+    };
+  } catch (error) {
+    return unavailable(["invalid_or_incomplete_v2_reference_data"], { detail: error.message });
   }
 }
 
