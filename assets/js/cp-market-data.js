@@ -18,6 +18,9 @@
     v3Factory: "0x33128a8fc17869897dce68ed026d694621f6fdfd",
     v3Fee: 10000n,
     v3TickSpacing: 200n,
+    v3Fee500Pool: "0x2ddcc7c2cc6ddf1e4f91894d4862c370827ed1a1",
+    v3Fee500: 500n,
+    v3Fee500TickSpacing: 10n,
     v2Pool: "0xa290c53cc25f0b857d21421b2f757f9a3434f80e",
     v2Factory: "0x8909dc15e40173ff4699343b6eb8132c65e18ec6",
     cpDecimals: 18,
@@ -36,7 +39,7 @@
     balanceOf: "0x70a08231"
   });
 
-  const CACHE_KEY = "cypress.cp-market-data.v1";
+  const CACHE_KEY = "cypress.cp-market-data.v2";
   const MAX_CACHE_AGE_MS = 24 * 60 * 60 * 1000;
   const Q192 = 2n ** 192n;
 
@@ -93,6 +96,9 @@
     requireAddress(state.v3.token0, CONFIG.usdc, "V3 token0");
     requireAddress(state.v3.token1, CONFIG.cp, "V3 token1");
     requireAddress(state.v3.factory, CONFIG.v3Factory, "V3 factory");
+    requireAddress(state.v3Fee500.token0, CONFIG.usdc, "V3 0.05% token0");
+    requireAddress(state.v3Fee500.token1, CONFIG.cp, "V3 0.05% token1");
+    requireAddress(state.v3Fee500.factory, CONFIG.v3Factory, "V3 0.05% factory");
     requireAddress(state.v2.token0, CONFIG.weth, "V2 token0");
     requireAddress(state.v2.token1, CONFIG.cp, "V2 token1");
     requireAddress(state.v2.factory, CONFIG.v2Factory, "V2 factory");
@@ -101,9 +107,18 @@
     if (state.v3.tickSpacing !== CONFIG.v3TickSpacing) {
       throw new Error("V3 tick spacing identity mismatch");
     }
+    if (state.v3Fee500.fee !== CONFIG.v3Fee500) {
+      throw new Error("V3 0.05% fee identity mismatch");
+    }
+    if (state.v3Fee500.tickSpacing !== CONFIG.v3Fee500TickSpacing) {
+      throw new Error("V3 0.05% tick spacing identity mismatch");
+    }
     if (state.v3.sqrtPriceX96 <= 0n) throw new Error("V3 price is unavailable");
     if (state.v3.usdcBalance <= 0n || state.v3.cpBalance <= 0n) {
       throw new Error("V3 token balances are unavailable");
+    }
+    if (state.v3Fee500.usdcBalance <= 0n || state.v3Fee500.cpBalance <= 0n) {
+      throw new Error("V3 0.05% token balances are unavailable");
     }
     if (state.v2.reserveWeth <= 0n || state.v2.reserveCp <= 0n) {
       throw new Error("V2 reserves are unavailable");
@@ -117,6 +132,8 @@
     );
     const v3Usdc = normalized(state.v3.usdcBalance, CONFIG.usdcDecimals);
     const v3Cp = normalized(state.v3.cpBalance, CONFIG.cpDecimals);
+    const v3Fee500Usdc = normalized(state.v3Fee500.usdcBalance, CONFIG.usdcDecimals);
+    const v3Fee500Cp = normalized(state.v3Fee500.cpBalance, CONFIG.cpDecimals);
     const v2Weth = normalized(state.v2.reserveWeth, CONFIG.wethDecimals);
     const v2Cp = normalized(state.v2.reserveCp, CONFIG.cpDecimals);
 
@@ -125,13 +142,15 @@
     // valued without adding another price provider.
     const impliedWethUsd = (v2Cp * cpPriceUsd) / v2Weth;
     const v3LiquidityUsd = v3Usdc + (v3Cp * cpPriceUsd);
+    const v3Fee500LiquidityUsd = v3Fee500Usdc + (v3Fee500Cp * cpPriceUsd);
     const v2LiquidityUsd = (v2Weth * impliedWethUsd) + (v2Cp * cpPriceUsd);
-    const totalLiquidityUsd = v3LiquidityUsd + v2LiquidityUsd;
+    const totalLiquidityUsd = v3LiquidityUsd + v2LiquidityUsd + v3Fee500LiquidityUsd;
 
     for (const [label, value] of Object.entries({
       cpPriceUsd,
       impliedWethUsd,
       v3LiquidityUsd,
+      v3Fee500LiquidityUsd,
       v2LiquidityUsd,
       totalLiquidityUsd
     })) {
@@ -142,7 +161,9 @@
       cpPriceUsd,
       totalLiquidityUsd,
       v3LiquidityUsd,
+      v3Fee500LiquidityUsd,
       v2LiquidityUsd,
+      liquidityPoolCount: 3,
       impliedWethUsd,
       blockNumber: state.blockNumber,
       fetchedAt: fetchedAt || Date.now()
@@ -202,11 +223,18 @@
       call(8, CONFIG.v2Pool, SELECTOR.token0, block),
       call(9, CONFIG.v2Pool, SELECTOR.token1, block),
       call(10, CONFIG.v2Pool, SELECTOR.factory, block),
-      call(11, CONFIG.v2Pool, SELECTOR.getReserves, block)
+      call(11, CONFIG.v2Pool, SELECTOR.getReserves, block),
+      call(14, CONFIG.v3Fee500Pool, SELECTOR.token0, block),
+      call(15, CONFIG.v3Fee500Pool, SELECTOR.token1, block),
+      call(16, CONFIG.v3Fee500Pool, SELECTOR.factory, block),
+      call(17, CONFIG.v3Fee500Pool, SELECTOR.fee, block),
+      call(18, CONFIG.v3Fee500Pool, SELECTOR.tickSpacing, block)
     ], requestOptions);
     const balances = await rpcRequest(url, [
       call(12, CONFIG.usdc, balanceOfData(CONFIG.v3Pool), block),
-      call(13, CONFIG.cp, balanceOfData(CONFIG.v3Pool), block)
+      call(13, CONFIG.cp, balanceOfData(CONFIG.v3Pool), block),
+      call(19, CONFIG.usdc, balanceOfData(CONFIG.v3Fee500Pool), block),
+      call(20, CONFIG.cp, balanceOfData(CONFIG.v3Fee500Pool), block)
     ], requestOptions);
 
     const state = {
@@ -227,6 +255,15 @@
         factory: decodeAddress(resultById(identityAndState, 10), "V2 factory"),
         reserveWeth: decodeUint(resultById(identityAndState, 11), "V2 reserves", 0),
         reserveCp: decodeUint(resultById(identityAndState, 11), "V2 reserves", 1)
+      },
+      v3Fee500: {
+        token0: decodeAddress(resultById(identityAndState, 14), "V3 0.05% token0"),
+        token1: decodeAddress(resultById(identityAndState, 15), "V3 0.05% token1"),
+        factory: decodeAddress(resultById(identityAndState, 16), "V3 0.05% factory"),
+        fee: decodeUint(resultById(identityAndState, 17), "V3 0.05% fee"),
+        tickSpacing: decodeUint(resultById(identityAndState, 18), "V3 0.05% tick spacing"),
+        usdcBalance: decodeUint(resultById(balances, 19), "V3 0.05% USDC balance"),
+        cpBalance: decodeUint(resultById(balances, 20), "V3 0.05% CP balance")
       }
     };
 
@@ -248,7 +285,13 @@
       if (age < 0 || age > (maxAgeMs || MAX_CACHE_AGE_MS)) return null;
       if (!Number.isFinite(parsed.cpPriceUsd) || parsed.cpPriceUsd <= 0 ||
           !Number.isFinite(parsed.totalLiquidityUsd) || parsed.totalLiquidityUsd <= 0 ||
+          !Number.isFinite(parsed.v3LiquidityUsd) || parsed.v3LiquidityUsd <= 0 ||
+          !Number.isFinite(parsed.v2LiquidityUsd) || parsed.v2LiquidityUsd <= 0 ||
+          !Number.isFinite(parsed.v3Fee500LiquidityUsd) || parsed.v3Fee500LiquidityUsd <= 0 ||
+          parsed.liquidityPoolCount !== 3 ||
           !Number.isInteger(parsed.blockNumber)) return null;
+      const poolSum = parsed.v3LiquidityUsd + parsed.v2LiquidityUsd + parsed.v3Fee500LiquidityUsd;
+      if (Math.abs(parsed.totalLiquidityUsd - poolSum) > parsed.totalLiquidityUsd * 1e-12) return null;
       return parsed;
     } catch (_) {
       return null;
