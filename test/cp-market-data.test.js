@@ -23,6 +23,7 @@ const BASE_STATE = {
     factory: market.CONFIG.v3Factory,
     fee: 500n,
     tickSpacing: 10n,
+    sqrtPriceX96: 637200461648009429704775779601818105n,
     usdcBalance: 3111884567n,
     cpBalance: 833278608262767231271370n
   },
@@ -65,9 +66,41 @@ test("keeps both existing pools and adds only the requested third pool", () => {
   assert.equal(market.CONFIG.v3Fee500TickSpacing, 10n);
 });
 
-test("derives V3 CP/USDC spot price with token decimals", () => {
+test("prefers the V3 0.05% CP/USDC spot price with correct token orientation", () => {
   const result = market.deriveMarketData(cloneState(), 1000);
-  assert.ok(Math.abs(result.cpPriceUsd - 0.015459911516385224) < 1e-15);
+  assert.equal(result.cpPriceUsd, market.cpPriceFromSqrtPriceX96(BASE_STATE.v3Fee500.sqrtPriceX96));
+  assert.equal(result.cpPriceSourcePool, market.CONFIG.v3Fee500Pool);
+  assert.equal(result.cpPriceSourceFee, 500);
+  assert.ok(result.cpPriceUsd > 0 && Number.isFinite(result.cpPriceUsd));
+});
+
+test("falls back to the old V3 1% price without removing it from liquidity", () => {
+  const state = cloneState();
+  state.v3Fee500.sqrtPriceX96 = null;
+  const result = market.deriveMarketData(state, 1000);
+  assert.equal(result.cpPriceUsd, market.cpPriceFromSqrtPriceX96(BASE_STATE.v3.sqrtPriceX96));
+  assert.equal(result.cpPriceSourcePool, market.CONFIG.v3Pool);
+  assert.equal(result.cpPriceSourceFee, 10000);
+  assert.ok(result.v3LiquidityUsd > 0);
+});
+
+test("rejects invalid prices and never emits zero, negative, or NaN", () => {
+  for (const invalid of [null, 0n, -1n]) {
+    assert.throws(() => market.cpPriceFromSqrtPriceX96(invalid), /price is unavailable/);
+  }
+  for (const invalidPreferred of [0n, -1n]) {
+    const state = cloneState();
+    state.v3Fee500.sqrtPriceX96 = invalidPreferred;
+    const result = market.deriveMarketData(state, 1000);
+    assert.equal(result.cpPriceSourcePool, market.CONFIG.v3Pool);
+    assert.ok(Number.isFinite(result.cpPriceUsd) && result.cpPriceUsd > 0);
+  }
+  for (const invalidFallback of [0n, -1n]) {
+    const state = cloneState();
+    state.v3Fee500.sqrtPriceX96 = null;
+    state.v3.sqrtPriceX96 = invalidFallback;
+    assert.throws(() => market.deriveMarketData(state, 1000), /fallback price is unavailable/);
+  }
 });
 
 test("values actual V3 pool token balances rather than global liquidity", () => {
@@ -96,7 +129,7 @@ test("aggregates exactly three pool TVLs once without price averaging", () => {
   assert.equal(result.cpPriceUsd, market.deriveMarketData(cloneState(), 2000).cpPriceUsd);
 });
 
-test("third-pool liquidity does not change the price source or market cap", () => {
+test("market cap uses 25,000,000 times the preferred current CP price", () => {
   const original = market.deriveMarketData(cloneState(), 1000);
   const changedState = cloneState();
   changedState.v3Fee500.usdcBalance *= 2n;
@@ -105,8 +138,8 @@ test("third-pool liquidity does not change the price source or market cap", () =
   assert.equal(changed.cpPriceUsd, original.cpPriceUsd);
   assert.notEqual(changed.totalLiquidityUsd, original.totalLiquidityUsd);
   assert.equal(
-    metrics.deriveMetrics(changed).usd.marketCap,
-    metrics.deriveMetrics(original).usd.marketCap
+    metrics.deriveMetrics(original).usd.marketCap,
+    original.cpPriceUsd * 25_000_000
   );
 });
 
@@ -123,6 +156,7 @@ test("reads all three pools from one pinned Base block", async () => {
     [14, addressWord(market.CONFIG.usdc)], [15, addressWord(market.CONFIG.cp)],
     [16, addressWord(market.CONFIG.v3Factory)], [17, uintWord(market.CONFIG.v3Fee500)],
     [18, uintWord(market.CONFIG.v3Fee500TickSpacing)],
+    [21, uintWord(BASE_STATE.v3Fee500.sqrtPriceX96)],
     [19, uintWord(BASE_STATE.v3Fee500.usdcBalance)], [20, uintWord(BASE_STATE.v3Fee500.cpBalance)]
   ]);
   const fetchImpl = async (_url, options) => {
@@ -142,6 +176,31 @@ test("reads all three pools from one pinned Base block", async () => {
   assert.ok(targets.has(market.CONFIG.v3Pool));
   assert.ok(targets.has(market.CONFIG.v2Pool));
   assert.ok(targets.has(market.CONFIG.v3Fee500Pool));
+  assert.equal(result.cpPriceSourcePool, market.CONFIG.v3Fee500Pool);
+});
+
+test("malformed preferred slot0 RPC data falls back safely at the same pinned block", async () => {
+  const responses = new Map([
+    [2, addressWord(market.CONFIG.usdc)], [3, addressWord(market.CONFIG.cp)],
+    [4, addressWord(market.CONFIG.v3Factory)], [5, uintWord(market.CONFIG.v3Fee)],
+    [6, uintWord(market.CONFIG.v3TickSpacing)], [7, uintWord(BASE_STATE.v3.sqrtPriceX96)],
+    [8, addressWord(market.CONFIG.weth)], [9, addressWord(market.CONFIG.cp)],
+    [10, addressWord(market.CONFIG.v2Factory)],
+    [11, uintWord(BASE_STATE.v2.reserveWeth) + uintWord(BASE_STATE.v2.reserveCp).slice(2)],
+    [12, uintWord(BASE_STATE.v3.usdcBalance)], [13, uintWord(BASE_STATE.v3.cpBalance)],
+    [14, addressWord(market.CONFIG.usdc)], [15, addressWord(market.CONFIG.cp)],
+    [16, addressWord(market.CONFIG.v3Factory)], [17, uintWord(market.CONFIG.v3Fee500)],
+    [18, uintWord(market.CONFIG.v3Fee500TickSpacing)], [19, uintWord(BASE_STATE.v3Fee500.usdcBalance)],
+    [20, uintWord(BASE_STATE.v3Fee500.cpBalance)], [21, "malformed"]
+  ]);
+  const fetchImpl = async (_url, options) => {
+    const payload = JSON.parse(options.body);
+    if (!Array.isArray(payload)) return { ok: true, json: async () => ({ id: 1, result: "0x10" }) };
+    return { ok: true, json: async () => payload.map(call => ({ id: call.id, result: responses.get(call.id) })) };
+  };
+  const result = await market.readMarketData({ fetchImpl, now: () => 1000 });
+  assert.equal(result.cpPriceSourcePool, market.CONFIG.v3Pool);
+  assert.ok(result.cpPriceUsd > 0 && Number.isFinite(result.cpPriceUsd));
 });
 
 test("rejects reversed token order", () => {
@@ -207,6 +266,12 @@ test("cache rejects malformed and fabricated zero values", () => {
   });
   assert.equal(market.readCache(zero, 2000), null);
   const valid = market.deriveMarketData(cloneState(), 1000);
+  for (const cpPriceUsd of [-1, NaN]) {
+    const invalidPrice = memoryStorage({
+      [market.CACHE_KEY]: JSON.stringify({ ...valid, cpPriceUsd })
+    });
+    assert.equal(market.readCache(invalidPrice, 2000), null);
+  }
   const mismatched = memoryStorage({
     [market.CACHE_KEY]: JSON.stringify({ ...valid, totalLiquidityUsd: valid.totalLiquidityUsd + 1 })
   });
