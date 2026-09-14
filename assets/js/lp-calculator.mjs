@@ -5,13 +5,200 @@ export const PRICE_PATH_URL = "/data/comparison/price-path-v2.json";
 export const REFERENCE_FEE_URL = "/data/comparison/reference-fee-window-v1.json";
 export const MAX_DATASET_BYTES = 1_000_000;
 
+const XYK_INTERNAL_DECIMALS = 72;
+const XYK_INTERNAL_SCALE = 10n ** BigInt(XYK_INTERNAL_DECIMALS);
+const XYK_OUTPUT_DECIMALS = 36;
+const XYK_INITIAL_CAPITAL = Object.freeze({ numerator: 1000n, denominator: 1n });
+const XYK_POSITIVE_INTEGER = /^[1-9]\d*$/;
+const XYK_NON_NEGATIVE_INTEGER = /^(?:0|[1-9]\d*)$/;
+
+export const XYK_REFERENCE_SCHEMA_VERSION = 1;
+
+function xykGcd(left, right) {
+  let a = left < 0n ? -left : left;
+  let b = right < 0n ? -right : right;
+  while (b !== 0n) [a, b] = [b, a % b];
+  return a;
+}
+
+function xykRational(numerator, denominator = 1n) {
+  if (typeof numerator !== "bigint" || typeof denominator !== "bigint" || denominator === 0n) {
+    throw new Error("invalid rational value");
+  }
+  const sign = denominator < 0n ? -1n : 1n;
+  const divisor = xykGcd(numerator, denominator);
+  return { numerator: numerator / divisor * sign, denominator: denominator / divisor * sign };
+}
+
+function xykAdd(left, right) {
+  return xykRational(left.numerator * right.denominator + right.numerator * left.denominator,
+    left.denominator * right.denominator);
+}
+
+function xykSubtract(left, right) {
+  return xykRational(left.numerator * right.denominator - right.numerator * left.denominator,
+    left.denominator * right.denominator);
+}
+
+function xykMultiply(left, right) {
+  return xykRational(left.numerator * right.numerator, left.denominator * right.denominator);
+}
+
+function xykDivide(left, right) {
+  if (right.numerator === 0n) throw new Error("division by zero");
+  return xykRational(left.numerator * right.denominator, left.denominator * right.numerator);
+}
+
+function xykCompare(left, right) {
+  const result = left.numerator * right.denominator - right.numerator * left.denominator;
+  return result === 0n ? 0 : result < 0n ? -1 : 1;
+}
+
+function xykParse(input, label, allowZero = false) {
+  const numerator = input?.numerator;
+  const denominator = input?.denominator;
+  if (!(allowZero ? XYK_NON_NEGATIVE_INTEGER : XYK_POSITIVE_INTEGER).test(numerator)
+      || !XYK_POSITIVE_INTEGER.test(denominator)) throw new Error(label + " must be a valid rational");
+  return xykRational(BigInt(numerator), BigInt(denominator));
+}
+
+function xykFormat(input, decimalPlaces = XYK_OUTPUT_DECIMALS) {
+  const negative = input.numerator < 0n;
+  const numerator = negative ? -input.numerator : input.numerator;
+  const integer = numerator / input.denominator;
+  const fraction = decimalPlaces === 0 ? "" : ((numerator % input.denominator) * 10n ** BigInt(decimalPlaces) / input.denominator)
+    .toString().padStart(decimalPlaces, "0").replace(/0+$/, "");
+  const rendered = fraction ? integer + "." + fraction : integer.toString();
+  return negative && numerator !== 0n ? "-" + rendered : rendered;
+}
+
+function xykOutput(input, decimalPlaces = XYK_OUTPUT_DECIMALS) {
+  return {
+    numerator: input.numerator.toString(),
+    denominator: input.denominator.toString(),
+    decimal: xykFormat(input, decimalPlaces),
+    decimalPlaces,
+    rounding: "toward-zero"
+  };
+}
+
+function xykIntegerSquareRoot(input) {
+  if (typeof input !== "bigint" || input < 0n) throw new Error("integer square root input must be non-negative");
+  if (input < 2n) return input;
+  let estimate = 1n << BigInt((input.toString(2).length + 1) >> 1);
+  while (true) {
+    const next = (estimate + input / estimate) >> 1n;
+    if (next >= estimate) return estimate;
+    estimate = next;
+  }
+}
+
+function xykSquareRoot(input) {
+  if (input.numerator <= 0n) throw new Error("price ratio must be positive");
+  const radicand = input.numerator * XYK_INTERNAL_SCALE * XYK_INTERNAL_SCALE / input.denominator;
+  return xykRational(xykIntegerSquareRoot(radicand), XYK_INTERNAL_SCALE);
+}
+
+export function calculateXyk50_50(startPrice, endPrice, estimatedFees) {
+  const start = xykParse(startPrice, "start price");
+  const end = xykParse(endPrice, "end price");
+  const fees = xykParse(estimatedFees, "estimated fees", true);
+  const priceRatio = xykDivide(end, start);
+  const holdEnding = xykMultiply(XYK_INITIAL_CAPITAL, priceRatio);
+  const xykBeforeFees = xykMultiply(XYK_INITIAL_CAPITAL, xykSquareRoot(priceRatio));
+  const xykFinal = xykAdd(xykBeforeFees, fees);
+  const holdProfitLoss = xykSubtract(holdEnding, XYK_INITIAL_CAPITAL);
+  const xykProfitLoss = xykSubtract(xykFinal, XYK_INITIAL_CAPITAL);
+  const difference = xykSubtract(holdEnding, xykFinal);
+  return {
+    priceRatio: xykOutput(priceRatio),
+    initialCapitalUsdc: xykOutput(XYK_INITIAL_CAPITAL),
+    holdCp: {
+      endingValueUsdc: xykOutput(holdEnding),
+      profitLossUsdc: xykOutput(holdProfitLoss),
+      returnPercent: xykOutput(xykDivide(holdProfitLoss, xykRational(10n)))
+    },
+    xykLp: {
+      principalEndingValueUsdc: xykOutput(xykBeforeFees),
+      estimatedFeesUsdc: xykOutput(fees),
+      endingValueIncludingEstimatedFeesUsdc: xykOutput(xykFinal),
+      profitLossIncludingEstimatedFeesUsdc: xykOutput(xykProfitLoss),
+      returnIncludingEstimatedFeesPercent: xykOutput(xykDivide(xykProfitLoss, xykRational(10n))),
+      feeProjectionIncluded: true,
+      feesReinvested: false
+    },
+    differenceIncludingEstimatedFees: {
+      holdMinusLpUsdc: xykOutput(difference),
+      leader: xykCompare(difference, xykRational(0n)) > 0 ? "hold_cp" : xykCompare(difference, xykRational(0n)) < 0 ? "xyk_lp" : "tie"
+    }
+  };
+}
+
+function selectXykBoundaries(dataset, period) {
+  if (!dataset || dataset.schemaVersion !== 2 || dataset.kind !== "cypress-hold-vs-rebalanced-lp-price-path"
+      || !Array.isArray(dataset.points)) throw new Error("Step 3A price-path contract mismatch");
+  const selected = dataset.periods?.[period];
+  const hold = selected?.strategyBoundaries?.holdCp;
+  const lp = selected?.strategyBoundaries?.rebalancedLp;
+  if (!hold || !lp || hold.startPointId !== lp.startPointId || hold.endPointId !== lp.endPointId) {
+    throw new Error("Hold and LP boundaries must be identical");
+  }
+  const byId = new Map(dataset.points.map(point => [point.id, point]));
+  const start = byId.get(hold.startPointId);
+  const end = byId.get(hold.endPointId);
+  if (!start || !end || Date.parse(start.timestamp) >= Date.parse(end.timestamp)) throw new Error("period boundaries are invalid");
+  return { start, end };
+}
+
+export function comparePeriodXyk50_50(dataset, period, estimatedFees) {
+  const { start, end } = selectXykBoundaries(dataset, period);
+  const calculated = calculateXyk50_50(start.priceUsd, end.priceUsd, estimatedFees);
+  return {
+    schemaVersion: XYK_REFERENCE_SCHEMA_VERSION,
+    kind: "cypress-hold-vs-xyk-50-50-reference",
+    period,
+    model: {
+      name: "xyk_50_50_reference",
+      initialValueAllocation: { cpPercent: "50", usdcPercent: "50" },
+      principalFormula: "initial_capital_times_square_root_end_price_over_start_price",
+      concentratedLiquidity: false,
+      exactUniswapV3Simulation: false,
+      impermanentLossDeduction: "not_separate_formula_already_captures_relative_xyk_behavior"
+    },
+    boundaries: {
+      startPointId: start.id,
+      endPointId: end.id,
+      startTimestamp: start.timestamp,
+      endTimestamp: end.timestamp,
+      startPriceUsd: structuredClone(start.priceUsd),
+      endPriceUsd: structuredClone(end.priceUsd)
+    },
+    ...calculated,
+    numericalPolicy: {
+      arithmetic: "BigInt rational accounting",
+      squareRootDecimalPlaces: XYK_INTERNAL_DECIMALS,
+      outputDecimalPlaces: XYK_OUTPUT_DECIMALS,
+      squareRootRounding: "toward-zero",
+      outputRounding: "toward-zero"
+    }
+  };
+}
+
+export function compareAllPeriodsXyk50_50(dataset, estimatedFeesByPeriod) {
+  return Object.fromEntries(PERIODS.map(period => {
+    const fees = estimatedFeesByPeriod?.[period];
+    if (!fees) throw new Error("estimated fees missing for " + period);
+    return [period, comparePeriodXyk50_50(dataset, period, fees)];
+  }));
+}
+
 const TEXT = Object.freeze({
   en: {
     unavailable: "Comparison data is unavailable.",
     ready: "Comparison ready.",
     holdAhead: "Hold ahead by",
-    liquidityAhead: "Liquidity ahead by",
-    tie: "Hold and Liquidity finish equal",
+    liquidityAhead: "LP 50/50 ahead by",
+    tie: "Hold and LP 50/50 finish equal",
     apr: "Reference fee APR",
     estimate: "estimate",
     window: "days observed"
@@ -21,8 +208,8 @@ const TEXT = Object.freeze({
     unavailable: "Dữ liệu so sánh hiện không khả dụng.",
     ready: "Đã tải kết quả so sánh.",
     holdAhead: "Hold dẫn trước",
-    liquidityAhead: "Thanh khoản dẫn trước",
-    tie: "Hold và Thanh khoản có kết quả bằng nhau",
+    liquidityAhead: "LP 50/50 dẫn trước",
+    tie: "Hold và LP 50/50 có kết quả bằng nhau",
     apr: "APR phí tham chiếu",
     estimate: "ước tính",
     window: "ngày quan sát"
@@ -85,7 +272,10 @@ export async function fetchComparisonData(options = {}) {
 export function buildComparisonResults(pricePath, referenceFeeWindow) {
   const referenceApr = calculateReferenceApr(referenceFeeWindow);
   if (!referenceApr.available || referenceApr.status !== "available") throw new Error("Reference fee APR is unavailable");
-  return { referenceApr, periods: projectAllPeriodFees(pricePath, referenceApr) };
+  const existingFeeProjection = projectAllPeriodFees(pricePath, referenceApr);
+  const estimatedFees = Object.fromEntries(PERIODS.map(period => [period,
+    existingFeeProjection[period].rebalancedLp.estimatedFeesUsdc]));
+  return { referenceApr, periods: compareAllPeriodsXyk50_50(pricePath, estimatedFees) };
 }
 
 function setText(root, key, value) {
@@ -121,10 +311,10 @@ export function renderPeriod(root, comparison, period, language = "en") {
   setText(root, "hold-ending", formatUsd(result.holdCp.endingValueUsdc.decimal));
   setText(root, "hold-pl", formatSignedUsd(result.holdCp.profitLossUsdc.decimal));
   setText(root, "hold-return", formatSignedPercent(result.holdCp.returnPercent.decimal));
-  setText(root, "lp-ending", formatUsd(result.rebalancedLp.endingValueIncludingEstimatedFeesUsdc.decimal));
-  setText(root, "lp-pl", formatSignedUsd(result.rebalancedLp.profitLossIncludingEstimatedFeesUsdc.decimal));
-  setText(root, "lp-return", formatSignedPercent(result.rebalancedLp.returnIncludingEstimatedFeesPercent.decimal));
-  setText(root, "estimated-fees", formatUsd(result.rebalancedLp.estimatedFeesUsdc.decimal));
+  setText(root, "lp-ending", formatUsd(result.xykLp.endingValueIncludingEstimatedFeesUsdc.decimal));
+  setText(root, "lp-pl", formatSignedUsd(result.xykLp.profitLossIncludingEstimatedFeesUsdc.decimal));
+  setText(root, "lp-return", formatSignedPercent(result.xykLp.returnIncludingEstimatedFeesPercent.decimal));
+  setText(root, "estimated-fees", formatUsd(result.xykLp.estimatedFeesUsdc.decimal));
   setText(root, "conclusion", conclusionText(result, language));
   root.querySelector("[data-lp-reference-apr]").textContent = referenceAprText(comparison.referenceApr, language);
   for (const button of root.querySelectorAll("[data-lp-period]")) {

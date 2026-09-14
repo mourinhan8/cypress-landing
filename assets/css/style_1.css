@@ -858,6 +858,7 @@ body.active {
 
 .lp-period-options button:focus-visible,
 .lp-close:focus-visible,
+.lp-methodology summary:focus-visible,
 .lp-explanation summary:focus-visible {
   box-shadow: 0 0 0 3px hsla(332, 89%, 52%, 0.25);
   outline: 2px solid #ff72b5;
@@ -994,12 +995,14 @@ body.active {
   margin-block-start: 6px;
 }
 
+.lp-methodology,
 .lp-explanation {
   border-top: 1px solid var(--white_10);
   margin-block-start: 16px;
   padding-block-start: 14px;
 }
 
+.lp-methodology summary,
 .lp-explanation summary {
   color: var(--cultured);
   cursor: pointer;
@@ -1017,6 +1020,13 @@ body.active {
   list-style: disc;
   margin-block-start: 12px;
   padding-inline-start: 20px;
+}
+
+.lp-methodology p {
+  color: var(--cadet-blue-crayola);
+  font-size: 1.3rem;
+  line-height: 1.55;
+  margin-block-start: 10px;
 }
 @media (max-width: 480px) {
   .cp-chart {

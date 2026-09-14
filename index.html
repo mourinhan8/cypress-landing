@@ -189,7 +189,7 @@
                       </dl>
                     </article>
                     <article class="lp-strategy-card lp-strategy-card-liquidity">
-                      <h3>Liquidity</h3>
+                      <h3>LP 50/50</h3>
                       <dl>
                         <div class="lp-ending-value"><dt>Ending value including estimated fees</dt><dd data-lp-result="lp-ending"></dd></div>
                         <div><dt>P/L</dt><dd data-lp-result="lp-pl"></dd></div>
@@ -201,12 +201,16 @@
                   <p class="lp-conclusion" data-lp-result="conclusion" aria-live="polite"></p>
                   <p class="lp-reference-apr" data-lp-reference-apr></p>
                   <p class="lp-disclaimer">Simulation based on historical price data, using daily average prices and linear interpolation for days with missing data.</p>
+                  <details class="lp-methodology">
+                    <summary><strong>Methodology:</strong> LP results are estimated using an AMM v2 (XYK 50/50) model. Actual Uniswap v3 results may differ.</summary>
+                    <p><strong>Note:</strong> This model uses an AMM v2 (XYK 50/50) reference. With Uniswap v3, impermanent loss can be larger because liquidity is concentrated, but fee income can also be higher while the position remains in range.</p>
+                  </details>
                   <details class="lp-explanation">
                     <summary>Why LP can differ from Hold</summary>
                     <ul>
-                      <li>When CP rises sharply, Hold usually does better because liquidity gradually sells CP as its price rises.</li>
-                      <li>When CP falls, liquidity may lose less than Hold because part of the position is in USD.</li>
-                      <li>When price moves sideways and volume is high, liquidity may do better thanks to trading fees.</li>
+                      <li>When CP rises strongly, Hold CP usually does better than LP 50/50.</li>
+                      <li>When CP falls, LP 50/50 usually falls less than Hold CP.</li>
+                      <li>When price stays roughly flat and volume is high, LP can do better thanks to trading fees.</li>
                       <li>When volume is low, fees contribute little, so the result is driven mostly by price moves and the liquidity position’s structure.</li>
                     </ul>
                   </details>
@@ -466,7 +470,7 @@
   <script src="/assets/js/cp-market-metrics.js?v=1.1" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.2" defer></script>
-  <script type="module" src="/assets/js/lp-calculator.mjs?v=2.0"></script>
+  <script type="module" src="/assets/js/lp-calculator.mjs?v=3.0"></script>
 
   <!-- 
     - ionicon link

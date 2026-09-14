@@ -189,7 +189,7 @@
                       </dl>
                     </article>
                     <article class="lp-strategy-card lp-strategy-card-liquidity">
-                      <h3>Thanh khoản</h3>
+                      <h3>LP 50/50</h3>
                       <dl>
                         <div class="lp-ending-value"><dt>Giá trị cuối kỳ gồm phí ước tính</dt><dd data-lp-result="lp-ending"></dd></div>
                         <div><dt>Lãi/lỗ</dt><dd data-lp-result="lp-pl"></dd></div>
@@ -201,12 +201,16 @@
                   <p class="lp-conclusion" data-lp-result="conclusion" aria-live="polite"></p>
                   <p class="lp-reference-apr" data-lp-reference-apr></p>
                   <p class="lp-disclaimer">Kết quả mô phỏng dựa trên dữ liệu giá lịch sử, sử dụng giá trung bình theo ngày và nội suy tuyến tính cho các ngày không có dữ liệu.</p>
+                  <details class="lp-methodology">
+                    <summary><strong>Phương pháp tính:</strong> Kết quả LP được ước tính theo mô hình AMM v2 (XYK 50/50). Với Uniswap v3, kết quả thực tế có thể khác.</summary>
+                    <p><strong>Lưu ý:</strong> Mô hình này sử dụng AMM v2 (XYK 50/50). Với Uniswap v3, lỗ vô thường có thể lớn hơn do thanh khoản tập trung, nhưng phí thu được cũng có thể cao hơn khi vị thế nằm trong vùng giao dịch.</p>
+                  </details>
                   <details class="lp-explanation">
                     <summary>Vì sao LP có thể khác Hold</summary>
                     <ul>
-                      <li>CP tăng mạnh → Hold thường tốt hơn LP vì LP bán dần CP khi giá tăng.</li>
-                      <li>CP giảm → LP có thể lỗ ít hơn Hold vì một phần vị thế nằm ở USD.</li>
-                      <li>Giá đi ngang + volume cao → LP có thể tốt hơn nhờ phí giao dịch.</li>
+                      <li>CP tăng mạnh → Hold CP thường tốt hơn LP 50/50.</li>
+                      <li>CP giảm → LP 50/50 thường giảm ít hơn Hold CP.</li>
+                      <li>Giá gần như đi ngang + volume cao → LP có thể tốt hơn nhờ phí giao dịch.</li>
                       <li>Volume thấp → phí đóng góp ít, kết quả chủ yếu do biến động giá và cấu trúc LP.</li>
                     </ul>
                   </details>
@@ -462,7 +466,7 @@
   <script src="/assets/js/cp-market-metrics.js?v=1.1" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.2" defer></script>
-  <script type="module" src="/assets/js/lp-calculator.mjs?v=2.0"></script>
+  <script type="module" src="/assets/js/lp-calculator.mjs?v=3.0"></script>
 
   <!-- 
     - ionicon link
