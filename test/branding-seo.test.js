@@ -60,14 +60,15 @@ test("visible homepage naming uses Cypress naturally for current Base infrastruc
 test("technical ticker, pair, contract, dotCP, and historical labels remain intact", () => {
   for (const html of Object.values(pages)) {
     assert.match(html, />CP \/ USD</);
-    assert.match(html, />CP \/ USDC · Uniswap V3/);
     assert.match(html, />dotCP on Polkadot</);
     assert.match(html, /CP\/WGLMR/);
     assert.match(html, /0x934ef4bfffdce191ac4bcc351b2fe7892865b440/);
     assert.equal((html.match(/>dotCP on Polkadot</g) || []).length, 1);
   }
-  assert.match(pages.en, />Start CP price<[\s\S]*>End CP price</);
-  assert.match(pages.vi, />Giá CP bắt đầu<[\s\S]*>Giá CP kết thúc</);
+  assert.match(pages.en, />Start price<[\s\S]*>End price</);
+  assert.match(pages.vi, />Giá đầu kỳ<[\s\S]*>Giá cuối kỳ</);
+  const legacy = fs.readFileSync(path.join(root, "tools/lp/legacy-full-range-calculator-ui.mjs"), "utf8");
+  assert.match(legacy, /simulateFullRange/);
 });
 
 test("homepage JSON-LD remains valid and keeps Cypress as the primary name", () => {

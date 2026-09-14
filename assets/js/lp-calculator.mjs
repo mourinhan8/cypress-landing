@@ -1,130 +1,91 @@
-import { POOL, simulateFullRange } from "../../tools/lp/full-range-simulator.mjs";
-import { toSimulatorState } from "../../tools/lp/historical-state.mjs";
+import { calculateReferenceApr, projectAllPeriodFees } from "../../tools/comparison/reference-fee.mjs";
 
-export const DATASET_URL = "/api/lp/v1/history.json";
-export const MAX_DATASET_BYTES = 512_000;
-export const STALE_AFTER_MS = 26 * 60 * 60 * 1000;
+export const PERIODS = Object.freeze(["7D", "30D", "6M", "1Y"]);
+export const PRICE_PATH_URL = "/data/comparison/price-path-v2.json";
+export const REFERENCE_FEE_URL = "/data/comparison/reference-fee-window-v1.json";
+export const MAX_DATASET_BYTES = 1_000_000;
 
 const TEXT = Object.freeze({
   en: {
-    unavailable: "LP data is unavailable.", stale: "The latest LP snapshot is stale.", ready: "Exact finalized pool states loaded.",
-    latest: "Latest finalized", block: "Block", calculate: "Calculate", loading: "Loading exact pool states…",
-    init: "Initialization", dateUnavailable: "Unavailable"
+    unavailable: "Comparison data is unavailable.",
+    ready: "Comparison ready.",
+    holdAhead: "Hold ahead by",
+    liquidityAhead: "Liquidity ahead by",
+    tie: "Hold and Liquidity finish equal",
+    apr: "Reference fee APR",
+    estimate: "estimate",
+    window: "days observed"
+
   },
   vi: {
-    unavailable: "Dữ liệu LP hiện không khả dụng.", stale: "Ảnh chụp LP mới nhất đã cũ.", ready: "Đã tải trạng thái pool finalized chính xác.",
-    latest: "Finalized mới nhất", block: "Khối", calculate: "Tính toán", loading: "Đang tải trạng thái pool chính xác…",
-    init: "Khởi tạo", dateUnavailable: "Không khả dụng"
+    unavailable: "Dữ liệu so sánh hiện không khả dụng.",
+    ready: "Đã tải kết quả so sánh.",
+    holdAhead: "Hold dẫn trước",
+    liquidityAhead: "Thanh khoản dẫn trước",
+    tie: "Hold và Thanh khoản có kết quả bằng nhau",
+    apr: "APR phí tham chiếu",
+    estimate: "ước tính",
+    window: "ngày quan sát"
+
   }
 });
 
-function canonicalTimestamp(value, label) {
-  const milliseconds = Date.parse(value);
-  if (typeof value !== "string" || !Number.isFinite(milliseconds) || new Date(milliseconds).toISOString() !== value) throw new Error(label + " is invalid");
-  return milliseconds;
+function numeric(decimal) {
+  const value = Number(decimal);
+  if (!Number.isFinite(value)) throw new Error("Invalid decimal result");
+  return value;
 }
 
-export function validateDataset(dataset) {
-  if (!dataset || dataset.schemaVersion !== 1 || dataset.kind !== "cypress-lp-principal-history") throw new Error("LP dataset schema is invalid");
-  if (dataset.identity?.chainId !== POOL.chainId || dataset.identity?.pool !== POOL.address
-      || dataset.identity?.token0?.address !== POOL.token0.address || dataset.identity?.token0?.decimals !== POOL.token0.decimals
-      || dataset.identity?.token1?.address !== POOL.token1.address || dataset.identity?.token1?.decimals !== POOL.token1.decimals
-      || dataset.identity?.fee !== String(POOL.fee) || dataset.identity?.tickSpacing !== String(POOL.tickSpacing)) {
-    throw new Error("LP dataset identity is invalid");
-  }
-  canonicalTimestamp(dataset.generatedAt, "generation timestamp");
-  if (!Array.isArray(dataset.snapshots) || dataset.snapshots.length === 0 || dataset.snapshots.length > 400
-      || !Array.isArray(dataset.resolutions) || !Array.isArray(dataset.gaps)
-      || dataset.fees?.included !== false || dataset.fees?.status !== "unavailable"
-      || dataset.resolutionPolicy?.interpolation !== false || dataset.resolutionPolicy?.exactRequestedTimestampsOnly !== true) {
-    throw new Error("LP dataset bounds or policy are invalid");
-  }
-  let previous = -1n;
-  const blocks = new Map();
-  for (const snapshot of dataset.snapshots) {
-    toSimulatorState(snapshot);
-    const number = BigInt(snapshot.blockNumber);
-    if (number <= previous) throw new Error("LP snapshots are not ordered");
-    previous = number;
-    blocks.set(snapshot.blockNumber, snapshot);
-  }
-  for (const resolution of dataset.resolutions) {
-    canonicalTimestamp(resolution.requestedTimestamp, "requested timestamp");
-    const snapshot = blocks.get(resolution.blockNumber);
-    if (!snapshot || snapshot.blockHash !== resolution.blockHash) throw new Error("LP resolution is inconsistent");
-  }
-  for (const gap of dataset.gaps) canonicalTimestamp(gap.requestedTimestamp, "gap timestamp");
-  const latest = blocks.get(dataset.latestIncludedFinalizedBlock?.blockNumber);
-  if (!latest || latest.blockHash !== dataset.latestIncludedFinalizedBlock.blockHash) throw new Error("latest LP snapshot is inconsistent");
-  return dataset;
+export function formatUsd(decimal, options = {}) {
+  const value = numeric(decimal);
+  const fractionDigits = options.price ? 8 : 2;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency", currency: "USD", minimumFractionDigits: options.price ? 2 : 2,
+    maximumFractionDigits: fractionDigits
+  }).format(value);
 }
 
-export async function fetchDataset(options = {}) {
+export function formatSignedUsd(decimal) {
+  const value = numeric(decimal);
+  if (value === 0) return formatUsd("0");
+  return (value > 0 ? "+" : "−") + formatUsd(String(Math.abs(value)));
+}
+
+export function formatSignedPercent(decimal) {
+  const value = numeric(decimal);
+  if (value === 0) return "0.00%";
+  return (value > 0 ? "+" : "−") + Math.abs(value).toFixed(2) + "%";
+}
+
+async function fetchJson(url, fetchImpl, signal) {
+  const response = await fetchImpl(url, { credentials: "same-origin", signal });
+  if (!response.ok) throw new Error("Comparison dataset returned HTTP " + response.status);
+  const length = Number(response.headers?.get?.("content-length"));
+  if (Number.isFinite(length) && length > MAX_DATASET_BYTES) throw new Error("Comparison dataset exceeds its byte bound");
+  const body = await response.text();
+  if (body.length > MAX_DATASET_BYTES) throw new Error("Comparison dataset exceeds its byte bound");
+  return JSON.parse(body);
+}
+
+export async function fetchComparisonData(options = {}) {
   const fetchImpl = options.fetchImpl || fetch;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), options.timeoutMs || 8_000);
   try {
-    const response = await fetchImpl(options.url || DATASET_URL, { credentials: "same-origin", signal: controller.signal });
-    if (!response.ok) throw new Error("LP dataset returned HTTP " + response.status);
-    const length = Number(response.headers?.get?.("content-length"));
-    if (Number.isFinite(length) && length > MAX_DATASET_BYTES) throw new Error("LP dataset exceeds its byte bound");
-    const body = await response.text();
-    if (body.length > MAX_DATASET_BYTES) throw new Error("LP dataset exceeds its byte bound");
-    return validateDataset(JSON.parse(body));
-  } finally { clearTimeout(timer); }
-}
-
-function datePart(timestamp) { return timestamp.slice(0, 10); }
-
-export function boundaryOptions(dataset) {
-  validateDataset(dataset);
-  const blocks = new Map(dataset.snapshots.map(snapshot => [snapshot.blockNumber, snapshot]));
-  const output = dataset.resolutions.map(resolution => ({
-    key: resolution.blockNumber,
-    requestedTimestamp: resolution.requestedTimestamp,
-    snapshot: blocks.get(resolution.blockNumber),
-    latest: false,
-    unavailable: false
-  }));
-  const latestBlock = dataset.latestIncludedFinalizedBlock.blockNumber;
-  if (!output.some(option => option.key === latestBlock)) {
-    output.push({ key: latestBlock, requestedTimestamp: blocks.get(latestBlock).timestamp, snapshot: blocks.get(latestBlock), latest: true, unavailable: false });
-  } else {
-    output.find(option => option.key === latestBlock).latest = true;
+    const [pricePath, referenceFeeWindow] = await Promise.all([
+      fetchJson(options.pricePathUrl || PRICE_PATH_URL, fetchImpl, controller.signal),
+      fetchJson(options.referenceFeeUrl || REFERENCE_FEE_URL, fetchImpl, controller.signal)
+    ]);
+    return { pricePath, referenceFeeWindow };
+  } finally {
+    clearTimeout(timer);
   }
-  for (const gap of dataset.gaps) {
-    if (!output.some(option => datePart(option.requestedTimestamp) === datePart(gap.requestedTimestamp))) {
-      output.push({ key: "gap:" + gap.requestedTimestamp, requestedTimestamp: gap.requestedTimestamp, latest: false, unavailable: true });
-    }
-  }
-  return output.sort((left, right) => Date.parse(left.requestedTimestamp) - Date.parse(right.requestedTimestamp));
 }
 
-export function calculateFromDataset(dataset, startBlock, endBlock) {
-  validateDataset(dataset);
-  const blocks = new Map(dataset.snapshots.map(snapshot => [snapshot.blockNumber, snapshot]));
-  const start = blocks.get(String(startBlock));
-  const end = blocks.get(String(endBlock));
-  if (!start || !end) throw new Error("Selected LP boundary is unavailable");
-  return { result: simulateFullRange({ start: toSimulatorState(start), end: toSimulatorState(end) }), start, end };
-}
-
-export function formatDecimal(value, maximumFractionDigits = 6) {
-  if (typeof value !== "string" || !/^-?\d+(?:\.\d+)?$/.test(value)) throw new Error("decimal value is invalid");
-  const negative = value.startsWith("-");
-  const [wholeRaw, fractionRaw = ""] = (negative ? value.slice(1) : value).split(".");
-  const whole = wholeRaw.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  const fraction = fractionRaw.slice(0, maximumFractionDigits).replace(/0+$/, "");
-  return (negative ? "−" : "") + whole + (fraction ? "." + fraction : "");
-}
-
-function optionLabel(option, language) {
-  const text = TEXT[language];
-  const date = datePart(option.requestedTimestamp);
-  if (option.unavailable) return date + " — " + text.dateUnavailable;
-  if (option.latest) return text.latest + " — " + option.snapshot.timestamp.replace(".000Z", "Z");
-  if (option.snapshot.blockNumber === POOL.initializationBlock.toString()) return date + " — " + text.init;
-  return date + " — 00:00 UTC";
+export function buildComparisonResults(pricePath, referenceFeeWindow) {
+  const referenceApr = calculateReferenceApr(referenceFeeWindow);
+  if (!referenceApr.available || referenceApr.status !== "available") throw new Error("Reference fee APR is unavailable");
+  return { referenceApr, periods: projectAllPeriodFees(pricePath, referenceApr) };
 }
 
 function setText(root, key, value) {
@@ -132,66 +93,75 @@ function setText(root, key, value) {
   if (element) element.textContent = value;
 }
 
-function renderResult(root, calculated, language) {
-  const { result, start, end } = calculated;
-  setText(root, "capital", formatDecimal(result.initial.capitalUsdc.decimal, 2) + " USDC");
-  setText(root, "initial-cp", formatDecimal(result.initial.initialCpQuantity.decimal, 6) + " CP");
-  setText(root, "start-price", formatDecimal(result.start.cpPriceUsdc.decimal, 8) + " USDC");
-  setText(root, "end-price", formatDecimal(result.end.cpPriceUsdc.decimal, 8) + " USDC");
-  setText(root, "ending-cp", formatDecimal(result.ending.totalAssetsIncludingDust.cp.decimal, 6) + " CP");
-  setText(root, "ending-usdc", formatDecimal(result.ending.totalAssetsIncludingDust.usdc.decimal, 6) + " USDC");
-  setText(root, "asset-value", formatDecimal(result.ending.assetValueUsdc.decimal, 6) + " USDC");
-  setText(root, "asset-pnl", formatDecimal(result.ending.assetPnlUsdc.decimal, 6) + " USDC");
-  setText(root, "return", formatDecimal(result.ending.periodReturnPercent.decimal, 4) + "%");
-  setText(root, "hodl", formatDecimal(result.ending.hodlValueUsdc.decimal, 6) + " USDC");
-  setText(root, "lp-vs-hodl", formatDecimal(result.ending.lpVsHodlUsdc.decimal, 6) + " USDC");
-  setText(root, "start-resolution", start.timestamp.replace(".000Z", "Z") + " · " + TEXT[language].block + " " + start.blockNumber);
-  setText(root, "end-resolution", end.timestamp.replace(".000Z", "Z") + " · " + TEXT[language].block + " " + end.blockNumber);
+export function conclusionText(result, language) {
+  const text = TEXT[language === "vi" ? "vi" : "en"];
+  const difference = result.differenceIncludingEstimatedFees;
+  if (difference.leader === "tie") return text.tie;
+  const leader = difference.leader === "hold_cp" ? text.holdAhead : text.liquidityAhead;
+  return leader + " " + formatUsd(String(Math.abs(numeric(difference.holdMinusLpUsdc.decimal))));
+}
+
+export function referenceAprText(referenceApr, language) {
+  const locale = language === "vi" ? "vi-VN" : "en-US";
+  const text = TEXT[language === "vi" ? "vi" : "en"];
+  const apr = numeric(referenceApr.lpNetAprPercent.decimal).toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  let rendered = text.apr + ": " + apr + "% (" + text.estimate + ")";
+  if (referenceApr.window.partial || numeric(referenceApr.window.durationDays.decimal) < 7) {
+    const days = numeric(referenceApr.window.durationDays.decimal).toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    rendered += " · " + days + " " + text.window;
+  }
+  return rendered;
+}
+
+export function renderPeriod(root, comparison, period, language = "en") {
+  if (!PERIODS.includes(period) || !comparison.periods[period]) throw new Error("Unsupported comparison period");
+  const result = comparison.periods[period];
+  setText(root, "start-price", formatUsd(result.boundaries.startPriceUsd.decimal, { price: true }));
+  setText(root, "end-price", formatUsd(result.boundaries.endPriceUsd.decimal, { price: true }));
+  setText(root, "hold-ending", formatUsd(result.holdCp.endingValueUsdc.decimal));
+  setText(root, "hold-pl", formatSignedUsd(result.holdCp.profitLossUsdc.decimal));
+  setText(root, "hold-return", formatSignedPercent(result.holdCp.returnPercent.decimal));
+  setText(root, "lp-ending", formatUsd(result.rebalancedLp.endingValueIncludingEstimatedFeesUsdc.decimal));
+  setText(root, "lp-pl", formatSignedUsd(result.rebalancedLp.profitLossIncludingEstimatedFeesUsdc.decimal));
+  setText(root, "lp-return", formatSignedPercent(result.rebalancedLp.returnIncludingEstimatedFeesPercent.decimal));
+  setText(root, "estimated-fees", formatUsd(result.rebalancedLp.estimatedFeesUsdc.decimal));
+  setText(root, "conclusion", conclusionText(result, language));
+  root.querySelector("[data-lp-reference-apr]").textContent = referenceAprText(comparison.referenceApr, language);
+  for (const button of root.querySelectorAll("[data-lp-period]")) {
+    button.setAttribute("aria-pressed", String(button.dataset.lpPeriod === period));
+  }
+  root.dataset.activePeriod = period;
   root.querySelector("[data-lp-results]").hidden = false;
+  return result;
 }
 
 export async function initializeCalculator(root, options = {}) {
   const language = root.dataset.language === "vi" ? "vi" : "en";
-  const text = TEXT[language];
   const status = root.querySelector("[data-lp-status]");
-  const calculateButton = root.querySelector("[data-lp-calculate]");
-  status.textContent = text.loading;
-  calculateButton.disabled = true;
   try {
-    const dataset = await fetchDataset(options);
-    const choices = boundaryOptions(dataset);
-    const usable = choices.filter(choice => !choice.unavailable);
-    for (const select of root.querySelectorAll("[data-lp-boundary]")) {
-      for (const choice of choices) {
-        const option = document.createElement("option");
-        option.value = choice.key;
-        option.textContent = optionLabel(choice, language);
-        option.disabled = choice.unavailable;
-        select.append(option);
-      }
+    const datasets = options.datasets || await fetchComparisonData(options);
+    const comparison = buildComparisonResults(datasets.pricePath, datasets.referenceFeeWindow);
+    const buttons = Array.from(root.querySelectorAll("[data-lp-period]"));
+    const select = period => renderPeriod(root, comparison, period, language);
+    for (const [index, button] of buttons.entries()) {
+      button.addEventListener("click", () => select(button.dataset.lpPeriod));
+      button.addEventListener("keydown", event => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const targetIndex = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1
+          : (index + (event.key === "ArrowRight" ? 1 : -1) + buttons.length) % buttons.length;
+        buttons[targetIndex].focus();
+        select(buttons[targetIndex].dataset.lpPeriod);
+      });
     }
-    root.querySelector('[data-lp-boundary="start"]').value = usable[0].key;
-    root.querySelector('[data-lp-boundary="end"]').value = usable.at(-1).key;
-    const stale = Date.now() - canonicalTimestamp(dataset.generatedAt, "generation timestamp") > STALE_AFTER_MS;
-    status.textContent = stale ? text.stale : text.ready;
-    status.dataset.state = stale ? "stale" : "ready";
-    calculateButton.disabled = usable.length < 1;
-    calculateButton.addEventListener("click", () => {
-      try {
-        const start = root.querySelector('[data-lp-boundary="start"]').value;
-        const end = root.querySelector('[data-lp-boundary="end"]').value;
-        renderResult(root, calculateFromDataset(dataset, start, end), language);
-      } catch (error) {
-        status.textContent = error.message;
-        status.dataset.state = "error";
-      }
-    });
-    if (usable.length) calculateButton.click();
-    return dataset;
+    select("7D");
+    status.textContent = TEXT[language].ready;
+    status.hidden = true;
+    return comparison;
   } catch (error) {
-    status.textContent = text.unavailable;
+    status.textContent = TEXT[language].unavailable;
     status.dataset.state = "error";
-    root.querySelectorAll("select, button[data-lp-calculate]").forEach(element => { element.disabled = true; });
+    root.querySelectorAll("[data-lp-period]").forEach(button => { button.disabled = true; });
     throw error;
   }
 }
@@ -199,8 +169,11 @@ export async function initializeCalculator(root, options = {}) {
 if (typeof document !== "undefined") {
   const dialog = document.querySelector("[data-lp-dialog]");
   const root = document.querySelector("[data-lp-calculator]");
-  document.querySelector("[data-lp-open]")?.addEventListener("click", () => dialog.showModal());
+  let initialization;
+  document.querySelector("[data-lp-open]")?.addEventListener("click", () => {
+    dialog.showModal();
+    if (root && !initialization) initialization = initializeCalculator(root).catch(() => {});
+  });
   dialog?.querySelector("[data-lp-close]")?.addEventListener("click", () => dialog.close());
   dialog?.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
-  if (root) initializeCalculator(root).catch(() => {});
 }

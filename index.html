@@ -46,7 +46,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.12">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.13">
 
   <!-- 
     - google font link
@@ -158,39 +158,58 @@
               <section class="lp-calculator" data-lp-calculator data-language="en">
                 <header class="lp-calculator-header">
                   <div>
-                    <p class="lp-eyebrow">CP / USDC · Uniswap V3 · Full range</p>
+                    <p class="lp-eyebrow">$1,000 comparison</p>
                     <h2 id="lp-calculator-title">Liquidity Returns</h2>
                   </div>
                   <button type="button" class="lp-close" data-lp-close aria-label="Close Liquidity Returns">×</button>
                 </header>
-                <p class="lp-intro">Model a fixed 1,000 USDC position: 500 USDC plus 500 USDC worth of CP at the start boundary.</p>
-                <div class="lp-controls">
-                  <label>Start date<select data-lp-boundary="start" aria-describedby="lp-date-policy"></select></label>
-                  <label>End date<select data-lp-boundary="end" aria-describedby="lp-date-policy"></select></label>
-                  <button type="button" class="x-btn lp-calculate" data-lp-calculate>Calculate</button>
-                </div>
-                <p class="lp-date-policy" id="lp-date-policy">Dates use exact finalized pool states at the displayed timestamp. September 6 uses the initialization time; later dates use 00:00 UTC.</p>
-                <p class="lp-status" data-lp-status aria-live="polite">Loading exact pool states…</p>
-                <div class="lp-results" data-lp-results hidden>
-                  <div class="lp-resolutions">
-                    <p><span>Start resolved to</span><strong data-lp-result="start-resolution"></strong></p>
-                    <p><span>End resolved to</span><strong data-lp-result="end-resolution"></strong></p>
+                <p class="lp-intro">If you started with $1,000, would holding Cypress or providing liquidity have performed better?</p>
+                <fieldset class="lp-periods" aria-label="Choose comparison period">
+                  <legend>Period</legend>
+                  <div class="lp-period-options">
+                    <button type="button" data-lp-period="7D" aria-pressed="true">7D</button>
+                    <button type="button" data-lp-period="30D" aria-pressed="false">30D</button>
+                    <button type="button" data-lp-period="6M" aria-pressed="false">6M</button>
+                    <button type="button" data-lp-period="1Y" aria-pressed="false">1Y</button>
                   </div>
-                  <dl class="lp-result-grid">
-                    <div><dt>Initial capital</dt><dd data-lp-result="capital"></dd></div>
-                    <div><dt>Initial CP quantity</dt><dd data-lp-result="initial-cp"></dd></div>
-                    <div><dt>Start CP price</dt><dd data-lp-result="start-price"></dd></div>
-                    <div><dt>End CP price</dt><dd data-lp-result="end-price"></dd></div>
-                    <div><dt>Ending CP, including dust</dt><dd data-lp-result="ending-cp"></dd></div>
-                    <div><dt>Ending USDC, including dust</dt><dd data-lp-result="ending-usdc"></dd></div>
-                    <div class="lp-result-emphasis"><dt>Ending LP asset value</dt><dd data-lp-result="asset-value"></dd></div>
-                    <div><dt>Asset P/L before fees</dt><dd data-lp-result="asset-pnl"></dd></div>
-                    <div><dt>Return before fees</dt><dd data-lp-result="return"></dd></div>
-                    <div><dt>HODL ending value</dt><dd data-lp-result="hodl"></dd></div>
-                    <div><dt>LP versus HODL</dt><dd data-lp-result="lp-vs-hodl"></dd></div>
+                </fieldset>
+                <p class="lp-status" data-lp-status aria-live="polite">Loading comparison…</p>
+                <div class="lp-results" data-lp-results hidden>
+                  <dl class="lp-price-context" aria-label="Period price context">
+                    <div><dt>Start price</dt><dd data-lp-result="start-price"></dd></div>
+                    <div><dt>End price</dt><dd data-lp-result="end-price"></dd></div>
                   </dl>
-                  <p class="lp-fee-status"><strong>Fee estimate unavailable.</strong> Asset P/L and return exclude fees.</p>
-                  <p class="lp-risk-note">Full range is only one LP strategy. Narrower ranges may earn more fees while in range, but introduce additional risk. Higher fees do not guarantee higher net returns.</p>
+                  <div class="lp-strategy-grid">
+                    <article class="lp-strategy-card">
+                      <h3>Hold Cypress</h3>
+                      <dl>
+                        <div class="lp-ending-value"><dt>Ending value</dt><dd data-lp-result="hold-ending"></dd></div>
+                        <div><dt>P/L</dt><dd data-lp-result="hold-pl"></dd></div>
+                        <div><dt>Return</dt><dd data-lp-result="hold-return"></dd></div>
+                      </dl>
+                    </article>
+                    <article class="lp-strategy-card lp-strategy-card-liquidity">
+                      <h3>Liquidity</h3>
+                      <dl>
+                        <div class="lp-ending-value"><dt>Ending value including estimated fees</dt><dd data-lp-result="lp-ending"></dd></div>
+                        <div><dt>P/L</dt><dd data-lp-result="lp-pl"></dd></div>
+                        <div><dt>Return</dt><dd data-lp-result="lp-return"></dd></div>
+                      </dl>
+                      <p class="lp-estimated-fees">Estimated fees: <strong data-lp-result="estimated-fees"></strong></p>
+                    </article>
+                  </div>
+                  <p class="lp-conclusion" data-lp-result="conclusion" aria-live="polite"></p>
+                  <p class="lp-reference-apr" data-lp-reference-apr></p>
+                  <p class="lp-disclaimer">Simulation based on historical price data, using daily average prices and linear interpolation for days with missing data.</p>
+                  <details class="lp-explanation">
+                    <summary>Why LP can differ from Hold</summary>
+                    <ul>
+                      <li>When CP rises sharply, Hold usually does better because liquidity gradually sells CP as its price rises.</li>
+                      <li>When CP falls, liquidity may lose less than Hold because part of the position is in USD.</li>
+                      <li>When price moves sideways and volume is high, liquidity may do better thanks to trading fees.</li>
+                      <li>When volume is low, fees contribute little, so the result is driven mostly by price moves and the liquidity position’s structure.</li>
+                    </ul>
+                  </details>
                 </div>
               </section>
             </dialog>
@@ -447,7 +466,7 @@
   <script src="/assets/js/cp-market-metrics.js?v=1.1" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
   <script src="/assets/js/cp-market-ui.js?v=1.2" defer></script>
-  <script type="module" src="/assets/js/lp-calculator.mjs?v=1.1"></script>
+  <script type="module" src="/assets/js/lp-calculator.mjs?v=2.0"></script>
 
   <!-- 
     - ionicon link

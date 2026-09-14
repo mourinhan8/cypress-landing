@@ -1,0 +1,1669 @@
+{
+  "schemaVersion": 1,
+  "kind": "cypress-reference-fee-window",
+  "generatedAt": "2026-09-09T13:00:19.850Z",
+  "identity": {
+    "chainId": 8453,
+    "pool": "0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9",
+    "token0": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    "token1": "0x934ef4bfffdce191ac4bcc351b2fe7892865b440",
+    "feeTier": "10000",
+    "feeTierFraction": {
+      "numerator": "1",
+      "denominator": "100"
+    }
+  },
+  "window": {
+    "requestedDays": 7,
+    "initializationTimestamp": "2026-09-06T05:36:17.000Z",
+    "startTimestamp": "2026-09-06T05:36:17.000Z",
+    "endTimestamp": "2026-09-09T12:58:19.000Z",
+    "partial": true,
+    "latestFinalizedBlock": {
+      "blockNumber": "51084676",
+      "blockHash": "0x33030fab360ccd57f41e53116f1de0ceaed1c13a46c1c97afe2df4e1ee327f8a",
+      "timestamp": "2026-09-09T12:58:19.000Z"
+    }
+  },
+  "volume": {
+    "source": "geckoterminal",
+    "generationId": "generation-bba8023cc66aab090ead",
+    "sourceStreamVersion": "base-uniswap-2026-09-06-v1",
+    "coverageStart": "2026-09-06T05:36:17.000Z",
+    "coverageEnd": "2026-09-09T12:58:19.850Z",
+    "sparseIntervalsMeanZeroVolume": true,
+    "intervals": [
+      {
+        "startTimestamp": "2026-09-06T12:00:00.000Z",
+        "endTimestamp": "2026-09-06T13:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "249746018343409",
+          "denominator": "10000000000000"
+        },
+        "finalized": true,
+        "rawRecordHash": "4213f8fd380dd3a8c8334c28cbc8eb90c4007ea784507f09f233f496eabba2f7"
+      },
+      {
+        "startTimestamp": "2026-09-06T18:00:00.000Z",
+        "endTimestamp": "2026-09-06T19:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "683945415457",
+          "denominator": "62500000000"
+        },
+        "finalized": true,
+        "rawRecordHash": "b777c156bb4504f7485f5d7070a17911cb55a5a12e45a9f33f1086755efd80d8"
+      },
+      {
+        "startTimestamp": "2026-09-07T02:00:00.000Z",
+        "endTimestamp": "2026-09-07T03:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "85782039977441",
+          "denominator": "25000000000000"
+        },
+        "finalized": true,
+        "rawRecordHash": "d17d3e745bc13cbb50f6026920693ee13df2168b6689e4edbb12f30c964387d9"
+      },
+      {
+        "startTimestamp": "2026-09-08T13:00:00.000Z",
+        "endTimestamp": "2026-09-08T14:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "516412921700739",
+          "denominator": "50000000000000"
+        },
+        "finalized": true,
+        "rawRecordHash": "9692ad4bc1008cfa061bc2bd51535f54e576ddd09ec1d6d947d4d1c95955bd85"
+      },
+      {
+        "startTimestamp": "2026-09-09T06:00:00.000Z",
+        "endTimestamp": "2026-09-09T07:00:00.000Z",
+        "volumeUsd": {
+          "numerator": "2243872479421",
+          "denominator": "62500000000"
+        },
+        "finalized": true,
+        "rawRecordHash": "8f30cf43b3af72d039490f9d8012a30f4cdf8afc23c2d9e5d65ff3d3bdb4b9c6"
+      }
+    ]
+  },
+  "tvl": {
+    "method": "hourly_block_pinned_balances_trapezoidal",
+    "tokenBalanceMethod": "ERC20_balanceOf_pool_at_pinned_block",
+    "priceMethod": "exact_pool_sqrtPriceX96_USDC_equals_USD",
+    "carryForwardProof": "all pool logs scanned; state carried only across boundaries with no intervening pool event",
+    "snapshots": [
+      {
+        "blockNumber": "50941815",
+        "blockHash": "0x748bf3c1a7db6485324676b7480bee436a226c2cf12e20f7c62c3f8a7d7f6918",
+        "timestamp": "2026-09-06T05:36:17.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 0,
+        "token0ProtocolFeeDenominator": 0,
+        "token1ProtocolFeeDenominator": 0,
+        "stateSourceBlockNumber": "50941815",
+        "stateSourceBlockHash": "0x748bf3c1a7db6485324676b7480bee436a226c2cf12e20f7c62c3f8a7d7f6918",
+        "stateSourceTimestamp": "2026-09-06T05:36:17.000Z",
+        "carriedForwardNoPoolEvents": false
+      },
+      {
+        "blockNumber": "50942526",
+        "blockHash": "0xef9b3f22094d96ba37e38ee26f651218723a87980a5a1df5a023a04b12c41f61",
+        "timestamp": "2026-09-06T05:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50944326",
+        "blockHash": "0xa916c71a0c0bca487793446c5d32747cfee54ea20c93e538daf79d62c4d6b608",
+        "timestamp": "2026-09-06T06:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50946126",
+        "blockHash": "0x4d60aba16395f61964b520b788d59fd65c36ae3d0c7d55659ce3baa364d72eb6",
+        "timestamp": "2026-09-06T07:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50947926",
+        "blockHash": "0x8a1e7de00645d963c944808b9f55a035cb4db71032803ec1da60049a4df776d9",
+        "timestamp": "2026-09-06T08:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50949726",
+        "blockHash": "0x8122ca7da9586fbab39676596c55ce6f33b96f93e5d37f34d25bd104eec9aa3e",
+        "timestamp": "2026-09-06T09:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50951526",
+        "blockHash": "0xc3986a057b6695ddb9f28a2bf6937842bb73181cb32c229c511d76b300d33983",
+        "timestamp": "2026-09-06T10:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50953326",
+        "blockHash": "0x1f3626d50266614ac9af61d76179320d1983910e4325f7d637ad42afcf1e8a62",
+        "timestamp": "2026-09-06T11:59:59.000Z",
+        "token0BalanceRaw": "3661697640",
+        "token1BalanceRaw": "1049134157946428001594088",
+        "sqrtPriceX96": "638407101806347576136442032642785978",
+        "tvlUsd": {
+          "numerator": "252434269280200131885460993636907126850790092204587366157883817652479983262289269",
+          "denominator": "12736363363649382456546309080286622192110083711433554074125887672294265125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50941863",
+        "stateSourceBlockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "stateSourceTimestamp": "2026-09-06T05:37:53.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50955126",
+        "blockHash": "0x6530f9e92afb5217351444da5207d27dc07e9eb21ed65a1e14797ee6ae2442d7",
+        "timestamp": "2026-09-06T12:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50956926",
+        "blockHash": "0xad1d88ac780d0e3c90a3bda1e9bd4b9aad6d979b576c38c9dcf4e7e61d1ccd7a",
+        "timestamp": "2026-09-06T13:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50958726",
+        "blockHash": "0x3534beeafa908f55e973ce44982e096f13033f2a5d158b5dda99d3446ce2cd09",
+        "timestamp": "2026-09-06T14:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50960526",
+        "blockHash": "0x95128054d46b73236394d598216c4699b7f20708790741f491c8fc51fc121509",
+        "timestamp": "2026-09-06T15:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50962326",
+        "blockHash": "0x6df3fc427350fb4290afd1a53958f6ff6402bd12d484b44a3646050105194e5d",
+        "timestamp": "2026-09-06T16:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50964126",
+        "blockHash": "0x57833ca80e6959fda8bb4881dfd1f6334f153526b286bc4d8b263e077e9a5331",
+        "timestamp": "2026-09-06T17:59:59.000Z",
+        "token0BalanceRaw": "3686697640",
+        "token1BalanceRaw": "1047529290682849028422702",
+        "sqrtPriceX96": "637566328727752917877175857685537210",
+        "tvlUsd": {
+          "numerator": "252314271506054922021515037036899289595505627523982463975277647889282491500302781",
+          "denominator": "12702838235230784237940545083386891982775637246420030276382475196705753125000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50953968",
+        "stateSourceBlockHash": "0xaafd8c7a20eb8139bf5f37e5c554e41362cfcb6b977738b7a08ed9203a436211",
+        "stateSourceTimestamp": "2026-09-06T12:21:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50965926",
+        "blockHash": "0x052af24baff7ec407090e19ebaebf85202ec903ba1c0818f58b7f228c02e5f77",
+        "timestamp": "2026-09-06T18:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50967726",
+        "blockHash": "0xee90266b94c9d151d03ed4f0845d10b95827f012cdb84ba98382c2f4279ecda2",
+        "timestamp": "2026-09-06T19:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50969526",
+        "blockHash": "0xce9e6e521d71ed12f3180b43d6905b240f8947c7522603bef248e074a78d8c5c",
+        "timestamp": "2026-09-06T20:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50971326",
+        "blockHash": "0x8c362facd34dbc6fbcba90e607c499f2e3592c8832ce6d2221ac489358898325",
+        "timestamp": "2026-09-06T21:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50973126",
+        "blockHash": "0x0b43e72067e0acd59701be0335d23bd720f39dfabba330ecaa8e3ff93d79a6d7",
+        "timestamp": "2026-09-06T22:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50974926",
+        "blockHash": "0x1847c0663f1a6aad94d5f49dfeae89f96a2e7f1ff10c7bef88543ac50c776eb4",
+        "timestamp": "2026-09-06T23:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50976726",
+        "blockHash": "0x458a2f47c5fef1e2e8c62a9151100fa21fe2f74f485a379689a2fee24d845ea7",
+        "timestamp": "2026-09-07T00:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50978526",
+        "blockHash": "0x241eef4a0d59f8dfe1fc5a97985682395f04b5d5d31a0ea21a6b6b357725335e",
+        "timestamp": "2026-09-07T01:59:59.000Z",
+        "token0BalanceRaw": "3697597130",
+        "token1BalanceRaw": "1046830923770241638565011",
+        "sqrtPriceX96": "637200461648009429704775779601818105",
+        "tvlUsd": {
+          "numerator": "4036189484568476208624271842177187769569838065133239312884945585837052470116820053",
+          "denominator": "203012214162218168050188331157067264205304852339587289448771310752895512500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50965615",
+        "stateSourceBlockHash": "0xd5ff7bda9b1284794d73fa2c9ea017213c707261c5ba00411d5fec98d17cfc10",
+        "stateSourceTimestamp": "2026-09-06T18:49:37.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50980326",
+        "blockHash": "0x1082a309d905fb47293d8afbd44c4845f64ef259bebd2e5e86be151f3e2ad9f1",
+        "timestamp": "2026-09-07T02:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50982126",
+        "blockHash": "0x5a7c232b56b78cdcbd7189b1bd4e401ce7edd4e2676c043cbb33720e167e2a2d",
+        "timestamp": "2026-09-07T03:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50983926",
+        "blockHash": "0x4add88e6caf4a3243a3544fff53904811f1ebdc534d9bd75a97eaf1abb04207f",
+        "timestamp": "2026-09-07T04:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50985726",
+        "blockHash": "0x17f6b9e61bfcadc392a86a8370a5addf43c613daac3be1484a0c95c199157c73",
+        "timestamp": "2026-09-07T05:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50987526",
+        "blockHash": "0x8dd5b77c2d2b1ff117915209a09e0947f141e5d77d1022ee63992f461cd8bf84",
+        "timestamp": "2026-09-07T06:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50989326",
+        "blockHash": "0xedf2b2bb5f0258312340841371a3a651304dc12b8c3ea443890e43164db1d50f",
+        "timestamp": "2026-09-07T07:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50991126",
+        "blockHash": "0x8644592bcdc969ab41cc50a2945a3777bd6636800619729ce711e89881331c0b",
+        "timestamp": "2026-09-07T08:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50992926",
+        "blockHash": "0x8a223f06d11d741033dc9fd566f36411a4bd49d736cd7ee28ba28f7fb4547956",
+        "timestamp": "2026-09-07T09:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50994726",
+        "blockHash": "0x05547da41a4282cb49d31e00c65c15fc0399aa84af53a94f02024c45bf0b9d89",
+        "timestamp": "2026-09-07T10:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50996526",
+        "blockHash": "0x646f7c6e04439ffba9cf5b251b47020e73aedf0275715b341f10158319e41d86",
+        "timestamp": "2026-09-07T11:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "50998326",
+        "blockHash": "0x694bc4fc6c0d69a4febfb87547e4421c3e0bf215d8b874faabd05bca966675f6",
+        "timestamp": "2026-09-07T12:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51000126",
+        "blockHash": "0x4ec9bab0b5f85bcf815d2c05f89a3e9cc940b9090695eaa59368c0d606b39726",
+        "timestamp": "2026-09-07T13:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51001926",
+        "blockHash": "0x447ca4301166b3238fb78530a73852e514fd3a28128537a5a318132a1370edf2",
+        "timestamp": "2026-09-07T14:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51003726",
+        "blockHash": "0xee850bb79902df47a4bb00cb979049b9a3f754b48171096e4b8e2ef41d83cbf4",
+        "timestamp": "2026-09-07T15:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51005526",
+        "blockHash": "0xe17e42590db4bdc6e5fd4d366c0bbd07172ab8f6d9ee1fb2ba46948ebe50eaaf",
+        "timestamp": "2026-09-07T16:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51007326",
+        "blockHash": "0x24d0133ddcd7f07d938c065a42f1daab32ff2eb437ffa3c726622fb6aefd639a",
+        "timestamp": "2026-09-07T17:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51009126",
+        "blockHash": "0xf869beb314b33ad2ee4f029a08a1741e96e34eea530f01236b2037f17d9f301d",
+        "timestamp": "2026-09-07T18:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51010926",
+        "blockHash": "0x162bcd9a3c423291096bd3e6df1b5187f9e521977372f1f12bf07f3961494310",
+        "timestamp": "2026-09-07T19:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51012726",
+        "blockHash": "0x3fb4f9e7a499ec34950005e9747daabb48c3a18692ee0c5f7030309902154a8a",
+        "timestamp": "2026-09-07T20:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51014526",
+        "blockHash": "0xdf9ce0d3686fdb6217268f7b8d7d072128975bd116e4322f77b7dedacc0c6406",
+        "timestamp": "2026-09-07T21:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51016326",
+        "blockHash": "0xfa5d22d7becb9f2a6785650c3344fdb850fc612ce54f18446224423597db9313",
+        "timestamp": "2026-09-07T22:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51018126",
+        "blockHash": "0x012262250d606fbfecceaebf5cd2c29e21aa0c575e92af4dd18e50838108ad0f",
+        "timestamp": "2026-09-07T23:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51019926",
+        "blockHash": "0xc1d44bf92829ab219e90d2105aed1c59ba286510e69898665b88a508f120c2ac",
+        "timestamp": "2026-09-08T00:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51021726",
+        "blockHash": "0xdef3aacab22254c19b21be144a6f601c3a3c9daee9b55349d59ea3853ef81b42",
+        "timestamp": "2026-09-08T01:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51023526",
+        "blockHash": "0xc84edce727a0c88f833730716093a92d2351de38816ff501ca8799f83f8fd7f8",
+        "timestamp": "2026-09-08T02:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51025326",
+        "blockHash": "0xcf91fe9f83cd71f8899b3f20ac1ae3a1e99039748df61ba1ee184a79daf88321",
+        "timestamp": "2026-09-08T03:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51027126",
+        "blockHash": "0x0039804cda239860583944893f214e414757c05d5aecab729400cf617e76205c",
+        "timestamp": "2026-09-08T04:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51028926",
+        "blockHash": "0x334624f87af840711439363723870c896ab2b07010ca8ba6f03f1af082f35169",
+        "timestamp": "2026-09-08T05:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51030726",
+        "blockHash": "0xcfd9542486c5d51c4b7bcbc2de1cc5ca55d4675238824484408cfe4562f69670",
+        "timestamp": "2026-09-08T06:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51032526",
+        "blockHash": "0x1d292df6112f8fb7ff4ad668a0944ee7c459b58304eeea0488986bb7c26f65f1",
+        "timestamp": "2026-09-08T07:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51034326",
+        "blockHash": "0x6b487054d9c4137be20d0cc6d93e97f05367e0e407d3e5243a2c0deb0cd90ccd",
+        "timestamp": "2026-09-08T08:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51036126",
+        "blockHash": "0x73f9f592f87d5f5873000a86aa7216b44917b0a84fa619a4bb70db7157a15d39",
+        "timestamp": "2026-09-08T09:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51037926",
+        "blockHash": "0xc91496231cf9c1edacbcca00464d74790a5e1d8af10506c9d795411d45c40539",
+        "timestamp": "2026-09-08T10:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51039726",
+        "blockHash": "0xaabc1820c658c1fe768ad07fe97705ded5acf96693131f73a606fe86b2f9c307",
+        "timestamp": "2026-09-08T11:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51041526",
+        "blockHash": "0x781b31542621af1ff3db95e3867b0e1503a8c1af8d9fb63d9e80f10c1c5b4e78",
+        "timestamp": "2026-09-08T12:59:59.000Z",
+        "token0BalanceRaw": "3701049914",
+        "token1BalanceRaw": "1046609859492422823930722",
+        "sqrtPriceX96": "637084648398124490877631311042161657",
+        "tvlUsd": {
+          "numerator": "4035923521604926618900339271244683793911801830734923824203504899193156494973137549",
+          "denominator": "202938424612280953210206509987360640910752073251471680807731129660492824500000"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "50979706",
+        "stateSourceBlockHash": "0x18b684fa8c379ee7134e26a0c01224e5fa54bae02346e81b8d5787a76d2730ab",
+        "stateSourceTimestamp": "2026-09-07T02:39:19.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51043326",
+        "blockHash": "0x887c1ad521f668cd7e5e7fe45fb78f7e82ca1948d7ba7e371c89a963201873b3",
+        "timestamp": "2026-09-08T13:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51045126",
+        "blockHash": "0x54b3923aaa0f25b4d19ef60017d66e7b639f379748e1d101828cd241b564b5b5",
+        "timestamp": "2026-09-08T14:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51046926",
+        "blockHash": "0x829af0952dfd23edffe9588b4e996543d44cb19fd72f4fee6c86a6c7f998fe60",
+        "timestamp": "2026-09-08T15:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51048726",
+        "blockHash": "0xb008e93561bef23055265f8e3f870b6d6f963f6fa14fbd622247c27d464961e1",
+        "timestamp": "2026-09-08T16:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51050526",
+        "blockHash": "0xfd5a064c8fe001acc0848ed0466e2f91c622aad8d01d76740f7ee3e96f6c668d",
+        "timestamp": "2026-09-08T17:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51052326",
+        "blockHash": "0x2da1b5558719bb0bfd0bb960778a46b959efb52d74bc718783cd63f867bc5339",
+        "timestamp": "2026-09-08T18:59:59.000Z",
+        "token0BalanceRaw": "3690739792",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "504595961447414286821072990020739892836116807085810402050275861975294419522251869",
+          "denominator": "25395138830286270751198159671079650406269506422229852669237123412677647562500"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51042768",
+        "stateSourceBlockHash": "0x8e7eddd60213fa2effe359f5d3456fadd7e74e3d9a8fe431e802aed7e07f7641",
+        "stateSourceTimestamp": "2026-09-08T13:41:23.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51054126",
+        "blockHash": "0x0fdd6be87d7ee8dac86e858d7dcab5e1d7fe0587ce5ac7e9f82d269eb1d4c209",
+        "timestamp": "2026-09-08T19:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51055926",
+        "blockHash": "0xe99bf91cf4f280e37628c4661604575b8ea1d73777aa8d2a6077a14bcc7aae6d",
+        "timestamp": "2026-09-08T20:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51057726",
+        "blockHash": "0x0abb8fc69653795184b322edeb9eeff774ea2f925431e81e624c12095dbb246e",
+        "timestamp": "2026-09-08T21:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51059526",
+        "blockHash": "0x9f8c4d87496af9a4e55e09d09bacb3398bfc28084ed2e22a68c945a2abd8ed06",
+        "timestamp": "2026-09-08T22:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51061326",
+        "blockHash": "0x7ca5287755945fe9941072ee3ea449ba5ced2bded0e83436fdc9d09659056128",
+        "timestamp": "2026-09-08T23:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51063126",
+        "blockHash": "0xafd9fd8c111329ce09c33e3b22f71ba9d4e94f6267998d32f684a2525c369c00",
+        "timestamp": "2026-09-09T00:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51064926",
+        "blockHash": "0xdee2e6126d43647eca70fd93d40723deec5585d3368abcabcade4a31d26dc51e",
+        "timestamp": "2026-09-09T01:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51066726",
+        "blockHash": "0xfb846cb91603552c190189d0f6105d053b7dd0657e5d2b241a03e2fc727a41e5",
+        "timestamp": "2026-09-09T02:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51068526",
+        "blockHash": "0x09ec3f1e3478569248bc4c685e823966ee62d560b6c79f3e7a4c0441dac9ff05",
+        "timestamp": "2026-09-09T03:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51070326",
+        "blockHash": "0x8addaf4d3ee52be5daab87d7bd2aaa2ef868712c35a21f3436d8056ae3a42ed9",
+        "timestamp": "2026-09-09T04:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51072126",
+        "blockHash": "0xbdbda5369d32198f18c51a7a902dadc7613eb31d7bab7f34cfb20c8270f82ae7",
+        "timestamp": "2026-09-09T05:59:59.000Z",
+        "token0BalanceRaw": "3690674208",
+        "token1BalanceRaw": "1047283614288088987585577",
+        "sqrtPriceX96": "637434091718179387822692496724259019",
+        "tvlUsd": {
+          "numerator": "50459429593262924132629204344063602474832456230650120652761840272779252247141413",
+          "denominator": "2539513883028627075119815967107965040626950642222985266923712341267764756250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51052667",
+        "stateSourceBlockHash": "0xff0fac8f2e0972da2fee83003cc8b0e238f25a292da527b2c95d8e3c7f9bf2fa",
+        "stateSourceTimestamp": "2026-09-08T19:11:21.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51073926",
+        "blockHash": "0xd6b448d707ab700959c8ebb2263374137d945c8d5fca5231c3337190c7181311",
+        "timestamp": "2026-09-09T06:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51075726",
+        "blockHash": "0x5dface8117d505d6edd5730a74bec8ba76fd57fe9425651db40d74cb07e06959",
+        "timestamp": "2026-09-09T07:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51077526",
+        "blockHash": "0xb840dfa7c3500ec609be0aa36c7f7886a807babd3cc8d2ce0d7ec1b51c6ff4cd",
+        "timestamp": "2026-09-09T08:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51079326",
+        "blockHash": "0xb4ee5cb37b4730ecd0fb65319615e45323c49b03f307b96969ed217618fb8d23",
+        "timestamp": "2026-09-09T09:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51081126",
+        "blockHash": "0x4959f8e24cb6027e54f3f472c23d178b441feec1e57f425e0245a2f33e4f9f9a",
+        "timestamp": "2026-09-09T10:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51082926",
+        "blockHash": "0x4271a3d0769362c3f048b549be7f8bfe1b18b7008dc2ae17cd6475ad8c26a564",
+        "timestamp": "2026-09-09T11:59:59.000Z",
+        "token0BalanceRaw": "3726674208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "984857976554362803760406750712909062235336737398558092259628294952905912610257",
+          "denominator": "49412324810533585390300194910577328561937362004426179693456129298538281250"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51072596",
+        "stateSourceBlockHash": "0x34c99dd76508cc493cbfb7effb42811f8f0e4a51ce0a3a5e2d637d6fa6857fc0",
+        "stateSourceTimestamp": "2026-09-09T06:15:39.000Z",
+        "carriedForwardNoPoolEvents": true
+      },
+      {
+        "blockNumber": "51084676",
+        "blockHash": "0x33030fab360ccd57f41e53116f1de0ceaed1c13a46c1c97afe2df4e1ee327f8a",
+        "timestamp": "2026-09-09T12:58:19.000Z",
+        "token0BalanceRaw": "3726614208",
+        "token1BalanceRaw": "1044980972242451177166889",
+        "sqrtPriceX96": "636227761770807303646716617692769840",
+        "tvlUsd": {
+          "numerator": "492427505907437085872641666350607213797811510578418913344423343792574000156691",
+          "denominator": "24706162405266792695150097455288664280968681002213089846728064649269140625"
+        },
+        "feeProtocolEncoded": 102,
+        "token0ProtocolFeeDenominator": 6,
+        "token1ProtocolFeeDenominator": 6,
+        "stateSourceBlockNumber": "51084676",
+        "stateSourceBlockHash": "0x33030fab360ccd57f41e53116f1de0ceaed1c13a46c1c97afe2df4e1ee327f8a",
+        "stateSourceTimestamp": "2026-09-09T12:58:19.000Z",
+        "carriedForwardNoPoolEvents": false
+      }
+    ]
+  },
+  "protocolFee": {
+    "eventTopic": "0x973d8d92bb299f4af6ce49b52a8adb85ae46b9f214c4c4fc06ac77401237b133",
+    "historyVerified": true,
+    "fromBlock": "50941816",
+    "throughBlock": "51084676",
+    "events": [
+      {
+        "blockNumber": "50941863",
+        "blockHash": "0xdda5164f1ed40969a4d69e3eca0cb024ee6a0742c34ce6f0f7bd8aa0b9604e5a",
+        "timestamp": "2026-09-06T05:37:53.000Z",
+        "transactionHash": "0xd2fc7222d189d04f497e9be20432243b9c92ac4445a1777b50b07ca984d9660e",
+        "logIndex": "320",
+        "token0OldDenominator": 0,
+        "token1OldDenominator": 0,
+        "token0NewDenominator": 6,
+        "token1NewDenominator": 6
+      }
+    ],
+    "segments": [
+      {
+        "startTimestamp": "2026-09-06T05:36:17.000Z",
+        "endTimestamp": "2026-09-06T05:37:53.000Z",
+        "token0Denominator": 0,
+        "token1Denominator": 0
+      },
+      {
+        "startTimestamp": "2026-09-06T05:37:53.000Z",
+        "endTimestamp": "2026-09-09T12:58:19.000Z",
+        "token0Denominator": 6,
+        "token1Denominator": 6
+      }
+    ]
+  },
+  "cacheVersion": "schema1-ed731c849f4d5ad8"
+}
