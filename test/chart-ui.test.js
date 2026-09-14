@@ -150,7 +150,9 @@ test("coordinator exposes empty, error, stale, and last-known-good states", asyn
 test("English and Vietnamese homepages include native chart copy and required attribution", () => {
   const root = path.join(__dirname, "..");
   const tradingUrl = "https://app.uniswap.org/swap?chain=base&amp;inputCurrency=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440";
-  const liquidityUrl = "https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A10000%2C%22tickSpacing%22%3A200%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D";
+  const englishLiquidityUrl = "https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A500%2C%22tickSpacing%22%3A10%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D&amp;lng=en-US";
+  const vietnameseLiquidityUrl = "https://app.uniswap.org/positions/create/v3?chain=base&amp;currencyA=0x934ef4bfffdce191ac4bcc351b2fe7892865b440&amp;currencyB=0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913&amp;fee=%7B%22isDynamic%22%3Afalse%2C%22feeAmount%22%3A500%2C%22tickSpacing%22%3A10%7D&amp;priceRangeState=%7B%22priceInverted%22%3Atrue%7D&amp;lng=vi-VN";
+  const geckoTerminalUrl = "https://www.geckoterminal.com/base/pools/0x2ddcc7c2cc6ddf1e4f91894d4862c370827ed1a1";
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
   const css = fs.readFileSync(path.join(root, "assets/css/style_1.css"), "utf8");
@@ -162,22 +164,28 @@ test("English and Vietnamese homepages include native chart copy and required at
     assert.match(html, /data-chart-timeframe="MAX" aria-selected="false"/);
     assert.doesNotMatch(html, /data-chart-timeframe="(?:7D|1M|3M)"/);
     assert.match(html, /coingecko\.com\/en\/coins\/cypress/);
-    assert.match(html, /geckoterminal\.com\/base\/pools\/0x962265/);
+    assert.equal((html.match(new RegExp(geckoTerminalUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.match(html, /tradingview\.com/);
     assert.match(html, /class="chart-actions"[\s\S]*?<a[^>]+>(?:Trading|Mua bán)<\/a>[\s\S]*?·[\s\S]*?positions\/create\/v3[\s\S]*?·[\s\S]*?data-lp-open[\s\S]*?<\/p>[\s\S]*?class="chart-attribution"[\s\S]*?Source:\s*<a[^>]+>CoinGecko<\/a>[\s\S]*?·[\s\S]*?<a[^>]+>GeckoTerminal<\/a>[\s\S]*?·[\s\S]*?Charts by <a[^>]+>TradingView<\/a>/);
     assert.equal((html.match(new RegExp(tradingUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
-    assert.equal((html.match(new RegExp(liquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
     assert.doesNotMatch(html, /(?:minTick|maxTick|depositState|hook=undefined)/);
+    assert.doesNotMatch(html, /positions\/create\/v3[^"\n]*feeAmount%22%3A10000/);
     assert.doesNotMatch(html, /Historical data:|Current market data:|Dữ liệu lịch sử:|Dữ liệu thị trường hiện tại:/);
     assert.doesNotMatch(html, /chart-provenance|How to read this chart|Cách đọc biểu đồ này/);
     assert.doesNotMatch(html, /chart-summary|data-chart-summary/);
   }
   assert.match(english, />Trading<\/a>/);
+  assert.equal((english.match(new RegExp(englishLiquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
   assert.match(english, /data-lp-open>Liquidity Returns<\/button>/);
   assert.doesNotMatch(english, />Mua bán<\/a>|data-lp-open>LP Calculator<\/button>/);
   assert.match(vietnamese, />Mua bán<\/a>/);
+  assert.equal((vietnamese.match(new RegExp(vietnameseLiquidityUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length, 1);
   assert.match(vietnamese, /data-lp-open>Tính lãi của thanh khoản<\/button>/);
   assert.doesNotMatch(vietnamese, />Trading<\/a>/);
+  const marketData = fs.readFileSync(path.join(root, "assets/js/cp-market-data.js"), "utf8");
+  const priceHistory = fs.readFileSync(path.join(root, "tools/comparison/price-path.mjs"), "utf8");
+  assert.match(marketData, /v3Pool:\s*"0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9"/);
+  assert.match(priceHistory, /0x962265593a7f6f5f0804b6a3ed203aa5d2e0d1e9/);
   assert.match(css, /@media \(max-width: 480px\)[\s\S]*chart-canvas/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /\.chart-attribution a,[\s\S]*?\.chart-footer-action[\s\S]*?color: hsl\(214, 100%, 74%\)[\s\S]*?text-decoration: underline[\s\S]*?text-decoration-color: currentColor/);
