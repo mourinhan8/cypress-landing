@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tôi dùng SubWallet làm “ví lạnh” như thế nào | Cypress</title>
+  <meta name="description" content="Một cách thực dụng để tách tài sản SUB dài hạn khỏi ví dùng hằng ngày: tạo account một lần, lưu địa chỉ công khai rồi để nó ngủ cho đến khi thật sự cần chi.">
+  <meta name="author" content="Minh Tiến">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cypress.work/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/">
+  <link rel="alternate" hreflang="en" href="https://cypress.work/research/how-i-use-subwallet-as-a-cold-wallet/">
+  <link rel="alternate" hreflang="vi" href="https://cypress.work/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/">
+  <link rel="alternate" hreflang="x-default" href="https://cypress.work/research/how-i-use-subwallet-as-a-cold-wallet/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Cypress">
+  <meta property="og:title" content="Tôi dùng SubWallet làm “ví lạnh” như thế nào">
+  <meta property="og:description" content="Một cách thực dụng để tách tài sản SUB dài hạn khỏi ví dùng hằng ngày: tạo account một lần, lưu địa chỉ công khai rồi để nó ngủ cho đến khi thật sự cần chi.">
+  <meta property="og:url" content="https://cypress.work/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:image" content="https://cypress.work/assets/images/research/subwallet-cold-wallet.png">
+  <meta property="og:image:width" content="1774">
+  <meta property="og:image:height" content="887">
+  <meta property="og:image:alt" content="Quy trình bốn bước dùng SubWallet như ví lạnh: derive SUB account, lưu địa chỉ công khai, chỉ nạp tiền và chỉ đánh thức khi cần chi.">
+  <meta property="article:published_time" content="2026-09-27">
+  <meta property="article:modified_time" content="2026-09-27">
+  <meta property="article:author" content="Minh Tiến">
+  <meta property="article:section" content="Nghiên cứu">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tôi dùng SubWallet làm “ví lạnh” như thế nào">
+  <meta name="twitter:description" content="Một cách thực dụng để tách tài sản SUB dài hạn khỏi ví dùng hằng ngày: tạo account một lần, lưu địa chỉ công khai rồi để nó ngủ cho đến khi thật sự cần chi.">
+  <meta name="twitter:image" content="https://cypress.work/assets/images/research/subwallet-cold-wallet.png">
+  <meta name="twitter:image:alt" content="Quy trình bốn bước dùng SubWallet như ví lạnh: derive SUB account, lưu địa chỉ công khai, chỉ nạp tiền và chỉ đánh thức khi cần chi.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Tôi dùng SubWallet làm “ví lạnh” như thế nào","description":"Một cách thực dụng để tách tài sản SUB dài hạn khỏi ví dùng hằng ngày: tạo account một lần, lưu địa chỉ công khai rồi để nó ngủ cho đến khi thật sự cần chi.","image":{"@type":"ImageObject","url":"https://cypress.work/assets/images/research/subwallet-cold-wallet.png","width":1774,"height":887},"author":{"@type":"Person","name":"Minh Tiến"},"publisher":{"@type":"Organization","name":"Cypress","logo":{"@type":"ImageObject","url":"https://cypress.work/assets/cypress-logo-pink.png"}},"datePublished":"2026-09-27","dateModified":"2026-09-27","mainEntityOfPage":{"@type":"WebPage","@id":"https://cypress.work/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/"},"inLanguage":"vi","articleSection":["Nghiên cứu","Bảo mật","Ví","Polkadot"],"translationOfWork":{"@type":"Article","inLanguage":"en","url":"https://cypress.work/research/how-i-use-subwallet-as-a-cold-wallet/"}}</script>
+  <link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.5">
+  <link rel="stylesheet" href="/assets/css/vi-research.css?v=1.4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="vi-research-page">
+  <header class="header" data-header><div class="container">
+    <a href="/vi/" class="logo"><img class="header-img" src="/assets/cypress-logo-pink-32.png" srcset="/assets/cypress-logo-pink-32.png 1x, /assets/cypress-logo-pink-64.png 2x" width="32" height="32" alt="Logo Cypress">Cypress</a>
+    <nav class="x-navbar" aria-label="Điều hướng chính" data-navbar><ul class="navbar-list">
+      <li class="navbar-item"><a href="/vi/" class="navbar-link" data-nav-link>Trang chủ</a></li>
+      <li class="navbar-item"><a href="/vi/nghien-cuu/" class="navbar-link active" aria-current="page" data-nav-link>Nghiên cứu</a></li>
+      <li class="navbar-item"><a href="/vi/#information" class="navbar-link" data-nav-link>Thông tin</a></li>
+      <li class="navbar-item"><a href="/vi/#moonbeam-legacy" class="navbar-link" data-nav-link>Di sản Moonbeam</a></li>
+      <li class="navbar-separator" aria-hidden="true"></li>
+      <li class="navbar-item mobile-language"><a href="/research/how-i-use-subwallet-as-a-cold-wallet/" class="navbar-link language-link" lang="en" hreflang="en" data-nav-link>English</a></li>
+      <li class="navbar-item mobile-language"><a href="/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/" class="navbar-link language-link active" lang="vi" aria-current="page" data-nav-link>Tiếng Việt</a></li>
+    </ul></nav>
+    <div class="desktop-language" aria-label="Ngôn ngữ"><a href="/research/how-i-use-subwallet-as-a-cold-wallet/" lang="en" hreflang="en">EN</a><span aria-hidden="true">|</span><a href="/vi/nghien-cuu/toi-dung-subwallet-lam-vi-lanh-nhu-the-nao/" class="active" lang="vi" aria-current="page">VI</a></div>
+    <button class="nav-toggle-btn" aria-label="Mở hoặc đóng menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button>
+    <a href="https://swap.cypress.work/" class="x-btn btn-outline" target="_blank" rel="noopener noreferrer">Học Swap</a>
+  </div></header>
+  <main class="vi-article-main"><article class="vi-article-shell">
+    <header class="vi-article-header">
+      <h1 class="vi-article-title">Tôi dùng SubWallet làm “ví lạnh” như thế nào</h1>
+      <p class="vi-article-meta"><span>Bởi <strong>Minh Tiến</strong></span><span>Nghiên cứu · Bảo mật · Ví · Polkadot</span><time datetime="2026-09-27">27 tháng 9, 2026</time></p>
+      <a class="vi-article-back" href="/research/how-i-use-subwallet-as-a-cold-wallet/" lang="en" hreflang="en">Read in English →</a>
+    </header>
+    <figure class="vi-article-hero"><img src="/assets/images/research/subwallet-cold-wallet.png" width="1774" height="887" loading="eager" fetchpriority="high" decoding="async" alt="Quy trình bốn bước dùng SubWallet như ví lạnh: derive SUB account, lưu địa chỉ công khai, chỉ nạp tiền và chỉ đánh thức khi cần chi."></figure>
+    <div class="vi-article-body">
+      <p>Tôi dùng SubWallet chủ yếu vì một lý do rất thực tế:</p>
+      <p>Trong cùng một ví, tôi có thể dùng cả account Substrate/Polkadot và account EVM.</p>
+      <p>Nhưng phần “ví lạnh” mà tôi nói ở đây chỉ áp dụng cho SUB account, không áp dụng cho EVM.</p>
+      <p>Điểm quan trọng nhất trong cách tôi dùng nó là:</p>
+      <blockquote><strong>Tạo account một lần, ghi lại địa chỉ công khai, rồi để nó ngủ. Từ đó về sau chỉ nạp tiền vào.</strong></blockquote>
+
+      <h2>1. Ví dùng hằng ngày và ví ngủ</h2>
+      <p>Các account dùng hằng ngày chỉ giữ một lượng tiền nhỏ, đủ cho những giao dịch thông thường.</p>
+      <p>Nếu máy tính hoặc điện thoại có sự cố, thiệt hại vẫn nằm trong mức chấp nhận được.</p>
+      <p>Phần tài sản lớn hơn, tôi tách sang một derived SUB account.</p>
+      <p>Cơ chế rất đơn giản:</p>
+      <pre><code>Seed gốc trong SubWallet
+        +
+secret derivation trên giấy
+        ↓
+derived SUB account</code></pre>
+      <p>Secret derivation là một chuỗi ngẫu nhiên dài.</p>
+      <p>Tôi không lưu nó trên máy tính.</p>
+      <p>Tôi viết nó ra giấy.</p>
+      <p>Sau khi derive account lần đầu, việc quan trọng nhất là ghi lại địa chỉ công khai của account đó.</p>
+      <p>Sau đó tôi có thể xóa account khỏi SubWallet.</p>
+      <p>Từ lúc ấy:</p>
+      <pre><code>public address
+      ↓
+nạp DOT / tài sản
+      ↓
+không cần mở account
+      ↓
+không cần ký</code></pre>
+      <p>Tôi vẫn có thể gửi thêm tài sản vào đó bất kỳ lúc nào chỉ bằng địa chỉ công khai.</p>
+      <p>Nhưng account chứa tiền thì không cần xuất hiện trên máy tính hay điện thoại nữa.</p>
+      <p>Nó có thể nằm im như vậy nhiều năm.</p>
+      <p>Thậm chí nếu mục tiêu chỉ là tích lũy dài hạn, nó có thể ngủ gần như vĩnh viễn.</p>
+      <p>Với tôi, lợi ích lớn nhất nằm ở đây:</p>
+      <p><strong>Không ký thì không có phiên ký để bị tấn công.</strong></p>
+      <p>Không cần mở account chỉ để nhận thêm tiền.</p>
+      <p>Không cần nhập secret.</p>
+      <p>Không cần cắm thiết bị.</p>
+      <p>Không cần biến mỗi lần tích lũy thành một nghi thức bảo mật.</p>
+      <p>Chỉ cần địa chỉ công khai.</p>
+      <p>Phần tài sản lớn được tách khỏi ví dùng hằng ngày bằng một cái giá rất thấp: một secret viết trên giấy, một địa chỉ công khai được lưu lại, và một chút kỷ luật để không nhét hết tiền vào account mình dùng mỗi ngày.</p>
+
+      <h2>2. Khi nào mới cần đánh thức nó?</h2>
+      <p>Chỉ khi cần chuyển tài sản ra ngoài, tôi mới dùng lại chức năng <strong>Derive from an existing account</strong>:</p>
+      <pre><code>seed gốc
++
+secret trên giấy
+→ tạo lại đúng account
+→ ký giao dịch</code></pre>
+      <p>Giao dịch xong, account lại có thể được xóa khỏi SubWallet.</p>
+      <p>Nó trở về trạng thái “ngủ”.</p>
+      <p>Cửa sổ rủi ro lớn nhất chính là lúc này, vì secret được đưa vào thiết bị online.</p>
+      <p>Vì vậy máy tính và điện thoại vẫn phải được bảo vệ cẩn thận.</p>
+      <p>Nhưng nếu tôi chỉ nạp tiền trong nhiều năm mà không rút, cửa sổ đó đơn giản là không xuất hiện.</p>
+
+      <h2>3. Nếu vẫn muốn dùng tài sản mà không đánh thức ví</h2>
+      <p>Polkadot còn có cơ chế proxy.</p>
+      <p>Account lưu trữ có thể ủy quyền một số quyền nhất định cho một account khác.</p>
+      <p>Ví dụ:</p>
+      <pre><code>SUB account lưu trữ
+      ↓
+giữ tài sản
+
+      │ ủy quyền giới hạn
+      ↓
+
+proxy account
+      ↓
+staking / governance / thao tác được phép</code></pre>
+      <p>Nếu chọn quyền phù hợp, proxy có thể làm một số việc thay account chính nhưng không có quyền tự ý chuyển tài sản ra ngoài.</p>
+      <p>Như vậy có thể tách hai việc:</p>
+      <p>Account ngủ giữ tiền.</p>
+      <p>Account nóng làm việc.</p>
+
+      <h2>4. Còn EVM thì sao?</h2>
+      <p>Cách này không áp dụng tương tự cho EVM account trong SubWallet.</p>
+      <p>Các địa chỉ EVM thường được sinh từ cùng một seed theo các derivation path chuẩn.</p>
+      <p>Vì vậy:</p>
+      <blockquote><strong>Nhiều địa chỉ EVM từ cùng một seed không phải là nhiều két sắt độc lập.</strong></blockquote>
+      <p>Nếu seed gốc bị lộ, nhiều EVM account được derive từ nó có thể cùng bị ảnh hưởng.</p>
+      <p>Tôi vẫn dùng EVM trong SubWallet vì sự tiện lợi.</p>
+      <p>Nhưng khi muốn tạo một account lưu trữ kiểu tạo một lần rồi cho ngủ, tôi dùng SUB account.</p>
+
+      <h2>5. Nếu muốn lạnh hơn nữa</h2>
+      <p>Nếu chấp nhận thêm phức tạp, có thể đưa luôn seed gốc ra khỏi thiết bị online và dùng một signer offline hoặc air-gapped signer khi cần ký.</p>
+      <p>Như vậy sẽ có thêm một lớp cách ly trong những lần bắt buộc phải đánh thức account.</p>
+      <p>Nhưng đây chỉ là một lựa chọn nâng cấp, không phải điều kiện bắt buộc.</p>
+      <p>Thêm thiết bị và thêm quy trình cũng có cái giá của nó. Phức tạp hơn không có nghĩa là không thể mất tiền.</p>
+      <p>Với tôi, ý chính vẫn đơn giản:</p>
+      <blockquote><strong>Tạo một lần, ghi địa chỉ, để ngủ. Chỉ đánh thức khi thật sự phải chi.</strong></blockquote>
+    </div>
+    <footer class="vi-article-footer"><a class="vi-article-back" href="/vi/nghien-cuu/">← Quay lại Nghiên cứu</a></footer>
+  </article></main>
+  <footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. Bảo lưu mọi quyền.</p><ul class="social-list"><li><a href="https://facebook.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer"><img src="/public-images/facebook.svg" width="30" height="30" alt="Facebook"></a></li><li><a href="https://twitter.com/TienCypress" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="X">X</a></li><li><a href="https://t.me/CypressCapital" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Telegram">Telegram</a></li></ul></div></div></footer>
+  <script src="/assets/js/script_1.js?v=1.5" defer></script>
+</body>
+</html>

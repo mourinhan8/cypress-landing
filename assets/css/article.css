@@ -11,7 +11,9 @@
 }
 
 .article-shell {
-  width: min(100%, 900px);
+  width: 100%;
+  max-width: 900px;
+  min-width: 0;
   margin-inline: auto;
 }
 
@@ -62,7 +64,10 @@
 }
 
 .article-hero img {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  height: auto;
   border: 1px solid var(--white_10);
   border-radius: var(--radius-12);
   box-shadow: var(--shadow-2);
@@ -77,7 +82,9 @@
 }
 
 .article-body {
-  width: min(100%, 780px);
+  width: 100%;
+  max-width: 780px;
+  min-width: 0;
   margin-inline: auto;
   color: var(--gainsboro);
   font-size: clamp(1.75rem, 2vw, 1.9rem);
@@ -120,6 +127,31 @@
   line-height: 1.5;
   white-space: normal;
   overflow-wrap: break-word;
+}
+
+.article-body pre {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 2em 0;
+  padding: 22px 24px;
+  overflow-x: auto;
+  color: var(--cultured);
+  background: var(--eerie-black-1);
+  border: 1px solid var(--white_10);
+  border-radius: var(--radius-12);
+  font-size: clamp(1.45rem, 2vw, 1.7rem);
+  line-height: 1.55;
+  tab-size: 2;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-body pre code {
+  display: block;
+  min-width: max-content;
+  font: inherit;
+  white-space: pre;
 }
 
 .article-signature {
@@ -187,7 +219,8 @@
   }
 
   .article-body blockquote,
-  .article-info-box {
+  .article-info-box,
+  .article-body pre {
     padding: 20px;
   }
 
