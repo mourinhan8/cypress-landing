@@ -46,7 +46,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.13">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.15">
 
   <!-- 
     - google font link
@@ -67,22 +67,22 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#home" class="logo" data-nav-link>
+      <a href="/" class="logo" data-nav-link aria-label="Cypress home">
         <img class="header-img" src="/assets/cypress-logo-pink-32.png" srcset="/assets/cypress-logo-pink-32.png 1x, /assets/cypress-logo-pink-64.png 2x" width="32" height="32" alt="Cypress logo">
         Cypress
       </a>
 
       <nav class="x-navbar" data-navbar>
         <ul class="navbar-list">
-          <li class="navbar-item">
-            <a href="#home" class="navbar-link nav-normal active" data-nav-link>Home</a>
-          </li>
+          <li class="navbar-item"><a href="/wallet/" class="navbar-link" data-nav-link>Wallet</a></li>
+          <li class="navbar-item"><a href="/guides/" class="navbar-link" data-nav-link>Guides</a></li>
           <li class="navbar-item">
             <a href="/research/" class="navbar-link" data-nav-link>Research</a>
           </li>
-          <li class="navbar-item">
-            <a href="https://testswap.cypress.work/" class="navbar-link" target="_blank" rel="noopener noreferrer" data-nav-link>Wallet</a>
-          </li>
+          <li class="navbar-item"><a href="/cypress/" class="navbar-link" data-nav-link>Cypress</a></li>
+          <li class="navbar-separator" aria-hidden="true"></li>
+          <li class="navbar-item mobile-language"><a href="/" class="navbar-link language-link active" lang="en" aria-current="page" data-nav-link>English</a></li>
+          <li class="navbar-item mobile-language"><a href="/vi/" class="navbar-link language-link" lang="vi" data-nav-link>Tiếng Việt</a></li>
         </ul>
       </nav>
 
@@ -104,11 +104,40 @@
   <main>
     <article>
 
-      <section class="section price-chart" id="home" data-section>
+      <section class="section cypress-hero" id="home" aria-labelledby="home-title" data-section>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="section-kicker">Wallet · Guides · Research</p>
+            <h1 class="hero-title" id="home-title">See where your assets are.<br>Understand what you can do next.</h1>
+            <p class="hero-lead">Cypress researches and builds tools around assets on Base, Polkadot Hub and Hydration.</p>
+            <div class="hero-actions"><a class="x-btn hero-primary" href="/wallet/">Open Wallet</a><a class="x-btn btn-outline hero-secondary" href="/guides/">Explore Guides</a></div>
+            <a class="text-link" href="/research/">Read Research →</a>
+          </div>
+          <aside class="hero-principle" aria-label="Cypress approach"><p>The wallet holds the keys.</p><p>The user decides.</p><p>Cypress only says what it can verify.</p></aside>
+        </div>
+      </section>
+
+      <section class="section network-scope" aria-labelledby="network-scope-title" data-section>
+        <div class="container compact-section"><p class="section-kicker">Network scope</p><h2 class="network-list" id="network-scope-title">Base <span>·</span> Polkadot Hub <span>·</span> Hydration</h2><p>Cypress focuses on assets and actions across these three networks, including routes that move assets into or out of them.</p></div>
+      </section>
+
+      <section class="section direction-section" aria-labelledby="direction-title" data-section>
+        <div class="container">
+          <div class="section-heading"><p class="section-kicker">What Cypress does</p><h2 class="h2 section-title" id="direction-title">From visibility to informed action</h2></div>
+          <div class="direction-grid"><article><span>01</span><h3>See</h3><p>Know what assets you have and where they are.</p></article><article><span>02</span><h3>Send</h3><p>Send supported assets using your connected wallet.</p></article><article><span>03</span><h3>Move</h3><p>Move assets to another supported network where that functionality is available.</p></article><article><span>04</span><h3>Understand</h3><p>Learn which actions are available and the trade-offs they involve.</p></article></div>
+          <aside class="compact-wallet-note" aria-label="Wallet and supported signers">
+            <div><p class="card-label">Wallet and signing</p><p><strong>Use your existing wallet.</strong> Cypress does not hold your private keys.</p></div>
+            <div class="compact-signers"><span>Supported signers</span><ul><li>SubWallet</li><li>Polkadot.js</li><li>MetaMask</li></ul></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section price-chart assets-section" id="cypress-assets" aria-labelledby="cypress-assets-title" data-section>
         <div class="price-chart-container">
           <div class="hero-heading">
-            <h1 class="h2 section-title">Independent Crypto Research</h1>
-            <p class="hero-tagline">Researching Base &amp; Polkadot</p>
+            <p class="section-kicker">Primary Cypress-linked asset · Base</p>
+            <h2 class="h2 section-title" id="cypress-assets-title">Cypress Coin (CP)</h2>
+            <p class="hero-tagline">CP is the primary asset associated with Cypress on Base. Cypress is broader than CP.</p>
           </div>
           <!-- <a href="#swapOn" class="x-btn x-btn-primary-swap">Swap now</a> -->
           <div class="price-chart-wrapper">
@@ -215,144 +244,41 @@
               </div>
               <p class="market-data-source" data-market-status>Aggregated from Uniswap pools on Base</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section latest-research" id="latest-research" aria-labelledby="latest-research-title" data-section>
-        <div class="container">
-          <div class="title-wrapper">
-            <h2 class="h2 section-title" id="latest-research-title">Featured Research</h2>
-            <a href="/research/" class="research-link">View all research →</a>
-          </div>
-          <article class="research-card">
-            <a class="research-card-image-link" href="/articles/base-starts-with-the-market-jam-starts-with-the-machine.html"
-              aria-label="Read Base Starts With the Market. JAM Starts With the Machine.">
-              <img class="research-card-image" src="/assets/images/base-vs-dot-jam-banner.png" width="1672" height="941"
-                loading="lazy" decoding="async"
-                alt="Base and DOT comparison after JAM, highlighting DOT’s decentralized infrastructure strengths and Base’s market and distribution advantages.">
-            </a>
-            <div class="research-card-content">
-              <span class="research-card-label">Research</span>
-              <h3 class="h3 research-card-title">
-                <a href="/articles/base-starts-with-the-market-jam-starts-with-the-machine.html">Base Starts With the Market. JAM Starts With the Machine.</a>
-              </h3>
-              <p>Base begins with users and distribution. JAM begins with decentralized computation. A personal comparison of two very different bets on crypto’s future.</p>
-              <p class="research-card-author">By TienCypress</p>
-              <a class="research-card-cta" href="/articles/base-starts-with-the-market-jam-starts-with-the-machine.html">Read the full article <span aria-hidden="true">→</span></a>
+<div class="asset-notes cp-identity">
+              <article class="cp-primary-record"><p class="card-label">Base</p><h3>Cypress Coin (CP)</h3><p>The chart and market figures above use the existing CP data sources and calculation methods.</p><p class="contract-label">Base CP contract</p><code class="contract-address">0x934ef4bfffdce191ac4bcc351b2fe7892865b440</code><a class="contract-link" href="https://basescan.org/token/0x934ef4bfffdce191ac4bcc351b2fe7892865b440" target="_blank" rel="noopener noreferrer">View on BaseScan ↗</a></article>
             </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- 
-        - #ABOUT
-      -->
-
-      <section class="section about" aria-label="about" data-section>
-        <div class="container">
-
-          <figure class="about-banner">
-            <img src="./assets/images/CypressPolkadot.jpg" width="436" loading="lazy" alt="about banner"
-              class="w-100">
-          </figure>
-
-          <div class="about-content">
-
-            <h2 class="h2 section-title">Our products</h2>
-
-            <p class="section-text">
-
-            </p>
-
-            <ul class="section-list">
-
-              <li class="section-item">
-                <a class="title-wrapper"
-                  href="https://app.uniswap.org/swap?chain=base&amp;inputCurrency=ETH&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440"
-                  target="_blank" rel="noopener noreferrer">
-                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                  <h3 class="h3 list-title">Cypress on Base</h3>
-                  <span aria-hidden="true" style="margin-inline-start: auto;">↗</span>
-                </a>
-
-              </li>
-
-              <li class="section-item">
-                <a class="title-wrapper" href="https://testswap.cypress.work/" target="_blank"
-                  rel="noopener noreferrer">
-                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                  <h3 class="h3 list-title">dotCP on Polkadot</h3>
-                  <span aria-hidden="true" style="margin-inline-start: auto;">↗</span>
-                </a>
-              </li>
-            </ul>
+            <aside class="dotcp-secondary" aria-label="Experimental secondary Cypress asset"><div><p class="card-label">Secondary asset</p><h3>dotCP on Polkadot</h3><p>Experimental / secondary Cypress asset.</p></div><div><a href="https://testswap.cypress.work/" target="_blank" rel="noopener noreferrer">Open TestSwap ↗</a><p class="experimental-note">TestSwap is experimental, is not Cypress Wallet, and does not imply production-grade swap guarantees.</p></div></aside>
+            <p class="interest-note">Cypress has economic interests in CP and dotCP. <a href="/cypress/#economic-interests">Read the disclosure →</a></p>
           </div>
-
         </div>
       </section>
 
-      <!-- 
-        - #INSTRUCTION
-      -->
+      <section class="section featured-guides" aria-labelledby="featured-guides-title" data-section>
+        <div class="container"><div class="title-wrapper"><div><p class="section-kicker">Practical paths</p><h2 class="h2 section-title" id="featured-guides-title">Featured Guides</h2></div><a href="/guides/" class="research-link">View all guides →</a></div><article class="guide-card"><div class="guide-route" aria-hidden="true"><span>Ethereum</span><b>→</b><span>Hydration</span></div><div><p class="card-label">Ethereum · Hydration</p><h3>Ethereum → Hydration: ETH and USDC</h3><p>A concise starting point for understanding the route structure and the checks to make before moving ETH or USDC toward Hydration.</p><a class="research-card-cta" href="/guides/ethereum-to-hydration/">Read the guide <span aria-hidden="true">→</span></a></div></article></div>
+      </section>
 
-      <section class="section instruction" aria-label="Cypress contract on Base" data-section>
-        <div class="container contract-section">
-          <h2 class="h2 section-title">Cypress Contract on Base</h2>
-          <p class="contract-address">0x934ef4bfffdce191ac4bcc351b2fe7892865b440</p>
-          <a class="contract-link" href="https://basescan.org/token/0x934ef4bfffdce191ac4bcc351b2fe7892865b440"
-            target="_blank" rel="noopener noreferrer">View on BaseScan</a>
+      <section class="section latest-research" id="featured-research" aria-labelledby="featured-research-title" data-section>
+        <div class="container"><div class="title-wrapper"><h2 class="h2 section-title" id="featured-research-title">Featured Research</h2><a href="/research/" class="research-link">View all research →</a></div><article class="research-card"><a class="research-card-image-link" href="/research/you-cannot-buy-a-cold-wallet/" aria-label="Read You Cannot Buy a Cold Wallet"><img class="research-card-image" src="/assets/images/research/cold-wallet-security-models.png" width="1672" height="941" loading="lazy" decoding="async" alt="Hardware and software wallet security models compared."></a><div class="research-card-content"><span class="research-card-label">Security</span><h3 class="h3 research-card-title"><a href="/research/you-cannot-buy-a-cold-wallet/">You Cannot Buy a “Cold Wallet”</a></h3><p>A hardware wallet is not automatically a cold wallet. Security depends on how keys are generated, stored and used.</p><p class="research-card-author">By Tien Cypress</p><a class="research-card-cta" href="/research/you-cannot-buy-a-cold-wallet/">Read the full article <span aria-hidden="true">→</span></a></div></article></div>
+      </section>
+
+      <section class="section history-bridge" aria-labelledby="moonbeam-history-title" data-section>
+        <div class="container history-bridge-panel">
+          <div><p class="section-kicker">Historical archive</p><h2 id="moonbeam-history-title">From Moonbeam to today</h2></div>
+          <p>Cypress previously operated on Moonbeam. In 2026, its active product focus moved to Base, Polkadot Hub and Hydration. Research and project history from the Moonbeam period remain available in the archive.</p>
+          <a class="research-card-cta" href="/cypress/moonbeam-history/">Explore Cypress history →</a>
+        </div>
+      </section>
+
+      <section class="section trust-section" aria-labelledby="trust-title" data-section>
+        <div class="container trust-panel">
+          <div><p class="section-kicker">Trust and verification</p><h2 class="h2 section-title" id="trust-title">Verify, don’t just trust.</h2></div>
+          <ul><li>Sources where possible.</li><li>Last-verified dates for time-sensitive guides.</li><li>Financial interests disclosed when relevant.</li></ul>
+          <a class="research-card-cta" href="/cypress/">How Cypress works →</a>
         </div>
       </section>
 
     </article>
   </main>
-
-  <!-- 
-        - #MARKET
-      -->
-
-  <section class="section market" id="information" aria-label="Information" data-section>
-    <div class="container">
-
-      <div class="title-wrapper">
-        <h2 class="h2 section-title">Information</h2>
-
-        <a href="#" class="btn-link"></a>
-      </div>
-
-      <div class="market-tab">
-
-        <div class="text" data-info-text>
-        </div>
-
-        <section class="history-gallery" id="moonbeam-legacy" aria-labelledby="historical-records-title">
-          <h2 class="h2 section-title" id="historical-records-title">Moonbeam Legacy</h2>
-
-          <article class="history-card">
-            <h3 class="h3">Moonbeam Explorer Snapshot</h3>
-            <p>Final on-chain record before Moonbeam network sunset.</p>
-            <img class="history-image" src="./assets/images/history/moonscan-final-1800.webp"
-              alt="Final Moonbeam explorer snapshot for the CP token" width="1800" height="837" loading="lazy" decoding="async">
-          </article>
-
-          <article class="history-card">
-            <h3 class="h3">GeckoTerminal Trading History</h3>
-            <p>CP/WGLMR weekly trading history on Moonbeam (2023–2026).</p>
-            <img class="history-image" src="./assets/images/history/geckoterminal-history-1800.webp"
-              alt="CP and WGLMR weekly trading history on GeckoTerminal" width="1800" height="1089" loading="lazy" decoding="async">
-          </article>
-
-          <p class="history-caption">These archived screenshots preserve the historical on-chain and trading records of CP before the Moonbeam network sunset in July 2026.</p>
-        </section>
-
-      </div>
-
-    </div>
-  </section>
-
 
   <!-- 
     - #FOOTER
@@ -456,10 +382,10 @@
   -->
   <script src="/assets/vendor/lightweight-charts/lightweight-charts.standalone.production.js?v=5.2.0" defer></script>
   <script src="/assets/js/cp-chart.js?v=1.1" defer></script>
-  <script src="/assets/js/cp-market-data.js?v=1.0" defer></script>
+  <script src="/assets/js/cp-market-data.js?v=1.1" defer></script>
   <script src="/assets/js/cp-market-metrics.js?v=1.1" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
-  <script src="/assets/js/cp-market-ui.js?v=1.2" defer></script>
+  <script src="/assets/js/cp-market-ui.js?v=1.3" defer></script>
   <script type="module" src="/assets/js/lp-calculator.mjs?v=4.0"></script>
 
   <!-- 

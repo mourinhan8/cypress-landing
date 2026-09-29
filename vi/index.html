@@ -46,7 +46,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.13">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.15">
 
   <!-- 
     - google font link
@@ -67,22 +67,22 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#home" class="logo" data-nav-link>
+      <a href="/vi/" class="logo" data-nav-link aria-label="Trang chủ Cypress">
         <img class="header-img" src="/assets/cypress-logo-pink-32.png" srcset="/assets/cypress-logo-pink-32.png 1x, /assets/cypress-logo-pink-64.png 2x" width="32" height="32" alt="Cypress logo">
         Cypress
       </a>
 
       <nav class="x-navbar" data-navbar>
         <ul class="navbar-list">
-          <li class="navbar-item">
-            <a href="#home" class="navbar-link nav-normal active" data-nav-link>Trang chủ</a>
-          </li>
+          <li class="navbar-item"><a href="/wallet/" class="navbar-link" data-nav-link>Ví</a></li>
+          <li class="navbar-item"><a href="/vi/huong-dan/" class="navbar-link" data-nav-link>Hướng dẫn</a></li>
           <li class="navbar-item">
             <a href="/vi/nghien-cuu/" class="navbar-link" data-nav-link>Nghiên cứu</a>
           </li>
-          <li class="navbar-item">
-            <a href="https://testswap.cypress.work/" class="navbar-link" target="_blank" rel="noopener noreferrer" data-nav-link>Wallet</a>
-          </li>
+          <li class="navbar-item"><a href="/vi/cypress/" class="navbar-link" data-nav-link>Cypress</a></li>
+          <li class="navbar-separator" aria-hidden="true"></li>
+          <li class="navbar-item mobile-language"><a href="/" class="navbar-link language-link" lang="en" data-nav-link>English</a></li>
+          <li class="navbar-item mobile-language"><a href="/vi/" class="navbar-link language-link active" lang="vi" aria-current="page" data-nav-link>Tiếng Việt</a></li>
         </ul>
       </nav>
 
@@ -104,11 +104,24 @@
   <main>
     <article>
 
-      <section class="section price-chart" id="home" data-section>
+      <section class="section cypress-hero" id="home" aria-labelledby="home-title" data-section>
+        <div class="container hero-grid"><div class="hero-copy"><p class="section-kicker">Ví · Hướng dẫn · Nghiên cứu</p><h1 class="hero-title" id="home-title">Biết tài sản của bạn đang ở đâu.<br>Hiểu bước tiếp theo bạn có thể làm.</h1><p class="hero-lead">Cypress nghiên cứu và xây dựng công cụ xoay quanh tài sản trên Base, Polkadot Hub và Hydration.</p><div class="hero-actions"><a class="x-btn hero-primary" href="/wallet/">Mở Ví</a><a class="x-btn btn-outline hero-secondary" href="/vi/huong-dan/">Khám phá Hướng dẫn</a></div><a class="text-link" href="/vi/nghien-cuu/">Đọc Nghiên cứu →</a></div><aside class="hero-principle" aria-label="Cách Cypress hoạt động"><p>Ví giữ khóa.</p><p>Người dùng quyết định.</p><p>Cypress chỉ nói điều có thể kiểm chứng.</p></aside></div>
+      </section>
+
+      <section class="section network-scope" aria-labelledby="network-scope-title" data-section>
+        <div class="container compact-section"><p class="section-kicker">Phạm vi mạng lưới</p><h2 class="network-list" id="network-scope-title">Base <span>·</span> Polkadot Hub <span>·</span> Hydration</h2><p>Cypress tập trung vào tài sản và thao tác trên ba mạng lưới này, bao gồm các tuyến đưa tài sản vào hoặc ra khỏi chúng.</p></div>
+      </section>
+
+      <section class="section direction-section" aria-labelledby="direction-title" data-section>
+        <div class="container"><div class="section-heading"><p class="section-kicker">Cypress làm gì</p><h2 class="h2 section-title" id="direction-title">Từ nhìn thấy đến hành động có hiểu biết</h2></div><div class="direction-grid"><article><span>01</span><h3>Xem</h3><p>Biết bạn có tài sản gì và chúng đang ở đâu.</p></article><article><span>02</span><h3>Gửi</h3><p>Gửi tài sản được hỗ trợ bằng ví bạn đã kết nối.</p></article><article><span>03</span><h3>Di chuyển</h3><p>Đưa tài sản sang mạng được hỗ trợ khác khi chức năng đó đã sẵn sàng.</p></article><article><span>04</span><h3>Hiểu</h3><p>Hiểu các thao tác hiện có và những đánh đổi đi kèm.</p></article></div><aside class="compact-wallet-note" aria-label="Ví và signer được hỗ trợ"><div><p class="card-label">Ví và ký giao dịch</p><p><strong>Dùng chính ví bạn đang có.</strong> Cypress không giữ khóa riêng của bạn.</p></div><div class="compact-signers"><span>Signer được hỗ trợ</span><ul><li>SubWallet</li><li>Polkadot.js</li><li>MetaMask</li></ul></div></aside></div>
+      </section>
+
+      <section class="section price-chart assets-section" id="tai-san-cypress" aria-labelledby="cypress-assets-title" data-section>
         <div class="price-chart-container">
           <div class="hero-heading">
-            <h1 class="h2 section-title">Nghiên cứu tiền mã hóa độc lập</h1>
-            <p class="hero-tagline">Nghiên cứu Base &amp; Polkadot</p>
+            <p class="section-kicker">Tài sản chính gắn với Cypress · Base</p>
+            <h2 class="h2 section-title" id="cypress-assets-title">Cypress Coin (CP)</h2>
+            <p class="hero-tagline">CP là tài sản chính gắn với Cypress trên Base. Cypress có phạm vi rộng hơn CP.</p>
           </div>
           <!-- <a href="#swapOn" class="x-btn x-btn-primary-swap">Swap now</a> -->
           <div class="price-chart-wrapper">
@@ -216,139 +229,38 @@
               <p class="market-data-source" data-market-status>Tổng hợp từ các pool Uniswap trên Base</p>
               <p class="market-data-source market-fx-source">USD/VND: <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> · Quy đổi tham khảo, không phải tỷ giá mua/bán của ngân hàng.</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section latest-research" id="nghien-cuu-moi-nhat" aria-labelledby="latest-research-vi-title" data-section>
-        <div class="container">
-          <div class="title-wrapper">
-            <h2 class="h2 section-title" id="latest-research-vi-title">Nghiên cứu tiêu biểu</h2>
-            <a href="/vi/nghien-cuu/" class="research-link">Xem tất cả nghiên cứu →</a>
-          </div>
-          <article class="research-card">
-            <a class="research-card-image-link" href="/vi/nghien-cuu/nguoi-moi-tham-gia-thi-truong-tien-ma-hoa-can-gi.html" aria-label="Đọc bài Người mới tham gia thị trường tiền mã hoá thực sự cần được giúp điều gì?">
-              <img class="research-card-image" src="/assets/images/research/nguoi-moi-thuc-su-can-gi-banner.png" width="1672" height="941" loading="lazy" decoding="async" alt="Người mới tham gia thị trường tiền mã hoá thực sự cần gì">
-            </a>
-            <div class="research-card-content">
-              <span class="research-card-label">Nghiên cứu</span>
-              <h3 class="h3 research-card-title"><a href="/vi/nghien-cuu/nguoi-moi-tham-gia-thi-truong-tien-ma-hoa-can-gi.html">Người mới tham gia thị trường tiền mã hoá thực sự cần được giúp điều gì?</a></h3>
-              <p>Người mới tham gia thị trường tiền mã hoá không chỉ cần cơ hội đầu tư. Họ cần một con đường rõ ràng, an toàn và trung thực để hiểu, bảo vệ tài sản và tự ra quyết định.</p>
-              <p class="research-card-author">Bởi Minh Tiến</p>
-              <a class="research-card-cta" href="/vi/nghien-cuu/nguoi-moi-tham-gia-thi-truong-tien-ma-hoa-can-gi.html">Đọc bài viết <span aria-hidden="true">→</span></a>
+<div class="asset-notes cp-identity">
+              <article class="cp-primary-record"><p class="card-label">Base</p><h3>Cypress Coin (CP)</h3><p>Biểu đồ và số liệu thị trường phía trên tiếp tục dùng các nguồn dữ liệu và cách tính CP hiện có.</p><p class="contract-label">Contract CP trên Base</p><code class="contract-address">0x934ef4bfffdce191ac4bcc351b2fe7892865b440</code><a class="contract-link" href="https://basescan.org/token/0x934ef4bfffdce191ac4bcc351b2fe7892865b440" target="_blank" rel="noopener noreferrer">Xem trên BaseScan ↗</a></article>
             </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- 
-        - #ABOUT
-      -->
-
-      <section class="section about" aria-label="about" data-section>
-        <div class="container">
-
-          <figure class="about-banner">
-            <img src="/assets/images/CypressPolkadot.jpg" width="436" loading="lazy" alt="Hình giới thiệu Cypress"
-              class="w-100">
-          </figure>
-
-          <div class="about-content">
-
-            <h2 class="h2 section-title">Sản phẩm của chúng tôi</h2>
-
-            <p class="section-text">
-
-            </p>
-
-            <ul class="section-list">
-
-              <li class="section-item">
-                <a class="title-wrapper"
-                  href="https://app.uniswap.org/swap?chain=base&amp;inputCurrency=ETH&amp;outputCurrency=0x934ef4bfffdce191ac4bcc351b2fe7892865b440"
-                  target="_blank" rel="noopener noreferrer">
-                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                  <h3 class="h3 list-title">Cypress trên Base</h3>
-                  <span aria-hidden="true" style="margin-inline-start: auto;">↗</span>
-                </a>
-
-              </li>
-
-              <li class="section-item">
-                <a class="title-wrapper" href="https://testswap.cypress.work/" target="_blank"
-                  rel="noopener noreferrer">
-                  <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-
-                  <h3 class="h3 list-title">dotCP on Polkadot</h3>
-                  <span aria-hidden="true" style="margin-inline-start: auto;">↗</span>
-                </a>
-              </li>
-            </ul>
+            <aside class="dotcp-secondary" aria-label="Tài sản Cypress phụ đang thử nghiệm"><div><p class="card-label">Tài sản phụ</p><h3>dotCP trên Polkadot</h3><p>Tài sản Cypress phụ / thử nghiệm.</p></div><div><a href="https://testswap.cypress.work/" target="_blank" rel="noopener noreferrer">Mở TestSwap ↗</a><p class="experimental-note">TestSwap đang thử nghiệm, không phải Ví Cypress và không hàm ý bảo đảm swap ở cấp độ production.</p></div></aside>
+            <p class="interest-note">Cypress có lợi ích kinh tế liên quan đến CP và dotCP. <a href="/vi/cypress/#loi-ich-kinh-te">Đọc công bố →</a></p>
           </div>
-
         </div>
       </section>
 
-      <!-- 
-        - #INSTRUCTION
-      -->
+      <section class="section featured-guides" aria-labelledby="featured-guides-title" data-section>
+        <div class="container"><div class="title-wrapper"><div><p class="section-kicker">Lộ trình thực tế</p><h2 class="h2 section-title" id="featured-guides-title">Hướng dẫn nổi bật</h2></div><a href="/vi/huong-dan/" class="research-link">Xem tất cả hướng dẫn →</a></div><article class="guide-card"><div class="guide-route" aria-hidden="true"><span>Ethereum</span><b>→</b><span>Hydration</span></div><div><p class="card-label">Ethereum · Hydration</p><h3>Ethereum → Hydration: ETH và USDC</h3><p>Điểm khởi đầu ngắn gọn để hiểu cấu trúc tuyến và những điều cần kiểm tra trước khi chuyển ETH hoặc USDC về phía Hydration.</p><a class="research-card-cta" href="/vi/huong-dan/ethereum-to-hydration/">Đọc hướng dẫn <span aria-hidden="true">→</span></a></div></article></div>
+      </section>
 
-      <section class="section instruction" aria-label="Contract Cypress trên Base" data-section>
-        <div class="container contract-section">
-          <h2 class="h2 section-title">Contract Cypress trên Base</h2>
-          <p class="contract-address">0x934ef4bfffdce191ac4bcc351b2fe7892865b440</p>
-          <a class="contract-link" href="https://basescan.org/token/0x934ef4bfffdce191ac4bcc351b2fe7892865b440"
-            target="_blank" rel="noopener noreferrer">Xem trên BaseScan</a>
+      <section class="section latest-research" id="featured-research" aria-labelledby="featured-research-title" data-section>
+        <div class="container"><div class="title-wrapper"><h2 class="h2 section-title" id="featured-research-title">Nghiên cứu nổi bật</h2><a href="/vi/nghien-cuu/" class="research-link">Xem tất cả nghiên cứu →</a></div><article class="research-card"><a class="research-card-image-link" href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/" aria-label="Đọc Không ai có thể bán cho bạn một chiếc ví lạnh"><img class="research-card-image" src="/assets/images/research/cold-wallet-security-models.png" width="1672" height="941" loading="lazy" decoding="async" alt="So sánh mô hình bảo mật của ví cứng và ví phần mềm."></a><div class="research-card-content"><span class="research-card-label">Bảo mật</span><h3 class="h3 research-card-title"><a href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/">Không ai có thể bán cho bạn một chiếc “ví lạnh”</a></h3><p>Ví cứng không tự động là ví lạnh. Mức độ an toàn phụ thuộc vào cách khóa được tạo, lưu trữ và sử dụng.</p><p class="research-card-author">Bởi Minh Tiến</p><a class="research-card-cta" href="/vi/nghien-cuu/khong-ai-co-the-ban-cho-ban-mot-chiec-vi-lanh/">Đọc bài viết <span aria-hidden="true">→</span></a></div></article></div>
+      </section>
+
+      <section class="section history-bridge" aria-labelledby="moonbeam-history-title" data-section>
+        <div class="container history-bridge-panel">
+          <div><p class="section-kicker">Kho lịch sử</p><h2 id="moonbeam-history-title">Từ Moonbeam đến hôm nay</h2></div>
+          <p>Cypress từng hoạt động trên Moonbeam. Năm 2026, trọng tâm sản phẩm chuyển sang Base, Polkadot Hub và Hydration. Các nghiên cứu và lịch sử dự án từ giai đoạn Moonbeam vẫn được lưu giữ trong kho lịch sử.</p>
+          <a class="research-card-cta" href="/vi/cypress/lich-su-moonbeam/">Xem lịch sử Cypress →</a>
+        </div>
+      </section>
+
+      <section class="section trust-section" aria-labelledby="trust-title" data-section>
+        <div class="container trust-panel"><div><p class="section-kicker">Niềm tin và kiểm chứng</p><h2 class="h2 section-title" id="trust-title">Hãy kiểm chứng, đừng chỉ tin.</h2></div><ul><li>Dẫn nguồn khi có thể.</li><li>Ghi ngày xác minh gần nhất cho hướng dẫn phụ thuộc thời điểm.</li><li>Công bố lợi ích tài chính khi có liên quan.</li></ul><a class="research-card-cta" href="/vi/cypress/">Cypress hoạt động như thế nào →</a>
         </div>
       </section>
 
     </article>
   </main>
-
-  <!-- 
-        - #MARKET
-      -->
-
-  <section class="section market" id="information" aria-label="Thông tin" data-section>
-    <div class="container">
-
-      <div class="title-wrapper">
-        <h2 class="h2 section-title">Thông tin</h2>
-
-        <a href="#" class="btn-link"></a>
-      </div>
-
-      <div class="market-tab">
-
-        <div class="text" data-info-text>
-        </div>
-
-        <section class="history-gallery" id="moonbeam-legacy" aria-labelledby="historical-records-title">
-          <h2 class="h2 section-title" id="historical-records-title">Di sản Moonbeam</h2>
-
-          <article class="history-card">
-            <h3 class="h3">Ảnh chụp Moonbeam Explorer</h3>
-            <p>Bản ghi on-chain cuối cùng trước khi mạng Moonbeam ngừng hoạt động.</p>
-            <img class="history-image" src="/assets/images/history/moonscan-final-1800.webp"
-              alt="Ảnh chụp Moonbeam explorer cuối cùng của token CP" width="1800" height="837" loading="lazy" decoding="async">
-          </article>
-
-          <article class="history-card">
-            <h3 class="h3">Lịch sử giao dịch GeckoTerminal</h3>
-            <p>Lịch sử giao dịch hằng tuần của CP/WGLMR trên Moonbeam (2023–2026).</p>
-            <img class="history-image" src="/assets/images/history/geckoterminal-history-1800.webp"
-              alt="Lịch sử giao dịch hằng tuần của CP và WGLMR trên GeckoTerminal" width="1800" height="1089" loading="lazy" decoding="async">
-          </article>
-
-          <p class="history-caption">Các ảnh chụp lưu trữ này bảo tồn bản ghi lịch sử on-chain và giao dịch của CP trước khi mạng Moonbeam ngừng hoạt động vào tháng 7 năm 2026.</p>
-        </section>
-
-      </div>
-
-    </div>
-  </section>
-
 
   <!-- 
     - #FOOTER
@@ -452,10 +364,10 @@
   -->
   <script src="/assets/vendor/lightweight-charts/lightweight-charts.standalone.production.js?v=5.2.0" defer></script>
   <script src="/assets/js/cp-chart.js?v=1.1" defer></script>
-  <script src="/assets/js/cp-market-data.js?v=1.0" defer></script>
+  <script src="/assets/js/cp-market-data.js?v=1.1" defer></script>
   <script src="/assets/js/cp-market-metrics.js?v=1.1" defer></script>
   <script src="/assets/js/script_1.js?v=1.5" defer></script>
-  <script src="/assets/js/cp-market-ui.js?v=1.2" defer></script>
+  <script src="/assets/js/cp-market-ui.js?v=1.3" defer></script>
   <script type="module" src="/assets/js/lp-calculator.mjs?v=4.0"></script>
 
   <!-- 

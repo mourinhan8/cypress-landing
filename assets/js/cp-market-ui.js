@@ -5,6 +5,7 @@
   const marketLiquidity = document.querySelector("[data-cp-liquidity]");
   const marketCap = document.querySelector("[data-cp-market-cap]");
   const marketStatus = document.querySelector("[data-market-status]");
+  const marketData = marketStatus && marketStatus.closest(".market-data");
   const vietnamese = document.documentElement.lang.toLowerCase().startsWith("vi");
 
   if (!marketPrice || !marketLiquidity || !marketCap || !marketStatus
@@ -24,6 +25,7 @@
     const display = window.CpMarketMetrics.formatLocaleMetrics(values, language);
     latestMarketData = data;
     latestMarketState = state;
+    if (marketData) marketData.dataset.state = state;
     marketPrice.textContent = display.price;
     marketLiquidity.textContent = display.liquidity;
     marketCap.textContent = display.marketCap;
@@ -33,9 +35,10 @@
   }
 
   function showUnavailable() {
-    marketPrice.textContent = vietnamese ? "Không khả dụng" : "Unavailable";
-    marketLiquidity.textContent = marketPrice.textContent;
-    marketCap.textContent = marketPrice.textContent;
+    marketPrice.textContent = "—";
+    marketLiquidity.textContent = "—";
+    marketCap.textContent = "—";
+    if (marketData) marketData.dataset.state = "unavailable";
     marketStatus.textContent = window.CpMarketData.statusText(
       document.documentElement.lang, "unavailable", 0, Date.now()
     );

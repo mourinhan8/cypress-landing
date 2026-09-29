@@ -334,11 +334,13 @@
 
   function statusText(language, state, fetchedAt, now) {
     const vi = String(language || "").toLowerCase().startsWith("vi");
-    if (state === "unavailable") return vi ? "Dữ liệu Uniswap hiện không khả dụng" : "Uniswap data unavailable";
+    if (state === "unavailable") {
+      return vi ? "Dữ liệu thị trường tạm thời không khả dụng." : "Market data temporarily unavailable.";
+    }
     const minutes = Math.max(0, Math.floor(((now || Date.now()) - fetchedAt) / 60000));
     if (state === "stale") {
-      return vi ? "Dữ liệu Uniswap đã cũ · cập nhật " + minutes + " phút trước" :
-        "Stale Uniswap data · updated " + minutes + " min ago";
+      return vi ? "Đang dùng dữ liệu thị trường gần nhất · Cập nhật lần cuối " + minutes + " phút trước" :
+        "Using last-known market data · Last updated " + minutes + " min ago";
     }
     return vi ? "Tổng hợp từ các pool Uniswap trên Base · vừa cập nhật" :
       "Aggregated from Uniswap pools on Base · updated just now";
