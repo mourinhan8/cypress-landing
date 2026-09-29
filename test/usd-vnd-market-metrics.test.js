@@ -131,7 +131,7 @@ test("first-run failure publishes an unavailable cache and remains rate-limited"
   fs.rmSync(directory, { recursive: true, force: true });
 });
 
-test("EN renders USD-only and VI renders VND-only metrics without changing chart, LP, or Swap", () => {
+test("EN renders USD-only and VI renders VND-only metrics without changing chart, LP, or Wallet navigation", () => {
   const root = path.join(__dirname, "..");
   const english = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const vietnamese = fs.readFileSync(path.join(root, "vi/index.html"), "utf8");
@@ -140,8 +140,8 @@ test("EN renders USD-only and VI renders VND-only metrics without changing chart
     assert.match(html, /cp-market-data\.js[\s\S]*cp-market-metrics\.js[\s\S]*cp-market-ui\.js/);
     assert.match(html, /data-cp-chart/);
     assert.match(html, /data-lp-dialog/);
-    assert.match(html, /swap\.cypress\.work/);
     assert.match(html, /testswap\.cypress\.work/);
+    assert.match(html, /href="\/wallet\/"/);
   }
   assert.match(english, /Cypress Token Price[\s\S]*Total Liquidity[\s\S]*Market Cap/);
   assert.doesNotMatch(english, /ExchangeRate-API|VND|25M CP fixed supply|Cypress is now on Base|Total supply reduced/);

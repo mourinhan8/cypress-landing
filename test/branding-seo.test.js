@@ -46,25 +46,30 @@ test("homepage metadata introduces Cypress as the brand and CP as its ticker", (
 test("visible homepage naming uses Cypress naturally for current Base infrastructure", () => {
   assert.match(pages.en, />Cypress Token Price</);
   assert.match(pages.en, /aria-label="Live Cypress token market data"/);
-  assert.match(pages.en, />Cypress on Base</);
-  assert.match(pages.en, />Cypress Contract on Base</);
+  assert.match(pages.en, />Primary Cypress-linked asset · Base</);
+  assert.match(pages.en, />Cypress Coin \(CP\)</);
+  assert.match(pages.en, />Base CP contract</);
   assert.match(pages.vi, />Giá token Cypress</);
   assert.match(pages.vi, /aria-label="Dữ liệu thị trường token Cypress trực tiếp"/);
-  assert.match(pages.vi, />Cypress trên Base</);
-  assert.match(pages.vi, />Contract Cypress trên Base</);
+  assert.match(pages.vi, />Tài sản chính gắn với Cypress · Base</);
+  assert.match(pages.vi, />Cypress Coin \(CP\)</);
+  assert.match(pages.vi, />Contract CP trên Base</);
   for (const html of Object.values(pages)) {
-    assert.doesNotMatch(html, />CP Token on Base<|>CP Price<|>Giá CP<|>CP Contract on Base<|>Contract CP trên Base</);
+    assert.doesNotMatch(html, />CP Token on Base<|>CP Price<|>Giá CP<|>CP Contract on Base</);
   }
 });
 
 test("technical ticker, pair, contract, dotCP, and historical labels remain intact", () => {
   for (const html of Object.values(pages)) {
     assert.match(html, />CP \/ USD</);
-    assert.match(html, />dotCP on Polkadot</);
-    assert.match(html, /CP\/WGLMR/);
     assert.match(html, /0x934ef4bfffdce191ac4bcc351b2fe7892865b440/);
-    assert.equal((html.match(/>dotCP on Polkadot</g) || []).length, 1);
   }
+  assert.match(pages.en, />dotCP on Polkadot</);
+  assert.match(pages.vi, />dotCP trên Polkadot</);
+  assert.equal((pages.en.match(/>dotCP on Polkadot</g) || []).length, 1);
+  assert.equal((pages.vi.match(/>dotCP trên Polkadot</g) || []).length, 1);
+  const history = fs.readFileSync(path.join(root, "cypress/moonbeam-history/index.html"), "utf8");
+  assert.match(history, /CP\/WGLMR/);
   assert.match(pages.en, />Start price<[\s\S]*>End price</);
   assert.match(pages.vi, />Giá đầu kỳ<[\s\S]*>Giá cuối kỳ</);
   const legacy = fs.readFileSync(path.join(root, "tools/lp/legacy-full-range-calculator-ui.mjs"), "utf8");

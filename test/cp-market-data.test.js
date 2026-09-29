@@ -296,8 +296,8 @@ test("RPC timeout aborts the bounded request", async () => {
 test("fresh, stale, and unavailable states render in English and Vietnamese", () => {
   assert.match(market.statusText("en", "fresh", 1000, 1000), /Aggregated from Uniswap/);
   assert.match(market.statusText("vi", "fresh", 1000, 1000), /Uniswap trên Base/);
-  assert.match(market.statusText("en", "stale", 1000, 121000), /Stale.*2 min/);
-  assert.match(market.statusText("vi", "stale", 1000, 121000), /đã cũ.*2 phút/);
-  assert.match(market.statusText("en", "unavailable", 0, 0), /unavailable/);
-  assert.match(market.statusText("vi", "unavailable", 0, 0), /không khả dụng/);
+  assert.match(market.statusText("en", "stale", 1000, 121000), /last-known.*Last updated 2 min/);
+  assert.match(market.statusText("vi", "stale", 1000, 121000), /gần nhất.*Cập nhật lần cuối 2 phút/);
+  assert.equal(market.statusText("en", "unavailable", 0, 0), "Market data temporarily unavailable.");
+  assert.equal(market.statusText("vi", "unavailable", 0, 0), "Dữ liệu thị trường tạm thời không khả dụng.");
 });
