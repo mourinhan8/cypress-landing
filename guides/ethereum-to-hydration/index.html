@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Move ETH and USDC from Ethereum to Hydration | Cypress</title>
+  <meta name="description" content="Move native ETH to Hydration with Snowbridge, prepare WETH (MRL) for MetaMask fees, and understand the current Basejump route for USDC.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cypress.work/guides/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="en" href="https://cypress.work/guides/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="vi" href="https://cypress.work/vi/huong-dan/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="x-default" href="https://cypress.work/guides/ethereum-to-hydration/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Cypress">
+  <meta property="og:title" content="Ethereum → Hydration: ETH and USDC">
+  <meta property="og:description" content="A practical, source-backed route guide for moving ETH and USDC from Ethereum to Hydration with a MetaMask/0x account.">
+  <meta property="og:url" content="https://cypress.work/guides/ethereum-to-hydration/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="vi_VN">
+  <meta property="article:published_time" content="2026-09-28">
+  <meta property="article:modified_time" content="2026-09-29">
+  <meta property="article:section" content="Guides">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Ethereum → Hydration: ETH and USDC","description":"A practical, source-backed route guide for moving ETH and USDC from Ethereum to Hydration with a MetaMask/0x account.","author":{"@type":"Organization","name":"Cypress"},"publisher":{"@type":"Organization","name":"Cypress","logo":{"@type":"ImageObject","url":"https://cypress.work/assets/cypress-logo-pink.png"}},"datePublished":"2026-09-28","dateModified":"2026-09-29","mainEntityOfPage":{"@type":"WebPage","@id":"https://cypress.work/guides/ethereum-to-hydration/"},"inLanguage":"en","articleSection":"Guides","workTranslation":{"@type":"Article","inLanguage":"vi","url":"https://cypress.work/vi/huong-dan/ethereum-to-hydration/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cypress.work/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://cypress.work/guides/"},{"@type":"ListItem","position":3,"name":"Ethereum to Hydration","item":"https://cypress.work/guides/ethereum-to-hydration/"}]}]}</script>
+  <link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.16">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+</head>
+<body class="guide-page">
+  <header class="header" data-header><div class="container"><a href="/" class="logo" data-nav-link><img class="header-img" src="/assets/cypress-logo-pink-32.png" width="32" height="32" alt="Cypress logo">Cypress</a><nav class="x-navbar" aria-label="Main navigation" data-navbar><ul class="navbar-list"><li class="navbar-item"><a href="/wallet/" class="navbar-link" data-nav-link>Wallet</a></li><li class="navbar-item"><a href="/guides/" class="navbar-link active" data-nav-link>Guides</a></li><li class="navbar-item"><a href="/research/" class="navbar-link" data-nav-link>Research</a></li><li class="navbar-item"><a href="/cypress/" class="navbar-link" data-nav-link>Cypress</a></li><li class="navbar-separator" aria-hidden="true"></li><li class="navbar-item mobile-language"><a href="/guides/ethereum-to-hydration/" class="navbar-link language-link active" lang="en" aria-current="page" data-nav-link>English</a></li><li class="navbar-item mobile-language"><a href="/vi/huong-dan/ethereum-to-hydration/" class="navbar-link language-link" lang="vi" hreflang="vi" data-nav-link>Tiếng Việt</a></li></ul></nav><div class="desktop-language" aria-label="Language"><a href="/guides/ethereum-to-hydration/" class="active" lang="en" aria-current="page">EN</a><span aria-hidden="true">|</span><a href="/vi/huong-dan/ethereum-to-hydration/" lang="vi" hreflang="vi">VI</a></div><button class="nav-toggle-btn" aria-label="Toggle menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button></div></header>
+
+  <main class="content-page"><article class="guide-article">
+    <header class="page-intro guide-intro">
+      <div class="container guide-container">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">Ethereum to Hydration</span></nav>
+        <p class="section-kicker">Practical route guide · Ethereum · Hydration</p>
+        <h1>Ethereum → Hydration: ETH and USDC</h1>
+        <p class="page-deck">For a user who holds ETH or USDC on Ethereum, uses MetaMask or another EVM <code>0x</code> account, and wants to start using Hydration.</p>
+        <dl class="guide-meta"><div><dt>Published</dt><dd><time datetime="2026-09-28">28 September 2026</time></dd></div><div><dt>Last verified</dt><dd><time datetime="2026-09-29">29 September 2026</time></dd></div></dl>
+        <section class="guide-quick-answer" aria-labelledby="quick-answer-title">
+          <h2 id="quick-answer-title">Quick answer</h2>
+          <p><strong>If you use MetaMask / a <code>0x</code> account:</strong></p>
+          <ul>
+            <li><strong>Move native ETH:</strong> use <strong>Hydration Cross-chain → Snowbridge</strong>.</li>
+            <li><strong>Pay Hydration transaction fees:</strong> keep some <strong>WETH (MRL)</strong>; native ETH does not replace this fee asset.</li>
+            <li><strong>Move USDC:</strong> use <strong>Basejump</strong> — currently <strong>0.1 USDC</strong>, fast when landing-pool liquidity is available.</li>
+            <li>After arrival, <strong>verify the asset representation before using it</strong>.</li>
+          </ul>
+          <div class="guide-quick-actions"><a href="https://app.hydration.net/cross-chain?srcChain=ethereum&amp;srcAsset=eth&amp;destChain=hydration&amp;destAsset=eth" target="_blank" rel="noopener noreferrer">Open Hydration Cross-chain ↗</a><a href="#route-explanation">Why? ↓</a></div>
+        </section>
+        <aside class="guide-alert" role="note"><strong>Re-check before acting.</strong> Bridge behavior, fees, supported assets, liquidity, rate limits and runtime behavior may change after the last-verified date.</aside>
+      </div>
+    </header>
+
+    <div class="container guide-container guide-content">
+      <section class="guide-section guide-opening" id="route-explanation" aria-labelledby="two-jobs-title">
+        <p class="section-kicker">Start with the constraint</p>
+        <h2 id="two-jobs-title">Treat the move as two separate jobs</h2>
+        <div class="guide-step-summary">
+          <article><span>1</span><div><h3>Choose the ETH representation</h3><p>Use native Snowbridge ETH for native ETH, or WETH (MRL) when the MetaMask/<code>0x</code> account needs its current fee asset.</p></div></article>
+          <article><span>2</span><div><h3>Move the main capital</h3><p>For USDC, check the current Basejump fee, rate limit, and landing-pool liquidity before signing.</p></div></article>
+        </div>
+        <p>Native ETH and WETH (MRL) are different Hydration representations for different purposes. They are not interchangeable names for one asset or competing bridges for one identical result. This guide does not make an investment recommendation.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="gas-title">
+        <p class="section-kicker">Step 1 · Fee asset</p>
+        <h2 id="gas-title">Solve the first-transaction problem</h2>
+        <p>Hydration supports Substrate accounts and EVM <code>0x</code> accounts. Its current fee documentation says a MetaMask user with a <code>0x</code> address can currently pay transaction fees only in <strong>WETH (MRL)</strong>.</p>
+        <p>That makes the fee asset a prerequisite for a fresh MetaMask account. USDC alone should not be assumed to solve the first-transaction problem.</p>
+        <aside class="guide-callout"><strong>Practical rule:</strong> keep a small WETH (MRL) fee buffer and check the current fee estimate. Cypress does not recommend a fixed dollar amount because fee requirements can change.</aside>
+      </section>
+
+      <section class="guide-section" aria-labelledby="wormhole-title">
+        <p class="section-kicker">Gas-bootstrap route</p>
+        <h2 id="wormhole-title">WETH (MRL) through Wormhole / MRL</h2>
+        <p>Hydration documents that Wormhole-routed assets are minted on Moonbeam before being transferred to Hydration. For this use case, the useful result is the representation Hydration currently identifies as the MetaMask fee asset: WETH (MRL).</p>
+        <div class="route-diagram" aria-label="Ethereum ETH through Wormhole and Moonbeam Routed Liquidity to Hydration WETH MRL"><span class="route-node">Ethereum ETH</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Wormhole / MRL</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration WETH (MRL)</span></div>
+        <p>Cypress treats this as a practical gas-bootstrap route for the specific MetaMask/<code>0x</code> use case. That is not a claim that Wormhole is universally safer, cheaper, faster, or better than another bridge.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="snowbridge-title">
+        <p class="section-kicker">A different route and trust model</p>
+        <h2 id="snowbridge-title">Where Snowbridge fits</h2>
+        <p>For a user who wants native ETH on Hydration, Hydration’s Cross-chain interface presents one Ethereum-to-Hydration transfer flow and lets the user select native ETH bridged through Snowbridge. You do not need to perform a separate manual transfer to Polkadot Hub.</p>
+        <div class="route-diagram" aria-label="User-facing route from Ethereum native ETH through Hydration Cross-chain and Snowbridge to Hydration native ETH"><span class="route-node">Ethereum native ETH</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Hydration Cross-chain / Snowbridge</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration native ETH</span></div>
+        <p>Under the hood, Snowbridge is the Ethereum–Polkadot system bridge and the architecture routes through Polkadot Hub before delivery to Hydration. Its documentation describes trustless, decentralized on-chain light-client verification, permissionless relayers, no multisig control, and governance through Polkadot OpenGov. That architecture is context, not an extra user step.</p>
+        <aside class="guide-warning"><strong>Do not make the bootstrap circular.</strong> Hydration’s current user documentation identifies WETH (MRL), not Snowbridge-native ETH, as the MetaMask/<code>0x</code> fee asset. Cypress has not verified that a completely fresh <code>0x</code> account can first swap Snowbridge ETH into WETH without already having the required fee asset.</aside>
+
+        <div class="guide-table-wrap" tabindex="0" aria-label="Wormhole MRL and Snowbridge comparison">
+          <table class="guide-table">
+            <thead><tr><th>Question</th><th>Wormhole / MRL</th><th>Snowbridge</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">User-facing route</th><td>Wormhole / MRL route to Hydration</td><td>One Hydration Cross-chain flow: Ethereum → Hydration</td></tr>
+              <tr><th scope="row">Underlying architecture</th><td>Wormhole-routed asset minted on Moonbeam, then transferred to Hydration</td><td>Snowbridge passes through Polkadot Hub before delivery to Hydration</td></tr>
+              <tr><th scope="row">ETH representation</th><td>WETH (MRL)</td><td>Native ETH via Snowbridge</td></tr>
+              <tr><th scope="row">MetaMask fee bootstrap</th><td>Documented by Hydration as the current fee asset</td><td>Not documented as the MetaMask fee asset</td></tr>
+              <tr><th scope="row">Trust model</th><td>Wormhole + routed path to Hydration</td><td>Ethereum–Polkadot system bridge with on-chain light clients</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="usdc-title">
+        <p class="section-kicker">Step 2 · Main capital</p>
+        <h2 id="usdc-title">Move USDC after the fee buffer is ready</h2>
+        <p>For Ethereum USDC, separate the underlying NTT settlement from Basejump’s fast payout. They are related parts of the current corridor, not competing assets.</p>
+        <div class="route-diagram" aria-label="Ethereum USDC through Basejump to Hydration USDC"><span class="route-node">Ethereum USDC</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Basejump</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration USDC</span></div>
+        <div class="guide-table-wrap" tabindex="0" aria-label="Normal settlement and Basejump fast path comparison">
+          <table class="guide-table">
+            <thead><tr><th>Route</th><th>What it is for</th><th>Main dependency</th><th>Main limitation</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Underlying settlement</th><td>Moves the gross USDC amount through Wormhole NTT</td><td>NTT settlement rail and its current capacity</td><td>Completion time varies; it is not an instant guarantee</td></tr>
+              <tr><th scope="row">Basejump fast path</th><td>Fronts the net USDC amount from a Hydration landing pool</td><td>Available landing-pool liquidity and fast-message delivery</td><td>Can queue when the pool cannot cover the payout</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section basejump-section" aria-labelledby="basejump-title">
+        <p class="section-kicker">Current Basejump design</p>
+        <h2 id="basejump-title">Fast payout, settlement in the background</h2>
+        <p>The current Galactic Council specification limits the live corridor to <strong>Ethereum → Hydration</strong> and the live token to <strong>USDC</strong>. Basejump uses a pre-funded landing pool on Hydration:</p>
+        <ol class="guide-process">
+          <li><span>1</span><p>The user sends gross USDC from Ethereum.</p></li>
+          <li><span>2</span><p>The fast message carries the net amount to Hydration.</p></li>
+          <li><span>3</span><p>If the landing pool has enough USDC, it pays the recipient before final settlement completes.</p></li>
+          <li><span>4</span><p>Wormhole NTT later delivers the gross amount and replenishes the landing pool.</p></li>
+        </ol>
+        <div class="guide-facts">
+          <article><span>Asset fee</span><strong>0.1 USDC</strong><p>Current specification value per transfer.</p></article>
+          <article><span>NTT outbound limit</span><strong>100,000 USDC</strong><p>Per sliding 24-hour window; separate from pool liquidity.</p></article>
+          <article><span>Direction / token</span><strong>Ethereum → Hydration</strong><p>USDC is the single live token in the pinned specification.</p></article>
+        </div>
+        <aside class="guide-example"><strong>Simplified current-fee example</strong><span>10 USDC sent</span><span aria-hidden="true">→</span><span>9.9 USDC fast-path payout</span><span aria-hidden="true">→</span><span>10 USDC later replenishes the pool</span><small>The 0.1 USDC difference remains in the pool under the current specification. This parameter can change.</small></aside>
+        <p>The specification describes NTT guardian finality around the 13-minute range, and referendum #404 uses similar context. This is a description of the current design—not a promised completion time. Actual completion can vary.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="capacity-title">
+        <p class="section-kicker">Two different constraints</p>
+        <h2 id="capacity-title">Landing-pool liquidity is not the NTT rate limit</h2>
+        <div class="constraint-grid">
+          <article><h3>Landing-pool liquidity</h3><p>The USDC currently available to front fast payouts. If it is insufficient, the payout can enter a pending FIFO queue.</p></article>
+          <article><h3>NTT rate limit</h3><p>The current specification reports an outbound limit of 100,000 USDC per sliding 24-hour window on the settlement rail.</p></article>
+        </div>
+        <p>These constraints can affect the experience in different ways. The 10,000 USDC documented in referendum #404 was seed liquidity for the landing pool; it is <strong>not</strong> evidence of a 10,000 USDC per-transfer maximum.</p>
+        <aside class="guide-warning"><strong>“Instant” is conditional.</strong> When the pool cannot cover a payout, the specification queues it FIFO. Nothing calls <code>fulfillPending()</code> automatically; a caller or keeper is still required after adequate liquidity becomes available.</aside>
+      </section>
+
+      <section class="guide-section" aria-labelledby="asset-title">
+        <p class="section-kicker">Verification checkpoint</p>
+        <h2 id="asset-title">Check what asset actually arrived</h2>
+        <p>Bridge routes can produce different asset representations. Before swapping, lending, providing liquidity, or treating two assets as equivalent, verify:</p>
+        <ul class="guide-checklist"><li>the destination network;</li><li>the displayed symbol;</li><li>the token or asset identity;</li><li>the bridge route used;</li><li>the current Hydration representation.</li></ul>
+        <p>Do not assume that two assets labelled “ETH” are interchangeable merely because their symbols look the same.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="flow-title">
+        <p class="section-kicker">Practical sequence</p>
+        <h2 id="flow-title">A verification-first flow</h2>
+        <ol class="practical-flow">
+          <li><strong>Connect the intended MetaMask/<code>0x</code> account.</strong><span>Confirm the account and destination before signing.</span></li>
+          <li><strong>Check Hydration’s current EVM fee-asset requirement.</strong><span>Do not rely only on this guide’s last-verified date.</span></li>
+          <li><strong>Choose the representation that matches the intended use.</strong><span>Use Hydration Cross-chain / Snowbridge for native ETH; obtain WETH (MRL) separately if the <code>0x</code> account needs the current fee asset.</span></li>
+          <li><strong>Confirm the fee balance on Hydration.</strong><span>Verify the network and exact asset representation.</span></li>
+          <li><strong>Move the intended USDC amount.</strong><span>Choose between waiting for settlement and the conditional Basejump fast path based on current conditions.</span></li>
+          <li><strong>Verify the received asset and remaining fee buffer.</strong><span>Check identity, route, amount, and transaction record.</span></li>
+          <li><strong>Only then decide what to do next.</strong><span>Holding, swapping, earning, or providing liquidity is a separate decision.</span></li>
+        </ol>
+      </section>
+
+      <section class="guide-section principle-section" aria-labelledby="principle-title">
+        <p class="section-kicker">Cypress principle</p>
+        <h2 id="principle-title">Verify before you sign</h2>
+        <blockquote><p>The wallet holds the keys.</p><p>The user decides.</p><p>Cypress only says what it can verify.</p></blockquote>
+        <p>Open <a href="/wallet/">Cypress Wallet</a> only when you are ready to inspect your own account. Continue with <a href="/guides/">Guides</a>, read the underlying <a href="/research/">Research</a>, or see <a href="/cypress/">how Cypress works</a>.</p>
+      </section>
+
+      <section class="guide-section guide-sources" aria-labelledby="sources-title">
+        <p class="section-kicker">Primary documentation</p>
+        <h2 id="sources-title">Sources</h2>
+        <p>Volatile technical claims above were checked against these primary records on <strong>29 September 2026</strong>:</p>
+        <ul>
+          <li><a href="https://app.hydration.net/cross-chain?srcChain=ethereum&amp;srcAsset=eth&amp;destChain=hydration&amp;destAsset=eth" target="_blank" rel="noopener noreferrer">Hydration — Ethereum ETH to Hydration ETH route</a><span>User-facing Cross-chain route preselected for native ETH through Snowbridge.</span></li>
+          <li><a href="https://docs.hydration.net/products/trading/fees/" target="_blank" rel="noopener noreferrer">Hydration Docs — Fees</a><span>MetaMask/<code>0x</code> fee behavior and Omnipool fee assets.</span></li>
+          <li><a href="https://docs.hydration.net/guides/deposit/from_ethereum/" target="_blank" rel="noopener noreferrer">Hydration Docs — Deposit from Ethereum</a><span>Wormhole, Snowbridge, minting locations, and selectable ETH representations.</span></li>
+          <li><a href="https://docs.hydration.net/devs/evm/" target="_blank" rel="noopener noreferrer">Hydration Docs — EVM integration</a><span>EVM account support and WETH gas configuration.</span></li>
+          <li><div class="source-links"><a href="https://docs.snowbridge.network/" target="_blank" rel="noopener noreferrer">Snowbridge — Introduction</a>, <a href="https://docs.snowbridge.network/architecture/verification" target="_blank" rel="noopener noreferrer">verification</a>, and <a href="https://docs.snowbridge.network/architecture/governance" target="_blank" rel="noopener noreferrer">governance</a></div><span>System-bridge scope, light clients, relayers, multisig claims, and OpenGov control.</span></li>
+          <li><a href="https://github.com/galacticcouncil/whm/blob/3ff51bc793c71c6add464574d8839d9d44a79fc2/docs/basejump/spec.md" target="_blank" rel="noopener noreferrer">Galactic Council / WHM — pinned Basejump specification</a><span>Direction, token, architecture, fee, rate limit, settlement context, queue, and keeper behavior.</span></li>
+          <li><a href="https://hydration.subsquare.io/referenda/404" target="_blank" rel="noopener noreferrer">Hydration OpenGov Referendum #404</a><span>Ethereum–Hydration corridor context and 10,000 USDC landing-pool seed.</span></li>
+        </ul>
+      </section>
+    </div>
+  </article></main>
+
+  <footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. All rights reserved.</p><nav class="footer-nav" aria-label="Footer navigation"><a href="/wallet/">Wallet</a><a href="/guides/">Guides</a><a href="/research/">Research</a><a href="/cypress/">Cypress</a></nav></div></div></footer>
+  <script src="/assets/js/script_1.js?v=1.6" defer></script>
+</body>
+</html>

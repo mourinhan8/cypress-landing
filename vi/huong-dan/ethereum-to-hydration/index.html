@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cách chuyển ETH và USDC từ Ethereum sang Hydration | Cypress</title>
+  <meta name="description" content="Chuyển native ETH sang Hydration qua Snowbridge, chuẩn bị WETH (MRL) cho phí MetaMask và hiểu tuyến Basejump hiện tại cho USDC.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cypress.work/vi/huong-dan/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="en" href="https://cypress.work/guides/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="vi" href="https://cypress.work/vi/huong-dan/ethereum-to-hydration/">
+  <link rel="alternate" hreflang="x-default" href="https://cypress.work/guides/ethereum-to-hydration/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Cypress">
+  <meta property="og:title" content="Ethereum → Hydration: ETH và USDC">
+  <meta property="og:description" content="Hướng dẫn tuyến thực tế, có nguồn, để chuyển ETH và USDC từ Ethereum sang Hydration bằng tài khoản MetaMask/0x.">
+  <meta property="og:url" content="https://cypress.work/vi/huong-dan/ethereum-to-hydration/">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="article:published_time" content="2026-09-28">
+  <meta property="article:modified_time" content="2026-09-29">
+  <meta property="article:section" content="Hướng dẫn">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Ethereum → Hydration: ETH và USDC","description":"Hướng dẫn tuyến thực tế, có nguồn, để chuyển ETH và USDC từ Ethereum sang Hydration bằng tài khoản MetaMask/0x.","author":{"@type":"Organization","name":"Cypress"},"publisher":{"@type":"Organization","name":"Cypress","logo":{"@type":"ImageObject","url":"https://cypress.work/assets/cypress-logo-pink.png"}},"datePublished":"2026-09-28","dateModified":"2026-09-29","mainEntityOfPage":{"@type":"WebPage","@id":"https://cypress.work/vi/huong-dan/ethereum-to-hydration/"},"inLanguage":"vi","articleSection":"Hướng dẫn","translationOfWork":{"@type":"Article","inLanguage":"en","url":"https://cypress.work/guides/ethereum-to-hydration/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trang chủ","item":"https://cypress.work/vi/"},{"@type":"ListItem","position":2,"name":"Hướng dẫn","item":"https://cypress.work/vi/huong-dan/"},{"@type":"ListItem","position":3,"name":"Ethereum sang Hydration","item":"https://cypress.work/vi/huong-dan/ethereum-to-hydration/"}]}]}</script>
+  <link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.16">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+</head>
+<body class="guide-page">
+  <header class="header" data-header><div class="container"><a href="/vi/" class="logo" data-nav-link><img class="header-img" src="/assets/cypress-logo-pink-32.png" width="32" height="32" alt="Logo Cypress">Cypress</a><nav class="x-navbar" aria-label="Điều hướng chính" data-navbar><ul class="navbar-list"><li class="navbar-item"><a href="/wallet/" class="navbar-link" data-nav-link>Ví</a></li><li class="navbar-item"><a href="/vi/huong-dan/" class="navbar-link active" data-nav-link>Hướng dẫn</a></li><li class="navbar-item"><a href="/vi/nghien-cuu/" class="navbar-link" data-nav-link>Nghiên cứu</a></li><li class="navbar-item"><a href="/vi/cypress/" class="navbar-link" data-nav-link>Cypress</a></li><li class="navbar-separator" aria-hidden="true"></li><li class="navbar-item mobile-language"><a href="/guides/ethereum-to-hydration/" class="navbar-link language-link" lang="en" hreflang="en" data-nav-link>English</a></li><li class="navbar-item mobile-language"><a href="/vi/huong-dan/ethereum-to-hydration/" class="navbar-link language-link active" lang="vi" aria-current="page" data-nav-link>Tiếng Việt</a></li></ul></nav><div class="desktop-language" aria-label="Ngôn ngữ"><a href="/guides/ethereum-to-hydration/" lang="en" hreflang="en">EN</a><span aria-hidden="true">|</span><a href="/vi/huong-dan/ethereum-to-hydration/" class="active" lang="vi" aria-current="page">VI</a></div><button class="nav-toggle-btn" aria-label="Mở hoặc đóng menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button></div></header>
+
+  <main class="content-page"><article class="guide-article">
+    <header class="page-intro guide-intro">
+      <div class="container guide-container">
+        <nav class="guide-breadcrumb" aria-label="Đường dẫn"><a href="/vi/">Trang chủ</a><span aria-hidden="true">/</span><a href="/vi/huong-dan/">Hướng dẫn</a><span aria-hidden="true">/</span><span aria-current="page">Ethereum sang Hydration</span></nav>
+        <p class="section-kicker">Hướng dẫn tuyến thực tế · Ethereum · Hydration</p>
+        <h1>Ethereum → Hydration: ETH và USDC</h1>
+        <p class="page-deck">Dành cho người đang giữ ETH hoặc USDC trên Ethereum, dùng MetaMask hay tài khoản EVM <code>0x</code> khác và muốn bắt đầu sử dụng Hydration.</p>
+        <dl class="guide-meta"><div><dt>Xuất bản</dt><dd><time datetime="2026-09-28">28/09/2026</time></dd></div><div><dt>Kiểm chứng gần nhất</dt><dd><time datetime="2026-09-29">29/09/2026</time></dd></div></dl>
+        <section class="guide-quick-answer" aria-labelledby="quick-answer-title">
+          <h2 id="quick-answer-title">Tóm tắt</h2>
+          <p><strong>Nếu bạn dùng MetaMask / tài khoản <code>0x</code>:</strong></p>
+          <ul>
+            <li><strong>Muốn đưa ETH native sang Hydration:</strong> dùng <strong>Hydration Cross-chain → Snowbridge</strong>.</li>
+            <li><strong>Muốn có phí giao dịch trên Hydration:</strong> giữ một ít <strong>WETH (MRL)</strong>; native ETH không thay thế fee asset này.</li>
+            <li><strong>Muốn chuyển USDC:</strong> dùng <strong>Basejump</strong> — phí hiện tại <strong>0,1 USDC</strong>, nhanh khi landing pool đủ thanh khoản.</li>
+            <li>Khi tài sản tới nơi, <strong>kiểm tra đúng representation trước khi sử dụng</strong>.</li>
+          </ul>
+          <div class="guide-quick-actions"><a href="https://app.hydration.net/cross-chain?srcChain=ethereum&amp;srcAsset=eth&amp;destChain=hydration&amp;destAsset=eth" target="_blank" rel="noopener noreferrer">Mở Hydration Cross-chain ↗</a><a href="#route-explanation">Vì sao? ↓</a></div>
+        </section>
+        <aside class="guide-alert" role="note"><strong>Hãy kiểm tra lại trước khi thao tác.</strong> Hành vi bridge, phí, tài sản được hỗ trợ, thanh khoản, rate limit và hành vi runtime có thể thay đổi sau ngày kiểm chứng gần nhất.</aside>
+      </div>
+    </header>
+
+    <div class="container guide-container guide-content">
+      <section class="guide-section guide-opening" id="route-explanation" aria-labelledby="two-jobs-title">
+        <p class="section-kicker">Bắt đầu từ điều kiện cần</p>
+        <h2 id="two-jobs-title">Tách việc chuyển tài sản thành hai bước</h2>
+        <div class="guide-step-summary">
+          <article><span>1</span><div><h3>Chọn đúng representation của ETH</h3><p>Dùng native ETH từ Snowbridge khi cần native ETH, hoặc WETH (MRL) khi tài khoản MetaMask/<code>0x</code> cần fee asset hiện tại.</p></div></article>
+          <article><span>2</span><div><h3>Chuyển phần vốn chính</h3><p>Với USDC, kiểm tra phí Basejump, rate limit và thanh khoản landing pool hiện tại trước khi ký.</p></div></article>
+        </div>
+        <p>Native ETH và WETH (MRL) là hai representation khác nhau trên Hydration, phục vụ mục đích khác nhau. Chúng không phải hai tên có thể thay thế cho cùng một tài sản hay hai bridge cạnh tranh để tạo ra kết quả giống hệt nhau. Đây không phải khuyến nghị đầu tư.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="gas-title">
+        <p class="section-kicker">Bước 1 · Fee asset</p>
+        <h2 id="gas-title">Giải quyết vấn đề giao dịch đầu tiên</h2>
+        <p>Hydration hỗ trợ tài khoản Substrate và tài khoản EVM <code>0x</code>. Tài liệu phí hiện tại ghi rằng người dùng MetaMask với địa chỉ <code>0x</code> hiện chỉ có thể trả transaction fee bằng <strong>WETH (MRL)</strong>.</p>
+        <p>Vì vậy fee asset là điều kiện cần cho một tài khoản MetaMask mới. Không nên giả định chỉ có USDC là đủ để thực hiện giao dịch đầu tiên.</p>
+        <aside class="guide-callout"><strong>Nguyên tắc thực tế:</strong> giữ một fee buffer WETH (MRL) nhỏ và kiểm tra fee estimate hiện tại. Cypress không khuyến nghị một số tiền cố định vì yêu cầu phí có thể thay đổi.</aside>
+      </section>
+
+      <section class="guide-section" aria-labelledby="wormhole-title">
+        <p class="section-kicker">Tuyến bootstrap gas</p>
+        <h2 id="wormhole-title">WETH (MRL) qua Wormhole / MRL</h2>
+        <p>Hydration ghi rõ tài sản đi qua Wormhole được mint trên Moonbeam trước khi chuyển tiếp tới Hydration. Với use case này, kết quả hữu ích là representation mà Hydration hiện xác định làm fee asset cho MetaMask: WETH (MRL).</p>
+        <div class="route-diagram" aria-label="Ethereum ETH qua Wormhole và Moonbeam Routed Liquidity tới Hydration WETH MRL"><span class="route-node">Ethereum ETH</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Wormhole / MRL</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration WETH (MRL)</span></div>
+        <p>Cypress xem đây là tuyến bootstrap gas thực dụng cho use case MetaMask/<code>0x</code> cụ thể. Điều đó không có nghĩa Wormhole luôn an toàn hơn, rẻ hơn, nhanh hơn hay tốt hơn bridge khác.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="snowbridge-title">
+        <p class="section-kicker">Một tuyến và trust model khác</p>
+        <h2 id="snowbridge-title">Vai trò của Snowbridge</h2>
+        <p>Với người muốn nhận native ETH trên Hydration, giao diện Cross-chain của Hydration cung cấp một flow chuyển từ Ethereum sang Hydration và cho phép chọn native ETH qua Snowbridge. Người dùng không cần tự thực hiện thêm một giao dịch riêng tới Polkadot Hub.</p>
+        <div class="route-diagram" aria-label="Tuyến người dùng từ native ETH trên Ethereum qua Hydration Cross-chain và Snowbridge tới native ETH trên Hydration"><span class="route-node">Ethereum native ETH</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Hydration Cross-chain / Snowbridge</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration native ETH</span></div>
+        <p>Ở lớp kiến trúc, Snowbridge là system bridge Ethereum–Polkadot và tuyến đi qua Polkadot Hub trước khi được chuyển tới Hydration. Tài liệu Snowbridge mô tả cơ chế kiểm chứng light client on-chain theo hướng trustless, phi tập trung, relayer permissionless, không có multisig kiểm soát và được quản trị qua Polkadot OpenGov. Đây là bối cảnh kiến trúc, không phải một bước thủ công bổ sung cho người dùng.</p>
+        <aside class="guide-warning"><strong>Không tạo hướng dẫn vòng tròn.</strong> Tài liệu người dùng hiện tại của Hydration xác định WETH (MRL), không phải native ETH từ Snowbridge, là fee asset cho MetaMask/<code>0x</code>. Cypress chưa kiểm chứng rằng một tài khoản <code>0x</code> hoàn toàn mới có thể swap Snowbridge ETH sang WETH trước khi đã có fee asset cần thiết.</aside>
+
+        <div class="guide-table-wrap" tabindex="0" aria-label="So sánh Wormhole MRL và Snowbridge">
+          <table class="guide-table">
+            <thead><tr><th>Câu hỏi</th><th>Wormhole / MRL</th><th>Snowbridge</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Tuyến người dùng</th><td>Tuyến Wormhole / MRL tới Hydration</td><td>Một flow Hydration Cross-chain: Ethereum → Hydration</td></tr>
+              <tr><th scope="row">Kiến trúc bên dưới</th><td>Tài sản qua Wormhole được mint trên Moonbeam rồi chuyển tới Hydration</td><td>Snowbridge đi qua Polkadot Hub trước khi chuyển tới Hydration</td></tr>
+              <tr><th scope="row">Representation ETH</th><td>WETH (MRL)</td><td>Native ETH qua Snowbridge</td></tr>
+              <tr><th scope="row">Bootstrap phí MetaMask</th><td>Được Hydration ghi là fee asset hiện tại</td><td>Không được ghi là fee asset cho MetaMask</td></tr>
+              <tr><th scope="row">Trust model</th><td>Wormhole + tuyến chuyển tiếp tới Hydration</td><td>System bridge Ethereum–Polkadot với light client on-chain</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="usdc-title">
+        <p class="section-kicker">Bước 2 · Phần vốn chính</p>
+        <h2 id="usdc-title">Chuyển USDC sau khi đã có fee buffer</h2>
+        <p>Với USDC trên Ethereum, cần phân biệt underlying NTT settlement và fast payout của Basejump. Chúng là các phần liên quan trong corridor hiện tại, không phải hai tài sản cạnh tranh.</p>
+        <div class="route-diagram" aria-label="Ethereum USDC qua Basejump tới Hydration USDC"><span class="route-node">Ethereum USDC</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node">Basejump</span><span class="route-arrow" aria-hidden="true">→</span><span class="route-node route-destination">Hydration USDC</span></div>
+        <div class="guide-table-wrap" tabindex="0" aria-label="So sánh normal settlement và Basejump fast path">
+          <table class="guide-table">
+            <thead><tr><th>Tuyến</th><th>Dùng để làm gì</th><th>Phụ thuộc chính</th><th>Giới hạn chính</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Underlying settlement</th><td>Chuyển lượng USDC gross qua Wormhole NTT</td><td>Settlement rail NTT và capacity hiện tại</td><td>Thời gian hoàn tất thay đổi; không có bảo đảm tức thời</td></tr>
+              <tr><th scope="row">Basejump fast path</th><td>Ứng trước lượng USDC net từ landing pool trên Hydration</td><td>Thanh khoản landing pool và fast-message delivery</td><td>Có thể vào hàng chờ khi pool không đủ để chi trả</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section basejump-section" aria-labelledby="basejump-title">
+        <p class="section-kicker">Thiết kế Basejump hiện tại</p>
+        <h2 id="basejump-title">Trả nhanh trước, settlement chạy phía sau</h2>
+        <p>Đặc tả Galactic Council hiện tại giới hạn corridor live ở <strong>Ethereum → Hydration</strong> và token live ở <strong>USDC</strong>. Basejump sử dụng một landing pool được cấp vốn sẵn trên Hydration:</p>
+        <ol class="guide-process">
+          <li><span>1</span><p>Người dùng gửi lượng USDC gross từ Ethereum.</p></li>
+          <li><span>2</span><p>Fast message mang lượng net tới Hydration.</p></li>
+          <li><span>3</span><p>Nếu landing pool có đủ USDC, pool trả cho người nhận trước khi settlement cuối cùng hoàn tất.</p></li>
+          <li><span>4</span><p>Wormhole NTT sau đó chuyển lượng gross để bổ sung lại landing pool.</p></li>
+        </ol>
+        <div class="guide-facts">
+          <article><span>Asset fee</span><strong>0.1 USDC</strong><p>Giá trị hiện tại trong đặc tả, tính trên mỗi transfer.</p></article>
+          <article><span>NTT outbound limit</span><strong>100,000 USDC</strong><p>Trong cửa sổ trượt 24 giờ; tách biệt với thanh khoản pool.</p></article>
+          <article><span>Hướng / token</span><strong>Ethereum → Hydration</strong><p>USDC là token live duy nhất trong đặc tả được ghim.</p></article>
+        </div>
+        <aside class="guide-example"><strong>Ví dụ đơn giản với mức phí hiện tại</strong><span>Gửi 10 USDC</span><span aria-hidden="true">→</span><span>Fast path trả 9.9 USDC</span><span aria-hidden="true">→</span><span>10 USDC bổ sung lại pool sau đó</span><small>Chênh lệch 0.1 USDC được giữ trong pool theo đặc tả hiện tại. Thông số này có thể thay đổi.</small></aside>
+        <p>Đặc tả mô tả guardian finality của NTT ở khoảng 13 phút; referendum #404 cũng dùng bối cảnh tương tự. Đây là mô tả thiết kế hiện tại, không phải cam kết thời gian hoàn tất. Thời gian thực tế có thể thay đổi.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="capacity-title">
+        <p class="section-kicker">Hai giới hạn khác nhau</p>
+        <h2 id="capacity-title">Thanh khoản landing pool không phải NTT rate limit</h2>
+        <div class="constraint-grid">
+          <article><h3>Thanh khoản landing pool</h3><p>Lượng USDC hiện có để ứng trước fast payout. Nếu không đủ, payout có thể vào hàng chờ FIFO.</p></article>
+          <article><h3>NTT rate limit</h3><p>Đặc tả hiện tại ghi outbound limit 100,000 USDC trong mỗi cửa sổ trượt 24 giờ trên settlement rail.</p></article>
+        </div>
+        <p>Hai giới hạn này ảnh hưởng trải nghiệm theo cách khác nhau. Con số 10,000 USDC trong referendum #404 là seed liquidity cho landing pool; nó <strong>không phải</strong> bằng chứng cho mức tối đa 10,000 USDC mỗi transfer.</p>
+        <aside class="guide-warning"><strong>“Instant” có điều kiện.</strong> Khi pool không đủ để chi trả, đặc tả đưa transfer vào hàng chờ FIFO. Không có gì tự động gọi <code>fulfillPending()</code>; vẫn cần một caller hoặc keeper khi đã có đủ thanh khoản.</aside>
+      </section>
+
+      <section class="guide-section" aria-labelledby="asset-title">
+        <p class="section-kicker">Điểm kiểm tra</p>
+        <h2 id="asset-title">Kiểm tra tài sản thực sự đã đến</h2>
+        <p>Các tuyến bridge có thể tạo ra những asset representation khác nhau. Trước khi swap, lend, cung cấp thanh khoản hoặc xem hai tài sản là tương đương, hãy kiểm tra:</p>
+        <ul class="guide-checklist"><li>network đích;</li><li>symbol hiển thị;</li><li>token hoặc asset identity;</li><li>tuyến bridge đã dùng;</li><li>representation hiện tại trên Hydration.</li></ul>
+        <p>Không nên giả định hai tài sản cùng hiển thị “ETH” là có thể thay thế cho nhau chỉ vì symbol giống nhau.</p>
+      </section>
+
+      <section class="guide-section" aria-labelledby="flow-title">
+        <p class="section-kicker">Trình tự thực tế</p>
+        <h2 id="flow-title">Flow đặt việc kiểm chứng lên trước</h2>
+        <ol class="practical-flow">
+          <li><strong>Kết nối đúng tài khoản MetaMask/<code>0x</code>.</strong><span>Xác nhận tài khoản và địa chỉ nhận trước khi ký.</span></li>
+          <li><strong>Kiểm tra yêu cầu fee asset EVM hiện tại của Hydration.</strong><span>Không chỉ dựa vào ngày kiểm chứng của hướng dẫn này.</span></li>
+          <li><strong>Chọn representation phù hợp với mục đích.</strong><span>Dùng Hydration Cross-chain / Snowbridge cho native ETH; chuẩn bị WETH (MRL) riêng nếu tài khoản <code>0x</code> cần fee asset hiện tại.</span></li>
+          <li><strong>Xác nhận fee balance trên Hydration.</strong><span>Kiểm tra network và chính xác asset representation.</span></li>
+          <li><strong>Chuyển lượng USDC dự định dùng.</strong><span>Chọn chờ settlement hoặc Basejump fast path có điều kiện dựa trên trạng thái hiện tại.</span></li>
+          <li><strong>Kiểm tra tài sản nhận được và fee buffer còn lại.</strong><span>Kiểm tra identity, route, amount và transaction record.</span></li>
+          <li><strong>Chỉ sau đó mới quyết định bước tiếp theo.</strong><span>Hold, swap, earn hay cung cấp thanh khoản là một quyết định riêng.</span></li>
+        </ol>
+      </section>
+
+      <section class="guide-section principle-section" aria-labelledby="principle-title">
+        <p class="section-kicker">Nguyên tắc Cypress</p>
+        <h2 id="principle-title">Kiểm chứng trước khi ký</h2>
+        <blockquote><p>Ví giữ khóa.</p><p>Người dùng quyết định.</p><p>Cypress chỉ nói những gì mình có thể kiểm chứng.</p></blockquote>
+        <p>Chỉ mở <a href="/wallet/">Ví Cypress</a> khi bạn sẵn sàng kiểm tra chính tài khoản của mình. Xem thêm <a href="/vi/huong-dan/">Hướng dẫn</a>, đọc <a href="/vi/nghien-cuu/">Nghiên cứu</a> nền tảng hoặc tìm hiểu <a href="/vi/cypress/">cách Cypress hoạt động</a>.</p>
+      </section>
+
+      <section class="guide-section guide-sources" aria-labelledby="sources-title">
+        <p class="section-kicker">Tài liệu chính</p>
+        <h2 id="sources-title">Nguồn</h2>
+        <p>Các claim kỹ thuật có thể thay đổi ở trên được kiểm tra với những nguồn chính này vào ngày <strong>29/09/2026</strong>:</p>
+        <ul>
+          <li><a href="https://app.hydration.net/cross-chain?srcChain=ethereum&amp;srcAsset=eth&amp;destChain=hydration&amp;destAsset=eth" target="_blank" rel="noopener noreferrer">Hydration — tuyến Ethereum ETH sang Hydration ETH</a><span>Tuyến Cross-chain hướng người dùng, được chọn sẵn cho native ETH qua Snowbridge.</span></li>
+          <li><a href="https://docs.hydration.net/products/trading/fees/" target="_blank" rel="noopener noreferrer">Hydration Docs — Fees</a><span>Hành vi phí MetaMask/<code>0x</code> và fee asset trong Omnipool.</span></li>
+          <li><a href="https://docs.hydration.net/guides/deposit/from_ethereum/" target="_blank" rel="noopener noreferrer">Hydration Docs — Deposit from Ethereum</a><span>Wormhole, Snowbridge, nơi mint và các ETH representation có thể chọn.</span></li>
+          <li><a href="https://docs.hydration.net/devs/evm/" target="_blank" rel="noopener noreferrer">Hydration Docs — EVM integration</a><span>Hỗ trợ tài khoản EVM và cấu hình gas WETH.</span></li>
+          <li><div class="source-links"><a href="https://docs.snowbridge.network/" target="_blank" rel="noopener noreferrer">Snowbridge — Introduction</a>, <a href="https://docs.snowbridge.network/architecture/verification" target="_blank" rel="noopener noreferrer">verification</a> và <a href="https://docs.snowbridge.network/architecture/governance" target="_blank" rel="noopener noreferrer">governance</a></div><span>Phạm vi system bridge, light client, relayer, claim về multisig và quyền kiểm soát OpenGov.</span></li>
+          <li><a href="https://github.com/galacticcouncil/whm/blob/3ff51bc793c71c6add464574d8839d9d44a79fc2/docs/basejump/spec.md" target="_blank" rel="noopener noreferrer">Galactic Council / WHM — đặc tả Basejump được ghim</a><span>Hướng, token, kiến trúc, phí, rate limit, bối cảnh settlement, hàng chờ và hành vi keeper.</span></li>
+          <li><a href="https://hydration.subsquare.io/referenda/404" target="_blank" rel="noopener noreferrer">Hydration OpenGov Referendum #404</a><span>Bối cảnh corridor Ethereum–Hydration và seed 10,000 USDC cho landing pool.</span></li>
+        </ul>
+      </section>
+    </div>
+  </article></main>
+
+  <footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. Bảo lưu mọi quyền.</p><nav class="footer-nav" aria-label="Điều hướng chân trang"><a href="/wallet/">Ví</a><a href="/vi/huong-dan/">Hướng dẫn</a><a href="/vi/nghien-cuu/">Nghiên cứu</a><a href="/vi/cypress/">Cypress</a></nav></div></div></footer>
+  <script src="/assets/js/script_1.js?v=1.6" defer></script>
+</body>
+</html>
