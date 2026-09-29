@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypress — Phạm vi, Mục tiêu và Nguyên tắc</title>
+  <meta name="description" content="Trang giải thích chính thức về Cypress: phạm vi hiện tại trên Base, Polkadot Hub và Hydration, mục tiêu, mô hình bằng chứng, trách nhiệm an toàn và nguyên tắc.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://cypress.work/vi/cypress/">
+  <link rel="alternate" hreflang="en" href="https://cypress.work/cypress/">
+  <link rel="alternate" hreflang="vi" href="https://cypress.work/vi/cypress/">
+  <link rel="alternate" hreflang="x-default" href="https://cypress.work/cypress/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cypress">
+  <meta property="og:title" content="Cypress — Phạm vi, Mục tiêu và Nguyên tắc">
+  <meta property="og:description" content="Cypress là gì, đang làm gì, xử lý bằng chứng và an toàn ra sao, và sản phẩm đang đi về đâu.">
+  <meta property="og:url" content="https://cypress.work/vi/cypress/">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:locale:alternate" content="en_US">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"AboutPage","name":"Cypress — Phạm vi, Mục tiêu và Nguyên tắc","url":"https://cypress.work/vi/cypress/","description":"Trang giải thích chính thức về phạm vi, mục tiêu, mô hình bằng chứng, trách nhiệm an toàn và nguyên tắc của Cypress.","inLanguage":"vi","isPartOf":{"@id":"https://cypress.work/#website"},"about":{"@type":"Organization","name":"Cypress","url":"https://cypress.work/"},"translationOfWork":{"@type":"AboutPage","inLanguage":"en","url":"https://cypress.work/cypress/"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Trang chủ","item":"https://cypress.work/vi/"},{"@type":"ListItem","position":2,"name":"Cypress","item":"https://cypress.work/vi/cypress/"}]}]}</script>
+  <link rel="icon" href="/assets/cypress-logo-pink-64.png" type="image/png">
+  <link rel="stylesheet" href="/assets/css/style_1.css?v=1.17">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+</head>
+<body class="identity-page">
+  <header class="header" data-header><div class="container"><a href="/vi/" class="logo" data-nav-link><img class="header-img" src="/assets/cypress-logo-pink-32.png" width="32" height="32" alt="Logo Cypress">Cypress</a><nav class="x-navbar" aria-label="Điều hướng chính" data-navbar><ul class="navbar-list"><li class="navbar-item"><a href="/wallet/" class="navbar-link" data-nav-link>Ví</a></li><li class="navbar-item"><a href="/vi/huong-dan/" class="navbar-link" data-nav-link>Hướng dẫn</a></li><li class="navbar-item"><a href="/vi/nghien-cuu/" class="navbar-link" data-nav-link>Nghiên cứu</a></li><li class="navbar-item"><a href="/vi/cypress/" class="navbar-link active" aria-current="page" data-nav-link>Cypress</a></li><li class="navbar-separator" aria-hidden="true"></li><li class="navbar-item mobile-language"><a href="/cypress/" class="navbar-link language-link" lang="en" hreflang="en" data-nav-link>English</a></li><li class="navbar-item mobile-language"><a href="/vi/cypress/" class="navbar-link language-link active" lang="vi" aria-current="page" data-nav-link>Tiếng Việt</a></li></ul></nav><div class="desktop-language" aria-label="Ngôn ngữ"><a href="/cypress/" lang="en" hreflang="en">EN</a><span aria-hidden="true">|</span><a href="/vi/cypress/" class="active" lang="vi" aria-current="page">VI</a></div><button class="nav-toggle-btn" aria-label="Mở hoặc đóng menu" aria-expanded="false" data-nav-toggler><span class="line line-1"></span><span class="line line-2"></span><span class="line line-3"></span></button></div></header>
+
+  <main class="content-page cypress-identity">
+    <header class="page-intro identity-intro">
+      <div class="container identity-container">
+        <nav class="identity-breadcrumb" aria-label="Đường dẫn"><a href="/vi/">Trang chủ</a><span aria-hidden="true">/</span><span aria-current="page">Cypress</span></nav>
+        <p class="section-kicker">Phạm vi · Mục tiêu · Nguyên tắc</p>
+        <h1>Cypress</h1>
+        <p class="identity-lead"><strong>Cypress giúp người dùng biết tài sản của mình đang ở đâu, có thể làm gì tiếp theo và mỗi lựa chọn có điểm lợi, điểm bất lợi gì.</strong></p>
+        <p>Hiện nay, Cypress gồm hai phần chính:</p>
+        <ul class="identity-summary-list"><li>nghiên cứu và hướng dẫn;</li><li>một giao diện ví đang được xây cho Base, Polkadot Hub và Hydration.</li></ul>
+        <p>Cypress không cố biết mọi thứ trong thị trường crypto.</p>
+        <p>Cypress cũng chưa phải một hệ thống có thể tự động tìm ra “con đường tốt nhất” cho mọi người.</p>
+        <p class="identity-opening-principle"><strong>Cypress chỉ nên nói những gì mình hiểu và kiểm chứng được.</strong></p>
+      </div>
+    </header>
+
+    <div class="container identity-container identity-document">
+      <nav class="identity-contents" aria-label="Nội dung trang">
+        <p>Trong trang này</p>
+        <ol><li><a href="#today">Hiện tại</a></li><li><a href="#focus">Phạm vi</a></li><li><a href="#mission">Mục tiêu</a></li><li><a href="#direction">Hướng đi</a></li><li><a href="#economic-interests">Lợi ích kinh tế</a></li><li><a href="#classification">Mô hình bằng chứng</a></li><li><a href="#security">An toàn</a></li><li><a href="#principles">Nguyên tắc</a></li></ol>
+      </nav>
+
+      <section class="identity-section" id="today">
+        <p class="section-kicker">Sản phẩm hiện tại</p>
+        <h2>Cypress đang làm gì hôm nay?</h2>
+        <p>Hiện Cypress đang từng bước xây dựng:</p>
+        <ul><li>các bài nghiên cứu và hướng dẫn;</li><li>thông tin về tài sản và thị trường;</li><li>khả năng xem tài sản trên những mạng đã hỗ trợ;</li><li>các chức năng giao dịch được mở dần sau khi đã thử nghiệm.</li></ul>
+        <p>Cypress <strong>không giữ private key</strong> của người dùng.</p>
+        <p>Người dùng vẫn ký giao dịch bằng ví của mình, như:</p>
+        <ul class="signer-inline"><li>SubWallet</li><li>Polkadot.js</li><li>MetaMask</li></ul>
+        <p>Nói đơn giản:</p>
+        <p class="identity-emphasis"><strong>Ví giữ khóa. Cypress giúp bạn hiểu và thực hiện hành động.</strong></p>
+        <p><a href="/wallet/">Mở giao diện Ví Cypress →</a></p>
+      </section>
+
+      <section class="identity-section" id="focus">
+        <p class="section-kicker">Phạm vi hiện tại</p>
+        <h2>Cypress tập trung vào đâu?</h2>
+        <p>Cypress không theo dõi toàn bộ thị trường crypto.</p>
+        <p>Cypress tập trung vào <strong>ba mạng</strong>:</p>
+        <div class="identity-network-scope" aria-label="Phạm vi mạng hiện tại của Cypress"><span>Base</span><span>Polkadot Hub</span><span>Hydration</span></div>
+        <p>Phạm vi được giới hạn theo <strong>mạng</strong>, không giới hạn theo loại tài sản.</p>
+        <p>Vì vậy DOT, HDX, ETH, USDC, USDT, HOLLAR, CP, dotCP hay một tài sản khác đều có thể được Cypress nghiên cứu nếu nó:</p>
+        <ul><li>đang nằm trên một trong ba mạng này;</li><li>đang được chuyển vào một trong ba mạng này;</li><li>hoặc đang được chuyển ra khỏi một trong ba mạng này.</li></ul>
+        <p>Ví dụ Ethereum không phải mạng Cypress theo dõi thường xuyên. Nhưng nếu người dùng có ETH trên Ethereum và muốn đưa vào Hydration, thì route đó vẫn nằm trong phạm vi Cypress quan tâm.</p>
+        <p>Cypress tập trung vào những việc người dùng thực sự làm:</p>
+        <p class="identity-action-line"><strong>xem tài sản · gửi · chuyển giữa các mạng · swap · stake · earn · cung cấp thanh khoản</strong></p>
+        <p>Và những câu hỏi đi cùng:</p>
+        <ul><li>lợi nhuận có thể là bao nhiêu;</li><li>rủi ro là gì;</li><li>thanh khoản có đủ không;</li><li>mất bao nhiêu phí;</li><li>mất bao lâu;</li><li>phải tin vào những bên hoặc cơ chế nào.</li></ul>
+        <p>Một con đường được Cypress nhắc tới <strong>không có nghĩa đó là lựa chọn tốt nhất trong toàn bộ thị trường crypto</strong>.</p>
+        <p>Nó chỉ có nghĩa:</p>
+        <blockquote><strong>Trong Base, Polkadot Hub và Hydration, đây là những con đường Cypress đang nhìn thấy và có thể kiểm chứng.</strong></blockquote>
+        <p>Nếu một vấn đề nằm ngoài phạm vi Cypress hiểu rõ, Cypress không cần phải cố đưa ra kết luận.</p>
+        <p>Cypress có thể dẫn người dùng tới nguồn hoặc giao thức hiểu vấn đề đó tốt hơn.</p>
+        <p class="history-link"><a href="/vi/cypress/lich-su-moonbeam/">Xem lịch sử Cypress trên Moonbeam →</a></p>
+      </section>
+
+      <section class="identity-section" id="mission">
+        <p class="section-kicker">Mục tiêu</p>
+        <h2>Mục tiêu</h2>
+        <p class="identity-emphasis"><strong>Cypress giúp người dùng tìm một con đường phù hợp trên Base, Polkadot Hub và Hydration — cân nhắc lợi nhuận, rủi ro, thanh khoản và mức độ tin cậy.</strong></p>
+        <p>“Phù hợp” không có nghĩa là lợi nhuận cao nhất.</p>
+        <p>Một lựa chọn còn phụ thuộc vào:</p>
+        <ul><li>bạn đang có tài sản gì;</li><li>tài sản đó đang ở đâu;</li><li>số tiền bao nhiêu;</li><li>mục tiêu của bạn là gì;</li><li>dự định giữ trong bao lâu;</li><li>cần thanh khoản đến mức nào;</li><li>chấp nhận rủi ro đến đâu.</li></ul>
+        <p>Vì vậy, hiện tại Cypress không nên nói:</p>
+        <blockquote>“Đây là con đường tốt nhất.”</blockquote>
+        <p>Cypress nên làm điều thực tế hơn:</p>
+        <blockquote><strong>Cho người dùng thấy các lựa chọn, điểm được và mất của từng lựa chọn, cùng bằng chứng để họ tự quyết định.</strong></blockquote>
+      </section>
+
+      <section class="identity-section" id="direction">
+        <p class="section-kicker">Hướng đi</p>
+        <h2>Cypress đang đi về đâu?</h2>
+        <p>Cypress được xây từng bước:</p>
+        <div class="identity-progress" aria-label="Hướng phát triển sản phẩm Cypress"><span>Xem tài sản</span><b aria-hidden="true">→</b><span>Gửi và chuyển tài sản</span><b aria-hidden="true">→</b><span>Hiểu mình có thể làm gì tiếp theo</span><b aria-hidden="true">→</b><span>So sánh các con đường</span></div>
+        <p>Về lâu dài, trước khi thực hiện một hành động, người dùng nên nhìn thấy được những thông tin như:</p>
+        <ul><li>phí;</li><li>thời gian;</li><li>thanh khoản;</li><li>lợi nhuận;</li><li>rủi ro;</li><li>những điều mình phải tin tưởng.</li></ul>
+        <p>Khả năng so sánh các con đường như vậy <strong>vẫn đang được xây dựng</strong>.</p>
+        <p>Cho tới khi có phương pháp đủ rõ và kiểm chứng được, Cypress sẽ không gọi một con đường là <strong>“tốt nhất”</strong>.</p>
+      </section>
+
+      <section class="identity-section economic-interests" id="economic-interests">
+        <p class="section-kicker">Công bố xung đột</p>
+        <h2>Lợi ích kinh tế của Cypress</h2>
+        <p>Cypress có lợi ích kinh tế liên quan tới:</p>
+        <ul class="economic-assets"><li><strong>CP trên Base</strong></li><li><strong>dotCP trong hệ Polkadot</strong></li></ul>
+        <p>Điều này có thể tạo ra xung đột lợi ích.</p>
+        <p>Ví dụ, nếu Cypress viết về một thị trường có CP hoặc dotCP, người đọc có quyền biết Cypress cũng có lợi ích trong đó.</p>
+        <p>Vì vậy, khi có liên quan, Cypress phải nói rõ điều này.</p>
+        <p>Tài sản của Cypress không được ưu tiên chỉ vì Cypress có thể hưởng lợi.</p>
+        <p class="identity-emphasis"><strong>Nếu một con đường khác phù hợp hơn, Cypress vẫn phải chỉ ra nó — kể cả khi con đường đó không liên quan tới CP, dotCP hay sản phẩm của Cypress.</strong></p>
+      </section>
+
+      <section class="identity-section" id="classification">
+        <p class="section-kicker">Mô hình bằng chứng</p>
+        <h2>Cypress phân biệt thông tin như thế nào?</h2>
+        <p>Cypress chia nội dung thành ba loại.</p>
+        <div class="classification-grid">
+          <article class="classification-fact"><p class="classification-label">Sự thật</p><h3>Sự thật có thể kiểm tra</h3><p>Ví dụ:</p><ul><li>tài liệu chính thức;</li><li>dữ liệu on-chain;</li><li>contract;</li><li>transaction;</li><li>thông tin có thể kiểm tra trực tiếp.</li></ul></article>
+          <article class="classification-observation"><p class="classification-label">Quan sát</p><h3>Điều Cypress quan sát được</h3><p>Ví dụ:</p><ul><li>một transaction đã thử;</li><li>một ví xử lý fee theo cách nào;</li><li>một pool có thanh khoản ra sao tại thời điểm kiểm tra.</li></ul><p>Đây là điều Cypress <strong>đã thấy</strong>.</p><p>Nó không có nghĩa là lúc nào cũng sẽ như vậy.</p></article>
+          <article class="classification-interpretation"><p class="classification-label">Nhận định</p><h3>Nhận định của Cypress</h3><p>Đây là phần Cypress phân tích và đưa ra cách hiểu của mình.</p><p>Nhận định có thể sai.</p><p>Nếu bằng chứng thay đổi, Cypress phải sẵn sàng thay đổi nhận định.</p></article>
+        </div>
+        <p>Những thông tin quan trọng nên có nguồn và ngày kiểm tra gần nhất khi có thể.</p>
+        <p class="identity-rule"><strong>Nếu chưa kiểm được, Cypress không nên viết như một sự thật.</strong></p>
+        <p>Nếu chỉ là thứ Cypress muốn xây trong tương lai, phải nói rõ đó là <strong>hướng đi</strong>.</p>
+      </section>
+
+      <section class="identity-section" id="verification">
+        <p class="section-kicker">Kiểm chứng</p>
+        <h2>Làm sao kiểm tra thông tin của Cypress?</h2>
+        <p>Khi phù hợp, người đọc nên có thể kiểm tra thông tin thông qua:</p>
+        <ul><li>nguồn gốc;</li><li>thời điểm dữ liệu được kiểm tra;</li><li>contract chính thức;</li><li>explorer hoặc transaction;</li><li>mạng đang nói tới;</li><li>đúng tài sản đang nói tới;</li><li>phương pháp tính hoặc so sánh.</li></ul>
+        <p>Thông tin càng có khả năng làm người dùng quyết định chuyển tiền hoặc ký giao dịch thì càng phải dễ kiểm chứng.</p>
+        <p>Cypress không muốn người dùng tin chỉ vì:</p>
+        <blockquote>“Cypress nói vậy.”</blockquote>
+        <p>Mục tiêu là:</p>
+        <blockquote><strong>Cypress nói và người dùng có thể tự kiểm lại.</strong></blockquote>
+      </section>
+
+      <section class="identity-section security-section" id="security">
+        <p class="section-kicker">Trách nhiệm an toàn</p>
+        <h2>An toàn</h2>
+        <p>Việc Cypress không giữ private key <strong>không có nghĩa Cypress không có trách nhiệm về an toàn</strong>.</p>
+        <p>Người dùng vẫn có thể mất tiền nếu Cypress:</p>
+        <ul><li>nhận nhầm tài sản;</li><li>chọn sai mạng;</li><li>gửi sai địa chỉ;</li><li>tính sai phí;</li><li>tạo sai transaction;</li><li>hoặc mô tả một việc nhưng transaction thực tế lại làm việc khác.</li></ul>
+        <p>Vì vậy, trước khi người dùng ký, Cypress phải cố gắng hiển thị rõ nhất có thể:</p>
+        <ul class="security-checks"><li>đang ở mạng nào;</li><li>đang dùng tài sản nào;</li><li>số lượng bao nhiêu;</li><li>gửi tới đâu;</li><li>dùng tài sản nào để trả phí;</li><li>phí ước tính;</li><li>đi qua route nào;</li><li>contract hoặc pallet liên quan;</li><li>cảnh báo đặc biệt nếu có.</li></ul>
+        <p class="identity-rule"><strong>Người dùng vẫn phải kiểm tra lại thông tin trong ví trước khi ký.</strong></p>
+      </section>
+
+      <section class="identity-section" id="not-cypress">
+        <p class="section-kicker">Ranh giới</p>
+        <h2>Cypress không phải là gì?</h2>
+        <p>Cypress không phải:</p>
+        <ul><li>ví lưu ký;</li><li>sàn giao dịch tập trung;</li><li>bridge;</li><li>sản phẩm thay thế SubWallet, Polkadot.js hay MetaMask;</li><li>bên bảo đảm lợi nhuận;</li><li>hệ thống biết mọi cơ hội trong toàn bộ thị trường crypto.</li></ul>
+        <p>Nếu một giao thức khác làm một việc tốt hơn, Cypress có thể đưa người dùng tới đó.</p>
+        <p class="identity-emphasis"><strong>Cypress không cần tự làm mọi thứ.</strong></p>
+      </section>
+
+      <section class="identity-section" id="guides">
+        <p class="section-kicker">Lộ trình thực tế</p>
+        <h2>Guides</h2>
+        <p><a href="/vi/huong-dan/">Cypress Guides</a> là nơi giải thích những con đường cụ thể mà người dùng có thể đi.</p>
+        <p>Ví dụ:</p>
+        <ul><li>chuyển ETH từ Ethereum vào Hydration;</li><li>chọn Wormhole hay Snowbridge;</li><li>đưa USDC hoặc USDT vào Hydration;</li><li>chuyển tài sản giữa Polkadot Hub và Hydration;</li><li>sử dụng một tài sản đang nằm trên Base;</li><li>hiểu phí, thanh khoản và rủi ro của một route.</li></ul>
+        <p>Một guide không chỉ nói:</p>
+        <blockquote>“Bấm nút này rồi bấm nút kia.”</blockquote>
+        <p>Nó phải giúp người dùng hiểu:</p>
+        <p class="identity-path-line"><strong>đang đi từ đâu → tới đâu → bằng cách nào → mất gì → được gì → phải tin vào điều gì → bằng chứng ở đâu.</strong></p>
+      </section>
+
+      <section class="identity-section" id="research">
+        <p class="section-kicker">Bối cảnh sâu hơn</p>
+        <h2>Research</h2>
+        <p><a href="/vi/nghien-cuu/">Cypress Research</a> đi sâu hơn vào những vấn đề liên quan tới Base, Polkadot Hub, Hydration và các đường đi vào hoặc ra khỏi ba mạng này.</p>
+        <p>Các chủ đề có thể gồm:</p>
+        <ul class="topic-list"><li>protocol;</li><li>thanh khoản;</li><li>tokenomics;</li><li>governance;</li><li>kiến trúc mạng;</li><li>transaction;</li><li>phí;</li><li>bridge;</li><li>lending;</li><li>staking;</li><li>LP;</li><li>cấu trúc thị trường.</li></ul>
+        <p>Cypress không cần nghiên cứu mọi thứ trong crypto.</p>
+        <p class="identity-emphasis"><strong>Cypress chỉ cần hiểu thật rõ những gì mình chọn để nói.</strong></p>
+      </section>
+
+      <section class="identity-section principles-section" id="principles">
+        <p class="section-kicker">Nguyên tắc hoạt động</p>
+        <h2>Nguyên tắc</h2>
+        <div class="identity-principles">
+          <article><h3>Dễ kiểm chứng</h3><p>Thông tin quan trọng phải có cách để kiểm lại.</p></article>
+          <article><h3>Khó giả mạo</h3><p>Domain, contract và nguồn chính thức của Cypress phải dễ nhận biết.</p></article>
+          <article><h3>Khó bị chi phối</h3><p>Lợi ích tài chính phải được nói rõ và không được âm thầm quyết định lời khuyên.</p></article>
+          <article><h3>Khó bị xóa bỏ</h3><p>Kiến thức quan trọng không nên chỉ tồn tại trên một mạng xã hội hay một nền tảng duy nhất.</p></article>
+        </div>
+      </section>
+
+      <blockquote class="identity-closing"><p><strong>Ví giữ khóa.</strong></p><p><strong>Người dùng quyết định.</strong></p><p><strong>Cypress chỉ nói những gì mình có thể kiểm chứng.</strong></p></blockquote>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="footer-bottom"><div class="container"><p class="copyright">© 2022–2026 Cypress Capital. Bảo lưu mọi quyền.</p><nav class="footer-nav" aria-label="Điều hướng chân trang"><a href="/wallet/">Ví</a><a href="/vi/huong-dan/">Hướng dẫn</a><a href="/vi/nghien-cuu/">Nghiên cứu</a><a href="/vi/cypress/lich-su-moonbeam/">Lịch sử</a></nav></div></div></footer>
+  <script src="/assets/js/script_1.js?v=1.6" defer></script>
+</body>
+</html>

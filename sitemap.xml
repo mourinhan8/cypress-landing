@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://cypress.work/</loc></url>
   <url><loc>https://cypress.work/vi/</loc><lastmod>2026-07-25</lastmod></url>
+  <url><loc>https://cypress.work/wallet/</loc></url>
+  <url><loc>https://cypress.work/guides/</loc></url>
+  <url><loc>https://cypress.work/vi/huong-dan/</loc></url>
+  <url><loc>https://cypress.work/guides/ethereum-to-hydration/</loc></url>
+  <url><loc>https://cypress.work/vi/huong-dan/ethereum-to-hydration/</loc></url>
+  <url><loc>https://cypress.work/cypress/</loc></url>
+  <url><loc>https://cypress.work/vi/cypress/</loc></url>
+  <url><loc>https://cypress.work/cypress/moonbeam-history/</loc></url>
+  <url><loc>https://cypress.work/vi/cypress/lich-su-moonbeam/</loc></url>
   <url><loc>https://cypress.work/research/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://cypress.work/vi/nghien-cuu/</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://cypress.work/research/how-i-use-subwallet-as-a-cold-wallet/</loc><lastmod>2026-09-27</lastmod></url>
