@@ -58,6 +58,21 @@ test("sitemap enumerates all new localized routes", () => {
   }
 });
 
+test("Research keeps Learning Swap distinct from Wallet and experimental TestSwap", () => {
+  const englishResearch = read("research/index.html");
+  const vietnameseResearch = read("vi/nghien-cuu/index.html");
+  const englishHome = read("index.html");
+  const vietnameseHome = read("vi/index.html");
+
+  assert.match(englishResearch, /href="https:\/\/swap\.cypress\.work\/\?lang=en"[\s\S]*>Learning Swap<\/a>/);
+  assert.match(vietnameseResearch, /href="https:\/\/swap\.cypress\.work\/"[^>]*>Học Swap<\/a>/);
+  for (const home of [englishHome, vietnameseHome]) {
+    assert.match(home, /href="\/wallet\/"/);
+    assert.doesNotMatch(home, /https:\/\/swap\.cypress\.work\//);
+    assert.match(home, /https:\/\/testswap\.cypress\.work\//);
+  }
+});
+
 test("Moonbeam continuity is historical and does not change current network scope", () => {
   const englishHome = read("index.html");
   const vietnameseHome = read("vi/index.html");
