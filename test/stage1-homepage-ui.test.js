@@ -37,16 +37,21 @@ test("mobile header exposes localized language links inside the menu", () => {
 });
 
 test("homepage positioning and section order match the Cypress IA", () => {
-  for (const locale of ["index.html", "vi/index.html"]) {
+  const locales = [
+    ["index.html", "Cypress researches and builds tools around assets on Base, Polkadot Hub and Hydration."],
+    ["vi/index.html", "Cypress nghiên cứu và xây dựng công cụ xoay quanh tài sản trên Base, Polkadot Hub và Hydration."]
+  ];
+  for (const [locale, heroNetworkCopy] of locales) {
     const html = fs.readFileSync(path.join(root, locale), "utf8");
-    const order = ["cypress-hero", "network-scope", "direction-section", "assets-section", "featured-guides", "featured-research", "history-bridge", "trust-section"];
+    const order = ["cypress-hero", "wallet-trust-strip", "assets-section", "featured-guides", "featured-research", "history-bridge", "trust-section"];
     let cursor = -1;
     for (const marker of order) {
       const next = html.indexOf(marker, cursor + 1);
       assert.ok(next > cursor, `${locale}: ${marker} is in order`);
       cursor = next;
     }
-    assert.match(html, /Base[\s\S]*Polkadot Hub[\s\S]*Hydration/);
+    assert.ok(html.includes(`<p class="hero-lead">${heroNetworkCopy}</p>`));
+    assert.doesNotMatch(html, /network-scope|direction-section|direction-grid/);
     assert.doesNotMatch(html, /wallet-section/);
     assert.match(html, /compact-wallet-note[\s\S]*SubWallet[\s\S]*Polkadot\.js[\s\S]*MetaMask/);
     assert.doesNotMatch(html, /Latest Research|Recent Research|Nghiên cứu mới nhất/);
@@ -61,11 +66,12 @@ test("CP is the primary Base asset and dotCP remains a secondary experimental li
   for (const required of ["CP / USD", "Total Liquidity", "Trading", "Provide liquidity", "Liquidity Returns", "0x934ef4bfffdce191ac4bcc351b2fe7892865b440"]) {
     assert.ok(english.includes(required), required);
   }
-  assert.match(english, /Cypress Coin \(CP\)[\s\S]*CP is the primary asset associated with Cypress on Base/);
-  assert.match(vietnamese, /Cypress Coin \(CP\)[\s\S]*CP là tài sản chính gắn với Cypress trên Base/);
+  assert.match(english, /Cypress on Base · CP[\s\S]*<h2[^>]*>Cypress<\/h2>[\s\S]*CP is the ticker for Cypress on Base/);
+  assert.match(vietnamese, /Cypress trên Base · CP[\s\S]*<h2[^>]*>Cypress<\/h2>[\s\S]*CP là mã giao dịch của Cypress trên Base/);
+  assert.doesNotMatch(combined, /Cypress Coin \(CP\)/);
   assert.match(combined, /https:\/\/basescan\.org\/token\/0x934ef4bfffdce191ac4bcc351b2fe7892865b440/);
-  assert.match(english, /dotcp-secondary[\s\S]*dotCP on Polkadot[\s\S]*Experimental \/ secondary Cypress asset[\s\S]*https:\/\/testswap\.cypress\.work\//);
-  assert.match(vietnamese, /dotcp-secondary[\s\S]*dotCP trên Polkadot[\s\S]*Tài sản Cypress phụ \/ thử nghiệm[\s\S]*https:\/\/testswap\.cypress\.work\//);
+  assert.match(english, /dotcp-secondary[\s\S]*dotCP — Cypress Coin on Polkadot[\s\S]*Experimental \/ secondary asset[\s\S]*https:\/\/testswap\.cypress\.work\//);
+  assert.match(vietnamese, /dotcp-secondary[\s\S]*dotCP — Cypress Coin trên Polkadot[\s\S]*Tài sản phụ \/ thử nghiệm[\s\S]*https:\/\/testswap\.cypress\.work\//);
   assert.doesNotMatch(combined, /href="https:\/\/testswap\.cypress\.work\/"[^>]*class="(?:x-btn|hero-primary)/);
 });
 

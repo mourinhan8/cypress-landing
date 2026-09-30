@@ -2100,7 +2100,7 @@ blockquote cite:before {
     var(--eerie-black-2);
 }
 
-:is(.cypress-hero, .network-scope, .direction-section, .featured-guides,
+:is(.cypress-hero, .featured-guides,
   .latest-research, .assets-section, .history-bridge, .trust-section, .page-intro, .guide-index)[data-section] > * {
   opacity: 1;
   transform: none;
@@ -2178,21 +2178,15 @@ blockquote cite:before {
 .hero-principle { align-self: end; color: var(--white); }
 .hero-principle p + p { margin-block-start: 8px; }
 
-.network-scope { background: var(--eerie-black-1); padding-block: 42px; }
-.compact-section { text-align: center; }
-.compact-section > p:last-child { margin: 18px auto 0; max-width: 760px; }
-.network-list { color: var(--white); font-size: clamp(2.8rem, 5vw, 5.2rem); letter-spacing: -0.03em; }
-.network-list span { color: var(--blue-crayola); display: inline; }
-
 .section-heading { margin-block-end: 34px; }
-.direction-grid { display: grid; gap: 1px; background: var(--white_10); border: 1px solid var(--white_10); border-radius: var(--radius-12); overflow: hidden; }
-.direction-grid article { background: var(--eerie-black-2); min-height: 220px; padding: 28px; }
-.direction-grid article > span { color: var(--roman-silver); font-size: 1.2rem; letter-spacing: 0.12em; }
-.direction-grid h3 { color: var(--white); font-size: 2.4rem; margin-block: 45px 12px; }
 
 .featured-guides,
 .trust-section { background: var(--eerie-black-1); }
 
+.wallet-trust-strip {
+  background: var(--eerie-black-1);
+  padding-block: 24px;
+}
 .compact-wallet-note {
   align-items: center;
   background: hsla(0, 0%, 100%, 0.025);
@@ -2200,7 +2194,6 @@ blockquote cite:before {
   border-radius: var(--radius-12);
   display: grid;
   gap: 20px;
-  margin-block-start: 24px;
   padding: 20px 22px;
 }
 .compact-wallet-note p:not(.card-label) { color: var(--cultured); line-height: 1.55; }
@@ -2824,7 +2817,6 @@ blockquote cite:before {
 
 @media (min-width: 700px) {
   .hero-grid { grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.65fr); }
-  .direction-grid { grid-template-columns: repeat(2, 1fr); }
   .compact-wallet-note { grid-template-columns: minmax(0, 1.4fr) auto; }
   .guide-card { grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.3fr); }
   .asset-notes { grid-template-columns: repeat(2, 1fr); }
@@ -2839,7 +2831,6 @@ blockquote cite:before {
 
 @media (min-width: 900px) {
   .mobile-language { display: none; }
-  .direction-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 899px) {
@@ -2853,12 +2844,10 @@ blockquote cite:before {
   :root { --section-padding: 72px; }
   .hero-title,
   .page-intro h1 { font-size: 3.8rem; }
-  .network-list { font-size: 2.8rem; }
-  .network-list span { margin-inline: 2px; }
-  .network-scope { padding-block: 40px; }
   .hero-actions .x-btn { text-align: center; width: 100%; }
   .hero-principle { font-size: 1.4rem; line-height: 1.45; padding: 16px 18px; }
   .hero-principle p + p { margin-block-start: 4px; }
+  .wallet-trust-strip { padding-block: 18px; }
   .compact-wallet-note { gap: 14px; padding: 17px; }
   .compact-signers li { padding: 7px 10px; }
 
